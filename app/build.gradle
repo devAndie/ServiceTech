@@ -30,6 +30,13 @@ android {
 
 dependencies {
 
+    def appcompat_version = "1.2.0"
+
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    // For loading and tinting drawables on older versions of the platform
+    implementation "androidx.appcompat:appcompat-resources:1.2.0"
+
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
