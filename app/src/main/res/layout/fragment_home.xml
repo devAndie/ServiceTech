@@ -18,11 +18,17 @@
             app:cardBackgroundColor="#E49F9F"
             app:cardCornerRadius="10dp">
 
-            <Button
-                android:id="@+id/button2"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_height="73dp"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_baseline_add_circle_outline_24"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="24sp"
+                android:typeface="normal"
+                tools:text="New event" />
 
         </androidx.cardview.widget.CardView>
 
@@ -48,8 +54,9 @@
             <Button
                 android:id="@+id/butcar2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_height="match_parent"
+                android:foreground="@drawable/ic_baseline_add_circle_outline_24"
+                app:backgroundTint="@android:color/darker_gray" />
         </androidx.cardview.widget.CardView>
 
 
