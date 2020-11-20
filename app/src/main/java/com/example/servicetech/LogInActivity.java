@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LogInActivity extends AppCompatActivity {
 
-    EditText phone = findViewById(R.id.phone);
-    EditText username = findViewById(R.id.name);
-    EditText Password = findViewById(R.id.password);
-    EditText confirmPassword = findViewById(R.id.confirmPass);
+    EditText name = findViewById(R.id.user);
+    EditText password = findViewById(R.id.pass);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +31,13 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(homeIntent);
                 validInputs();
                 validateUsername();
-                validatePhonenumber();
                 validatePassword();
-                dialog.setTitle("connecting.....");
             }
         });
     }
-    public boolean validInputs() {
-        EditText phone = findViewById(R.id.phone);
-        EditText username = findViewById(R.id.name);
-        EditText Password = findViewById(R.id.password);
-        EditText confirmPassword = findViewById(R.id.confirmPass);
+    public void validInputs() {
+        EditText username = findViewById(R.id.user);
+        EditText password = findViewById(R.id.pass);
 
         String validUsername = "";
         String Username = username.getText().toString();
@@ -49,9 +48,12 @@ public class LogInActivity extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Enter valid Username", Toast.LENGTH_LONG).show();
         }
-        if (confirmPassword.getText().toString().equals("")){
-            confirmPassword.setError("Enter password");
-        };
+        if (password.getText().toString().equals("")){
+            password.setError("Enter password");
+        }
+        else {
+            password.setError(null);
+        }
     }
 
     private boolean validateUsername() {
