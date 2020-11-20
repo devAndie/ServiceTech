@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 public class AboutFragment extends Fragment {
@@ -44,11 +45,17 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                //Intent viewimg = new Intent(Intent.ACTION_VIEW, )
             }
         });
 
+        CardView msg = view.findViewById(R.id.msg_card);
+        msg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
         //super.onViewCreated(view, savedInstanceState);
     }
 }
