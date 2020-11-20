@@ -13,7 +13,7 @@
         android:title="dashboard" />
     <item
         android:id="@+id/event"
-        android:icon="@drawable/ic_baseline_event_24"
+        android:icon="@drawable/ic_baseline_home_repair_service_24"
         android:title="event" />
     <item
         android:id="@+id/about"
