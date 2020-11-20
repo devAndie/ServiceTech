@@ -57,7 +57,6 @@ public class SignInActivity extends AppCompatActivity {
             confirmPassword.setError("Enter password");
         };
     }
-
     public boolean validatePhonenumber(){
         String passwordInput = phone.getEditableText().toString().trim();
 
@@ -70,7 +69,6 @@ public class SignInActivity extends AppCompatActivity {
             return true;
         }
     }
-
     private boolean validateUsername() {
         String nameInput = name.getEditableText().toString().trim();
         if (nameInput.isEmpty()) {
@@ -84,7 +82,6 @@ public class SignInActivity extends AppCompatActivity {
             return  true;
         }
     }
-
     public boolean validatePassword() {
         String passwordInput = password.getEditableText().toString().trim();
 
