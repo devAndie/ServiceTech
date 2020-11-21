@@ -18,7 +18,6 @@ public class AboutFragment extends Fragment {
 
     ImageButton profile;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

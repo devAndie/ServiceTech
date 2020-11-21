@@ -1,4 +1,4 @@
-package com.example.summoner;
+package com.example.servicetech;
 
 public class DB_Strings {
     static final String DATABASE_URL="3306";
