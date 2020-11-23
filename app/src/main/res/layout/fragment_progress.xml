@@ -13,11 +13,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
+        android:text="Technician Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updt"
-        tools:text="Technician Name" />
+        app:layout_constraintTop_toBottomOf="@+id/updt" />
 
     <TextView
         android:id="@+id/textView3"
@@ -26,11 +26,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text='"Get Tech name"'
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/techv"
-        app:layout_constraintTop_toBottomOf="@+id/updt"
-        tools:text='"Get Tech name"' />
+        app:layout_constraintTop_toBottomOf="@+id/updt" />
 
     <TextView
         android:id="@+id/myName"
@@ -39,11 +39,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
+        android:text="Customer Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/techv"
-        tools:text="Customer Name" />
+        app:layout_constraintTop_toBottomOf="@+id/techv" />
 
     <TextView
         android:id="@+id/custName"
@@ -52,11 +52,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text='"Get customers Name"'
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/myName"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:text='"Get customers Name"' />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/eventPV"
@@ -65,10 +65,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text="event"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myName"
-        tools:text="event" />
+        app:layout_constraintTop_toBottomOf="@+id/myName" />
 
     <TextView
         android:id="@+id/eventd"
@@ -80,7 +80,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/eventPV"
         app:layout_constraintTop_toBottomOf="@+id/custName"
-        tools:text='"Get event"' />
+        android:text='"Get event"' />
 
     <TextView
         android:id="@+id/desc"
@@ -92,7 +92,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventPV"
-        tools:text="Description" />
+        android:text="Description" />
 
     <TextView
         android:id="@+id/infod"
@@ -104,7 +104,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/desc"
         app:layout_constraintTop_toBottomOf="@+id/eventd"
-        tools:text='"Get Additional info"' />
+        android:text='"Get Additional info"' />
 
     <TextView
         android:id="@+id/textView12"
@@ -116,7 +116,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infod"
-        tools:text="Progress" />
+        android:text="Progress" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -134,10 +134,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:text="Milestones"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Milestones" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/mile1"
