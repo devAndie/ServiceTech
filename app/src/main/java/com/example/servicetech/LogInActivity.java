@@ -14,13 +14,29 @@ import java.util.regex.Pattern;
 
 public class LogInActivity extends AppCompatActivity {
 
-    EditText name = findViewById(R.id.user);
-    EditText password = findViewById(R.id.pass);
+    EditText name, password;
 
+    private boolean validateUsername() {
+        String nameInput = name.getEditableText().toString().trim();
+        if (nameInput.isEmpty()) {
+            name.setError("Field can't be empty");
+            return false;
+        }else if (nameInput.length() > 12) {
+            name.setError("Username too long");
+            return false;
+        }else {
+            name.setError(null);
+            return  true;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        EditText name = findViewById(R.id.user);
+        EditText password = findViewById(R.id.pass);
+
 
         Button logIn =findViewById(R.id.log2);
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -29,13 +45,14 @@ public class LogInActivity extends AppCompatActivity {
 
                 Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeIntent);
-                validInputs();
-                validateUsername();
-                validatePassword();
+                //validInputs();
+                //validateUsername();
+                //validatePassword();
             }
         });
     }
-    public void validInputs() {
+
+    /*public void validInputs() {
         EditText username = findViewById(R.id.user);
         EditText password = findViewById(R.id.pass);
 
@@ -54,21 +71,7 @@ public class LogInActivity extends AppCompatActivity {
         else {
             password.setError(null);
         }
-    }
-
-    private boolean validateUsername() {
-        String nameInput = name.getEditableText().toString().trim();
-        if (nameInput.isEmpty()) {
-            name.setError("Field can't be empty");
-            return false;
-        }else if (nameInput.length() > 12) {
-            name.setError("Username too long");
-            return false;
-        }else {
-            name.setError(null);
-            return  true;
-        }
-    }
+    }*/
 
     public boolean validatePassword() {
         String passwordInput = password.getEditableText().toString().trim();

@@ -27,11 +27,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
+        android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Username" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/uslevl"
@@ -40,16 +40,16 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
+        android:text="User level"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toBottomOf="@+id/myun"
-        tools:text="User level" />
+        app:layout_constraintTop_toBottomOf="@+id/myun" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/score_card"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile">
@@ -75,18 +75,18 @@
                 <TextView
                     android:id="@+id/score"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="My credit Score"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="My credit Score" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/dscore"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text='"Get credit score"'
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text='"Get credit score"' />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -95,7 +95,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/msg_card"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +110,7 @@
                 android:id="@+id/msg_img"
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_baseline_chat_24"
                 tools:layout_editor_absoluteX="12dp"
                 tools:layout_editor_absoluteY="190dp"
                 tools:srcCompat="@drawable/ic_baseline_chat_24" />
@@ -122,18 +123,18 @@
                 <TextView
                     android:id="@+id/msg_st"
                     android:layout_width="292dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Messages and chats"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="Messages and chats" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/msg_d"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Font size, Keyboard input"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text="Font size, Keyboard input" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -142,7 +143,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/ntfn_card"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +160,7 @@
                 android:layout_width="133dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                app:srcCompat="@drawable/ic_baseline_notifications_24"
                 tools:srcCompat="@drawable/ic_baseline_notifications_24" />
 
             <LinearLayout
@@ -170,18 +172,18 @@
                 <TextView
                     android:id="@+id/ntf"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Notifications"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="Notifications" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/ntf_d"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Frequency, Tones"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text="Frequency, Tones" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -189,7 +191,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/paycard"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,18 +218,18 @@
                 <TextView
                     android:id="@+id/payst"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Payment"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="Payment" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/payd"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Linked acounts"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text="Linked acounts" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -235,7 +237,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/loccard"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paycard">
@@ -259,20 +261,20 @@
                 <TextView
                     android:id="@+id/locst"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="My HomeBase"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="My Location/ HomeBase" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/locd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text='"Get My Location"'
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text='"Get My Location"' />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -282,10 +284,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/seccard"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/loccard"
-        tools:layout_editor_absoluteX="58dp" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loccard">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -306,18 +308,18 @@
                 <TextView
                     android:id="@+id/sec_st"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Security"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="24sp"
-                    tools:text="Security" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/secd"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="select how you log in to account"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="18sp"
-                    tools:text="select how you log in to account" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -334,7 +336,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seccard"
-        tools:text="Created By AndrU" />
+        android:text="Created By AndrU" />
 
     <Button
         android:id="@+id/up_ul"

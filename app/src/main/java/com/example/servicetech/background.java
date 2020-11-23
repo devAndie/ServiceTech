@@ -1,4 +1,4 @@
-package com.example.summoner;
+package com.example.servicetech;
 
 import android.app.AlertDialog;
 import android.content.Context;

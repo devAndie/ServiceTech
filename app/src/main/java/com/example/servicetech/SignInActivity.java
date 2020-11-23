@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignInActivity extends AppCompatActivity {
@@ -25,9 +23,7 @@ public class SignInActivity extends AppCompatActivity {
             ".{4,}" +               //at least 4 characters
             "$");
 
-    EditText phone = findViewById(R.id.phone);
-    EditText password = findViewById(R.id.pass);
-    EditText confirmPassword = findViewById(R.id.conPass);
+    EditText fName, sName, mail, address, phone, password;
 
 
     @Override
@@ -35,17 +31,29 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        Button signIn = findViewById(R.id.signUp);
+        EditText fName = findViewById(R.id.fName);
+        EditText sName = findViewById(R.id.surName);
+        EditText mail = findViewById(R.id.mail);
+        EditText address = findViewById(R.id.address);
+        EditText phone = findViewById(R.id.phone);
+        EditText password = findViewById(R.id.pass);
+        EditText confirmPassword = findViewById(R.id.conPass);
+
+
+
+        Button signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeIntent);
-                validatePhonenumber();
-                validatePassword();
+                //validInputs();
+                //validatePassword();
             }
         });
     }
+
     public boolean validatePhonenumber(){
         String phoneInput = phone.getEditableText().toString().trim();
 

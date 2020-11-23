@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nwFrag"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <TextView
         android:id="@+id/autov"
@@ -12,12 +13,12 @@
         android:layout_height="31dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Type of service to request"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Type of service to request" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <AutoCompleteTextView
         android:id="@+id/auto"
@@ -25,9 +26,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
-        android:completionHint="Type of service"
-        android:text="service type"
+        android:hint="what is the  item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autov" />
 
@@ -37,12 +36,12 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:text="Installation / Repair"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto"
-        tools:text="Installation / Repair" />
+        app:layout_constraintTop_toBottomOf="@+id/auto" />
 
     <EditText
         android:id="@+id/ir_in"
@@ -50,7 +49,6 @@
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Install / Repair"
         android:inputType="textPersonName"
@@ -63,19 +61,19 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Best time "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ir_in"
-        tools:text="Best time " />
+        app:layout_constraintTop_toBottomOf="@+id/ir_in" />
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="131dp"
-        android:layout_height="50dp"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
         android:text="8am-12noon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timev" />
@@ -83,10 +81,9 @@
     <CheckBox
         android:id="@+id/checkBox2"
         android:layout_width="113dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
         android:text="12pm-5pm"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toBottomOf="@+id/timev" />
@@ -94,10 +91,9 @@
     <CheckBox
         android:id="@+id/checkBox3"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
         android:text="early mornings."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
@@ -105,10 +101,9 @@
     <CheckBox
         android:id="@+id/checkBox4"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
         android:text="Late evening"
         app:layout_constraintStart_toEndOf="@+id/checkBox3"
         app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
@@ -116,10 +111,10 @@
     <Button
         android:id="@+id/pin"
         android:layout_width="52dp"
-        android:layout_height="81dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="8dp"
         app:backgroundTint="@color/teal_700"
         app:icon="@drawable/ic_baseline_person_pin_circle_24"
         app:iconPadding="10dp"
@@ -132,26 +127,34 @@
         android:layout_height="36dp"
         android:layout_marginStart="37dp"
         android:layout_marginLeft="37dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="10dp"
+        android:text="My Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3"
-        tools:text="My Location" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
 
     <EditText
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Additional info"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin" />
+
+    <Button
+        android:id="@+id/nw_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/info"
         app:layout_constraintTop_toBottomOf="@+id/pin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
