@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -77,10 +77,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text='"Get event"'
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/eventPV"
-        app:layout_constraintTop_toBottomOf="@+id/custName"
-        android:text='"Get event"' />
+        app:layout_constraintTop_toBottomOf="@+id/custName" />
 
     <TextView
         android:id="@+id/desc"
@@ -89,10 +89,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text="Description"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventPV"
-        android:text="Description" />
+        app:layout_constraintTop_toBottomOf="@+id/eventPV" />
 
     <TextView
         android:id="@+id/infod"
@@ -101,10 +101,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text='"Get Additional info"'
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/desc"
-        app:layout_constraintTop_toBottomOf="@+id/eventd"
-        android:text='"Get Additional info"' />
+        app:layout_constraintTop_toBottomOf="@+id/eventd" />
 
     <TextView
         android:id="@+id/textView12"
@@ -113,10 +113,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:text="Progress"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infod"
-        android:text="Progress" />
+        app:layout_constraintTop_toBottomOf="@+id/infod" />
 
     <ProgressBar
         android:id="@+id/progressBar"

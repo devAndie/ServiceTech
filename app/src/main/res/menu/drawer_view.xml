@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nw_d"
+            android:checked="true"
+            android:icon="@drawable/ic_baseline_add_circle_outline_24"
+            android:title="new" />
+        <item
+            android:id="@+id/avail_d"
+            android:icon="@drawable/ic_baseline_home_repair_service_24"
+            android:title="Available" />
+        <item
+            android:id="@+id/book_d"
+            android:icon="@drawable/ic_baseline_book_24"
+            android:title="Book" />
+        <item
+            android:id="@+id/prog_dr"
+            android:icon="@drawable/ic_baseline_book_24"
+            android:title="progress" />
+        <item
+            android:id="@+id/mil_d"
+            android:icon="@drawable/ic_baseline_post_add_24"
+            android:title="Milestone" />
+        <item
+            android:id="@+id/pay_dr"
+            android:icon="@drawable/ic_baseline_payment_24"
+            android:title="Payment" />
+        <item
+            android:id="@+id/loc_dr"
+            android:icon="@drawable/ic_baseline_person_pin_circle_24"
+            android:title="My location" />
+        <item
+            android:id="@+id/stt_d"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="My settings" />
+        <item
+            android:id="@+id/sup_d"
+            android:icon="@drawable/ic_baseline_support_24"
+            android:title="Support" />
+
+    </group>
+</menu>

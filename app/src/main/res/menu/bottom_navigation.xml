@@ -8,10 +8,6 @@
         android:title="home"
         />
     <item
-        android:id="@+id/dash"
-        android:icon="@drawable/ic_baseline_dashboard_24"
-        android:title="dashboard" />
-    <item
         android:id="@+id/event"
         android:icon="@drawable/ic_baseline_home_repair_service_24"
         android:title="event" />

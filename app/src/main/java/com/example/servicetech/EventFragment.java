@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 public class EventFragment extends Fragment {
 
@@ -22,6 +26,9 @@ public class EventFragment extends Fragment {
     public ProgressFragment progressFragment;
     public StakesFragment stakesFragment;
 
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
     FragmentActivity listener;
 
     @Override
@@ -32,6 +39,19 @@ public class EventFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        DrawerLayout mDrawer = getView().findViewById(R.id.draw_lay);
+        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        getSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setupDrawerContent(nvDrawer);
+
+        insertNestedFragment();
+
+        //super.onViewCreated(view, savedInstanceState);
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,20 +60,68 @@ public class EventFragment extends Fragment {
             progressFragment = new ProgressFragment();
             stakesFragment = new StakesFragment();
         }
-        /**/
 
         getChildFragmentManager().beginTransaction().replace(R.id.event_container,
                 new HomeFragment()).commit();
 
-    return inflater.inflate(R.layout.fragment_event, container, false);
+        return inflater.inflate(R.layout.fragment_event, container, false);
     }
-
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        insertNestedFragment();
-        //super.onViewCreated(view, savedInstanceState);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.new:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
+    private void setupDrawerContent(NavigationView navigationView){
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        MenuItem menuItem = null;
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                }
+        );
+    }
+    public void selectDrawerItem(MenuItem menuItem){
+        Fragment fragment = null;
+        Class fragmentClass;
+        switch (menuItem.getItemId()){
+            case R.id.nwFrag:
+                fragmentClass = NewFragment.class;
+                break;
+            case R.id.avail_d:
+                fragmentClass = StakesFragment.class;
+                break;
+            case R.id.book_d:
+                fragmentClass = BookFragment.class;
+                break;
+            case R.id.progFrag:
+                fragmentClass = ProgressFragment.class;
+                break;
+            case R.id.:
+                fragmentClass = .class;
+                break;
+            case R.id.:
+                fragmentClass = .class;
+                break;
+            case R.id.:
+                fragmentClass = .class;
+                break;
+            case R.id.:
+                fragmentClass = .class;
+                break;
+
+        }
+    }
+
     private void insertNestedFragment(){
         Fragment newFragment = new NewFragment();
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
