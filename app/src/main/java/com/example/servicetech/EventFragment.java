@@ -106,13 +106,13 @@ public class EventFragment extends Fragment {
             case R.id.progFrag:
                 fragmentClass = ProgressFragment.class;
                 break;
-            case R.id.:
-                fragmentClass = .class;
+            case R.id.pay_dr:
+                fragmentClass = PaymentFragment.class;
                 break;
-            case R.id.:
-                fragmentClass = .class;
+            case R.id.loc_dr:
+                fragmentClass = LocationFragment.class;
                 break;
-            case R.id.:
+            case R.id.stt_d:
                 fragmentClass = .class;
                 break;
             case R.id.:
