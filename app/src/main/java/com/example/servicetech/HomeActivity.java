@@ -39,10 +39,7 @@ public class HomeActivity extends AppCompatActivity {
                     case  R.id.home:
                         selectedFrag = new HomeFragment();
                         break;
-                    case  R.id.dash:
-                        selectedFrag = new DashboardFragment();
-                        break;
-                    case  R.id.event:
+                     case  R.id.event:
                         selectedFrag = new EventFragment();
                         break;
                     case  R.id.about:

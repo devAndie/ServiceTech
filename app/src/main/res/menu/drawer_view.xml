@@ -4,20 +4,21 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nw_d"
-            android:checked="true"
             android:icon="@drawable/ic_baseline_add_circle_outline_24"
             android:title="new" />
         <item
             android:id="@+id/avail_d"
             android:icon="@drawable/ic_baseline_home_repair_service_24"
-            android:title="Available" />
+            android:title="Available"
+            android:checked="true"
+            />
         <item
             android:id="@+id/book_d"
             android:icon="@drawable/ic_baseline_book_24"
             android:title="Book" />
         <item
             android:id="@+id/prog_dr"
-            android:icon="@drawable/ic_baseline_book_24"
+            android:icon="@drawable/ic_baseline_pending_24"
             android:title="progress" />
         <item
             android:id="@+id/mil_d"
