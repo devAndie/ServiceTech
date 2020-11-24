@@ -1,6 +1,7 @@
 package com.example.servicetech;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,20 +42,24 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         mDrawer = (DrawerLayout)findViewById(R.id.draw_lay);
+        drawerToggle = setupDrawerToggle();
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
+        mDrawer.addDrawerListener(drawerToggle);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
-        nvDrawer = (NavigationView)findViewById(R.id.drawer);
-
-
-        NavigationView navigationView = findViewById(R.id.drawer);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
-
-        //ImageView ivHeadPhoto = headerLayout.findViewById(R.id.imageView);
-
-        setupDrawerContent(nvDrawer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        nvDrawer = (NavigationView)findViewById(R.id.drawer);
+//        setupDrawerContent(nvDrawer);
+
+        NavigationView navigationView = findViewById(R.id.drawer);
+//        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+//        ImageView ivHeadPhoto = headerLayout.findViewById(R.id.head_img);
+
 
         if (savedInstanceState == null){
             homeFragment = new HomeFragment();
@@ -107,26 +114,16 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-            default:
-                throw new IllegalStateException("Unexpected value: " + item.getItemId());
+        if (drawerToggle.onOptionsItemSelected(item)){
+            return true;
         }
-
-        //   return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
-
-
     public void setupDrawerContent(NavigationView navigationView){
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 }
         );
     }
@@ -176,4 +173,20 @@ public class HomeActivity extends AppCompatActivity {
         mDrawer.closeDrawers();
     }
 
+    private ActionBarDrawerToggle setupDrawerToggle(){
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 }
