@@ -55,88 +55,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mDrawer = (DrawerLayout)getView().findViewById(R.id.draw_lay);
-
-        toolbar = (Toolbar)getView().findViewById(R.id.toolbar);
-        /*setSupportActionBar(bar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
-
-        nvDrawer = (NavigationView)getView().findViewById(R.id.drawer);
-        //setupDrawerContent(nvDrawer);
-
-        insertNestedFragment();
-        //super.onViewCreated(view, savedInstanceState);
 
         //super.onViewCreated(view, savedInstanceState);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.event:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-            default:
-                throw new IllegalStateException("Unexpected value: " + item.getItemId());
-        }
-
-        //   return super.onOptionsItemSelected(item);
-    }
-
-
-    public void setupDrawerContent(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(
-                item -> {
-                    MenuItem menuItem = null;
-                    selectDrawerItem(menuItem);
-                    return true;
-                }
-        );
-    }
-    public void selectDrawerItem(MenuItem menuItem){
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch (menuItem.getItemId()){
-            case R.id.nwFrag:
-                fragmentClass = NewFragment.class;
-                break;
-            case R.id.avail_d:
-                fragmentClass = StakesFragment.class;
-                break;
-            case R.id.book_d:
-                fragmentClass = BookFragment.class;
-                break;
-            case R.id.progFrag:
-                fragmentClass = ProgressFragment.class;
-                break;
-            case R.id.pay_dr:
-                fragmentClass = PaymentFragment.class;
-                break;
-            case R.id.loc_dr:
-                fragmentClass = LocationFragment.class;
-                break;
-            case R.id.stt_d:
-                fragmentClass = SettingsFragment.class;
-                break;
-            case R.id.sup_d:
-                fragmentClass = SupportFragment.class;
-                break;
-            default:
-                fragmentClass = StakesFragment.class;
-        }
-        try {
-            fragment = (Fragment)fragmentClass.newInstance();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        FragmentManager fragmentManager = getChildFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.event_container, fragment).commit();
-
-        menuItem.setChecked(true);
-        menuItem.setTitle(getId());
-
-        mDrawer.closeDrawers();
     }
 
     private void insertNestedFragment(){
