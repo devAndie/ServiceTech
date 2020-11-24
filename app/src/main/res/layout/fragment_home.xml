@@ -35,6 +35,7 @@
             android:id="@+id/drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_view" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

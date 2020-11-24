@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     FragmentActivity listener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,12 @@ public class HomeActivity extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         nvDrawer = (NavigationView)findViewById(R.id.drawer);
+
+
+        NavigationView navigationView = findViewById(R.id.drawer);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+
+        //ImageView ivHeadPhoto = headerLayout.findViewById(R.id.imageView);
 
         setupDrawerContent(nvDrawer);
         setSupportActionBar(toolbar);
