@@ -42,19 +42,21 @@ public class HomeActivity extends AppCompatActivity {
         mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar_main);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
-        ImageView ivHeadPhoto = headerLayout.findViewById(R.id.nav_head_img);
+       // View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+        //ImageView ivHeadPhoto = headerLayout.findViewById(R.id.nav_head_img);
 
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        //nvDrawer = findViewById(R.id.nav_view);
-//        setupDrawerContent(nvDrawer);
+        setupDrawerContent(navigationView);
+
+        //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                new HomeFragment()).commit();
 //        navigationView.setNavigationItemSelectedListener(this::onOptionsItemSelected);
         if (savedInstanceState == null) {
             homeFragment = new HomeFragment();
@@ -62,8 +64,8 @@ public class HomeActivity extends AppCompatActivity {
             eventFragment = new EventFragment();
             aboutFragment = new AboutFragment();
         }
-      /*  BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        /*bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFrag = null;
@@ -82,11 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFrag).commit();
                 return true;
             }
-        });
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
-
-       */
+        });*/
     }
 
     @Override
@@ -101,8 +99,16 @@ public class HomeActivity extends AppCompatActivity {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
     }
+    public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
+                }
+        );
+    }
 
-/*    public void selectDrawerItem(MenuItem menuItem) {
+    public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
@@ -148,8 +154,6 @@ public class HomeActivity extends AppCompatActivity {
         mDrawer.closeDrawer(GravityCompat.START);
     }
 
- */
-
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -182,15 +186,4 @@ public class HomeActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_container, aboutFragment);
         ft.commit();
     }
-
-    /*public void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                }
-        );
-    }
-
-     */
 }
