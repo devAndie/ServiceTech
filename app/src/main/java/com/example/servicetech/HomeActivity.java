@@ -22,10 +22,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity {
-    public HomeFragment homeFragment;
-    public DashboardFragment dashboardFragment;
-    public EventFragment eventFragment;
-    public AboutFragment aboutFragment;
+    HomeFragment homeFragment;
+    DashboardFragment dashboardFragment;
+    EventFragment eventFragment;
+    AboutFragment aboutFragment;
 
     DrawerLayout mDrawer;
     Toolbar toolbar;
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar_main);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
         ImageView ivHeadPhoto = headerLayout.findViewById(R.id.nav_head_img);
 
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             eventFragment = new EventFragment();
             aboutFragment = new AboutFragment();
         }
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+      /*  BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -85,6 +85,8 @@ public class HomeActivity extends AppCompatActivity {
         });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
+
+       */
     }
 
     @Override
