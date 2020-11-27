@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, newFragment).commit();
 
-        NavigationView nav = getView().findViewById(R.id.drawer);
+        NavigationView nav = getView().findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

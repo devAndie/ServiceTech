@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -14,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -26,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
     DrawerLayout mDrawer;
     Toolbar toolbar;
-    NavigationView nvDrawer;
+    NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     FragmentActivity listener;
 
@@ -36,25 +39,24 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mDrawer = (DrawerLayout)findViewById(R.id.draw_lay);
+        mDrawer = findViewById(R.id.draw_lay);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+        ImageView ivHeadPhoto = headerLayout.findViewById(R.id.nav_head_img);
+
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
         mDrawer.addDrawerListener(drawerToggle);
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
-        nvDrawer = (NavigationView)findViewById(R.id.drawer);
+        //nvDrawer = findViewById(R.id.nav_view);
 //        setupDrawerContent(nvDrawer);
-
-        NavigationView navigationView = findViewById(R.id.drawer);
-//        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
-//        ImageView ivHeadPhoto = headerLayout.findViewById(R.id.head_img);
-
-
-        if (savedInstanceState == null){
+//        navigationView.setNavigationItemSelectedListener(this::onOptionsItemSelected);
+        if (savedInstanceState == null) {
             homeFragment = new HomeFragment();
             dashboardFragment = new DashboardFragment();
             eventFragment = new EventFragment();
@@ -65,14 +67,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFrag = null;
-                switch (item.getItemId()){
-                    case  R.id.home:
+                switch (item.getItemId()) {
+                    case R.id.home:
                         selectedFrag = new HomeFragment();
                         break;
-                     case  R.id.event:
+                    case R.id.event:
                         selectedFrag = new EventFragment();
                         break;
-                    case  R.id.about:
+                    case R.id.about:
                         selectedFrag = new AboutFragment();
                         break;
                 }
@@ -84,46 +86,24 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
     }
-    protected void displayHome(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, homeFragment);
-        ft.commit();
-    }
-    protected void displayDashboard(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, aboutFragment);
-        ft.commit();
-    }
-    protected void displayEvent(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, eventFragment);
-        ft.commit();
-    }
-    protected void displayAbout(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, aboutFragment);
-        ft.commit();
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)){
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void setupDrawerContent(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                }
-        );
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
     }
-    public void selectDrawerItem(MenuItem menuItem){
+
+/*    public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass;
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nwFrag:
                 fragmentClass = NewFragment.class;
                 break;
@@ -152,8 +132,8 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = StakesFragment.class;
         }
         try {
-            fragment = (Fragment)fragmentClass.newInstance();
-        } catch (Exception e){
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -163,13 +143,10 @@ public class HomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
 
-        mDrawer.closeDrawers();
+        mDrawer.closeDrawer(GravityCompat.START);
     }
 
-    private ActionBarDrawerToggle setupDrawerToggle(){
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar,
-                R.string.drawer_open, R.string.drawer_close);
-    }
+ */
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -182,4 +159,36 @@ public class HomeActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+    protected void displayHome() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, homeFragment);
+        ft.commit();
+    }
+    protected void displayDashboard() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, aboutFragment);
+        ft.commit();
+    }
+    protected void displayEvent() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, eventFragment);
+        ft.commit();
+    }
+    protected void displayAbout() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, aboutFragment);
+        ft.commit();
+    }
+
+    /*public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
+                }
+        );
+    }
+
+     */
 }
