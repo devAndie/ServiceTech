@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
-        Class fragmentClass;
+        Class fragmentClass = null;
         switch (menuItem.getItemId()) {
             case R.id.new_d:
                 fragmentClass = NewFragment.class;
@@ -133,8 +133,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.sup_d:
                 fragmentClass = SupportFragment.class;
                 break;
-            default:
-                fragmentClass = StakesFragment.class;
+            
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -163,4 +162,13 @@ public class HomeActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mDrawer.isDrawerOpen(GravityCompat.START)){
+            mDrawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 }

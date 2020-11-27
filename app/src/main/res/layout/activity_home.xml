@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:overScrollMode="ifContentScrolls"
+        app:layout_scrollFlags="scroll|enterAlways"
         tools:openDrawer="start">
 
         <LinearLayout
@@ -49,9 +51,9 @@
             android:overScrollMode="ifContentScrolls"
             app:layout_scrollFlags="scroll|enterAlways"
             android:isScrollContainer="true"
-
             app:headerLayout="@layout/nav_header"
-            app:menu="@menu/drawer_view" />
+            app:menu="@menu/drawer_view"
+            />
     </androidx.drawerlayout.widget.DrawerLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
