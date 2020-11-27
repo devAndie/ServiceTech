@@ -11,11 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
@@ -62,7 +60,7 @@ public class HomeFragment extends Fragment {
     private void insertNestedFragment(){
         Fragment newFragment = new NewFragment();
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.event_container, newFragment).commit();
+        ft.replace(R.id.fragment_container, newFragment).commit();
 
         NavigationView nav = getView().findViewById(R.id.drawer);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -80,7 +78,7 @@ public class HomeFragment extends Fragment {
                         selectedFrag = new StakesFragment();
                         break;
                 }
-                getChildFragmentManager().beginTransaction().replace(R.id.event_container,
+                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         selectedFrag).commit();
                 return true;
 
