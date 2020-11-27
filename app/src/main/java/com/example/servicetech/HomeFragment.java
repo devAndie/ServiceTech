@@ -39,11 +39,6 @@ public class HomeFragment extends Fragment {
             progressFragment = new ProgressFragment();
             stakesFragment = new StakesFragment();
         }
-
-        getChildFragmentManager().beginTransaction().replace(R.id.homeFrag,
-                new HomeFragment()).commit();
-
-
         return inflater.inflate(R.layout.fragment_home, container, false);
 
 
@@ -68,7 +63,7 @@ public class HomeFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFrag = null;
                 switch (item.getItemId()){
-                    case  R.id.nw_d:
+                    case  R.id.new_d:
                         selectedFrag = new NewFragment();
                         break;
                     case  R.id.prog_dr:

@@ -5,7 +5,9 @@
     android:id="@+id/sign"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity">
+    tools:context=".SignInActivity"
+    app:layout_scrollFlags="scroll|enterAlways"
+    android:overScrollMode="always">
 
     <EditText
         android:id="@+id/fName"
