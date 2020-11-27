@@ -16,11 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:openDrawer="start">
 
-        <include
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+        <include
             android:id="@+id/actbar"
             layout="@layout/app_bar_main"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <FrameLayout
@@ -32,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actbar"
             />
+        </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
