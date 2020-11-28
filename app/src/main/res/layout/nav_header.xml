@@ -5,7 +5,7 @@
     android:id="@+id/nav_head"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryDark"
+    android:background="@drawable/dispatch_a_technician_header"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -34,12 +34,12 @@
             android:id="@+id/nav_head_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:padding="8dp"
             android:text="Header"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="8dp"
-            />
+            android:textColor="#67F66D"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,13 @@
     android:id="@+id/newFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbarAlwaysDrawVerticalTrack="true">
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:isScrollContainer="true"
+    android:overScrollMode="always"
+    >
 
     <TextView
-        android:id="@+id/autov"
+        android:id="@+id/auto_v"
         android:layout_width="268dp"
         android:layout_height="31dp"
         android:layout_marginStart="24dp"
@@ -28,7 +31,7 @@
         android:layout_marginLeft="24dp"
         android:hint="what is the  item"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autov" />
+        app:layout_constraintTop_toBottomOf="@+id/auto_v" />
 
     <TextView
         android:id="@+id/ir"
