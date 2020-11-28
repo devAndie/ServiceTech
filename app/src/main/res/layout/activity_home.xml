@@ -40,7 +40,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/act_bar"
                 app:layout_scrollFlags="scroll|enterAlways"
                 android:isScrollContainer="true"
-                android:overScrollMode="ifContentScrolls"/>
+                android:overScrollMode="ifContentScrolls">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="            app:headerLayout=&quot;@layout/nav_header&quot;&#xA;" />
+            </FrameLayout>
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
