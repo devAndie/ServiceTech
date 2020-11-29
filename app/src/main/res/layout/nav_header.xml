@@ -24,22 +24,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/nav_head_img"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            app:srcCompat="@drawable/technician_icon" />
-
         <TextView
             android:id="@+id/nav_head_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:padding="8dp"
-            android:text="Header"
+            android:text="Service provision on your palms"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="#67F66D"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

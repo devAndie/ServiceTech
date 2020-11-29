@@ -10,41 +10,16 @@
     android:overScrollMode="always"
     >
 
-    <TextView
-        android:id="@+id/auto_v"
-        android:layout_width="268dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:text="Type of service to request"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <AutoCompleteTextView
         android:id="@+id/auto"
         android:layout_width="262dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
         android:hint="what is the  item"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto_v" />
-
-    <TextView
-        android:id="@+id/ir"
-        android:layout_width="266dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Installation / Repair"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/ir_in"
@@ -52,11 +27,12 @@
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Install / Repair"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ir" />
+        app:layout_constraintTop_toBottomOf="@+id/auto" />
 
     <TextView
         android:id="@+id/time_v"
@@ -137,19 +113,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
 
+    <ImageView
+        android:id="@+id/itm_img"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loc"
+        app:srcCompat="@drawable/dreamstime_m_117494793" />
+
     <EditText
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Additional info"
         android:inputType="textMultiLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pin" />
+        app:layout_constraintTop_toBottomOf="@+id/itm_img" />
 
     <Button
         android:id="@+id/nw_add"
@@ -159,15 +145,5 @@
         android:text="Button"
         app:layout_constraintStart_toEndOf="@+id/info"
         app:layout_constraintTop_toBottomOf="@+id/pin" />
-
-    <ImageView
-        android:id="@+id/itm_img"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info"
-        app:srcCompat="@drawable/dreamstime_m_117494793" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
