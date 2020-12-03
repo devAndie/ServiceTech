@@ -8,7 +8,7 @@
     tools:context=".SignInActivity"
     app:layout_scrollFlags="scroll|enterAlways"
     android:overScrollMode="always"
-    android:background="@drawable/lighting">
+    >
 
     <EditText
         android:id="@+id/fName"
