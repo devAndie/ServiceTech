@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,8 @@ public class ProgressFragment extends Fragment {
         mile1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent milestoneIntent = new Intent(getContext(), MilestoneFragment.class);
+                startActivity(milestoneIntent);
             }
         });
 
