@@ -27,6 +27,7 @@ public class ProgressFragment extends Fragment {
             public void onClick(View v) {
                 Intent milestoneIntent = new Intent(getContext(), MilestoneFragment.class);
                 startActivity(milestoneIntent);
+
             }
         });
 

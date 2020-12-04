@@ -18,6 +18,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:hint="what is the  item"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,6 +32,7 @@
         android:ems="10"
         android:hint="Install / Repair"
         android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/auto" />
 
@@ -42,7 +44,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="10dp"
         android:text="Best time "
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ir_in" />
@@ -54,6 +56,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:text="8am-12noon"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_v" />
 
@@ -64,6 +67,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:text="12pm-5pm"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toBottomOf="@+id/time_v" />
 
@@ -74,6 +78,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:text="early mornings."
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
@@ -84,17 +89,19 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:text="Late evening"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toEndOf="@+id/checkBox3"
         app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
 
     <Button
         android:id="@+id/pin"
-        android:layout_width="52dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="8dp"
-        app:backgroundTint="@color/teal_700"
+        android:text="Location"
+        app:backgroundTint="#045C08"
         app:icon="@drawable/ic_baseline_person_pin_circle_24"
         app:iconPadding="10dp"
         app:layout_constraintStart_toEndOf="@+id/loc"
@@ -102,13 +109,13 @@
 
     <TextView
         android:id="@+id/loc"
-        android:layout_width="137dp"
+        android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginLeft="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:text="My Location"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="equipment's Location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
@@ -128,12 +135,13 @@
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Additional info"
         android:inputType="textMultiLine"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itm_img" />
 
@@ -141,8 +149,9 @@
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Button"
+        android:layout_marginTop="70dp"
+        android:text="Submit"
+        app:backgroundTint="#098750"
         app:layout_constraintStart_toEndOf="@+id/info"
         app:layout_constraintTop_toBottomOf="@+id/pin" />
 
