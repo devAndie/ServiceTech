@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +25,12 @@ public class NewFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent milestoneIntent = new Intent(getContext(), MilestoneFragment.class);
+                startActivity(milestoneIntent);
             }
         });
 
 
         //super.onViewCreated(view, savedInstanceState);
     }
-    private View.OnClickListener.n
 }
