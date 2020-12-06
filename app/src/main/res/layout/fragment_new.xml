@@ -5,10 +5,10 @@
     android:id="@+id/newFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:background="#DCD782"
     android:isScrollContainer="true"
     android:overScrollMode="always"
-    >
+    android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <AutoCompleteTextView
         android:id="@+id/auto"
