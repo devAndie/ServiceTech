@@ -15,21 +15,23 @@ public class NewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_new, container, false);
-
+        return inflater.inflate(R.layout.fragment_new, container, false
+        );
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button submit = getView().findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent milestoneIntent = new Intent(getContext(), MilestoneFragment.class);
-                startActivity(milestoneIntent);
-            }
+        submit.setOnClickListener(v -> {
+            Intent bookIntent = new Intent(getContext(), BookFragment.class);
+            startActivity(bookIntent);
         });
 
+        Button locPin = getView().findViewById(R.id.pin);
+        locPin.setOnClickListener(v -> {
+            //Intent locationPin = new Intent get my location
+            //startActivity(locationPin);
+        });
 
         //super.onViewCreated(view, savedInstanceState);
     }
