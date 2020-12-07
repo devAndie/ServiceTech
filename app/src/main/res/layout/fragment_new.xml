@@ -10,8 +10,8 @@
     android:overScrollMode="always"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
-    <AutoCompleteTextView
-        android:id="@+id/auto"
+    <EditText
+        android:id="@+id/item_type"
         android:layout_width="262dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/ir_in"
+        android:id="@+id/service"
         android:layout_width="262dp"
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
@@ -34,7 +34,7 @@
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto" />
+        app:layout_constraintTop_toBottomOf="@+id/item_type" />
 
     <TextView
         android:id="@+id/time_v"
@@ -47,7 +47,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ir_in" />
+        app:layout_constraintTop_toBottomOf="@+id/service" />
 
     <CheckBox
         android:id="@+id/checkBox"

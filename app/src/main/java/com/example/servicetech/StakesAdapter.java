@@ -41,7 +41,7 @@ public class StakesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflator.inflate(R.layout.fragment_stakes, null);
+        View v = mInflator.inflate(R.layout.fragment_book, null);
         TextView details = (TextView) v.findViewById(R.id.detailsL);
         TextView status = (TextView) v.findViewById(R.id.costL);
 
