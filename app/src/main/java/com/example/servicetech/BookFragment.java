@@ -20,7 +20,7 @@ public class BookFragment extends Fragment {
     FragmentActivity listener;
     StakesAdapter stakesAdapter;
 
-    @Override
+/*    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof Activity){
@@ -28,13 +28,15 @@ public class BookFragment extends Fragment {
         }
     }
 
+
+ */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> details = new ArrayList<String>();
         ArrayList<String> cost = new ArrayList<String>();
 
-        stakesAdapter = new StakesAdapter(getActivity(), (Map) details);
+//        stakesAdapter = new StakesAdapter(getActivity(), (Map) details);
 
     }
 
@@ -49,8 +51,8 @@ public class BookFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ListView lv = view.findViewById(R.id.list);
-        lv.setAdapter(stakesAdapter);
+  //      ListView lv = view.findViewById(R.id.list);
+  //      lv.setAdapter(stakesAdapter);
 
 
         //super.onViewCreated(view, savedInstanceState);
