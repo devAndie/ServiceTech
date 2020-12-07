@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,11 +27,16 @@ public class NewFragment extends Fragment {
             Intent bookIntent = new Intent(getContext(), BookFragment.class);
             startActivity(bookIntent);
         });
+        ImageButton itmImg = getView().findViewById(R.id.itm_img);
+        itmImg.setOnClickListener(v -> {
+//                Intent cam = new Intent(Intent.ACTION_CAMERA_BUTTON);
+//                startActivity(cam);
+        });
 
         Button locPin = getView().findViewById(R.id.pin);
         locPin.setOnClickListener(v -> {
-            //Intent locationPin = new Intent get my location
-            //startActivity(locationPin);
+//            Intent locationPin = new Intent(Intent.CATEGORY_APP_MAPS);
+//            startActivity(locationPin);
         });
 
         //super.onViewCreated(view, savedInstanceState);
