@@ -42,11 +42,8 @@ public class SignInActivity extends AppCompatActivity {
         password = findViewById(R.id.pass);
         confirmPassword = findViewById(R.id.conPass);
 
-
-
         Button signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(v -> {
-
             Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(homeIntent);
             confirmInput(v);
@@ -61,7 +58,6 @@ public class SignInActivity extends AppCompatActivity {
             return false;
         }else {
             phone.setError(null);
-
             return true;
         }
     }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "751904213644",
+    "project_id": "servicetech-174ad",
+    "storage_bucket": "servicetech-174ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751904213644:android:27cb5732e4afdc622309a9",
+        "android_client_info": {
+          "package_name": "com.example.servicetech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751904213644-a4nddcomu4prurvrp3lro16tff40tr21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANhXhwbEnrfLq6GGStTrafEb_6unQAOWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751904213644-a4nddcomu4prurvrp3lro16tff40tr21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
