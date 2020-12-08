@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.android.SqlPersistenceStorageEngine;
+
 import java.util.regex.Pattern;
 
 public class SignInActivity extends AppCompatActivity {
@@ -33,14 +37,10 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        fName = findViewById(R.id.fName);
-        sName = findViewById(R.id.surName);
-        username = findViewById(R.id.username);
-        mail = findViewById(R.id.mail);
-        address = findViewById(R.id.address);
-        phone = findViewById(R.id.phone);
-        password = findViewById(R.id.pass);
-        confirmPassword = findViewById(R.id.conPass);
+        fName = findViewById(R.id.fName);   sName = findViewById(R.id.surName);
+        username = findViewById(R.id.username); mail = findViewById(R.id.mail);
+        address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
+        password = findViewById(R.id.pass); confirmPassword = findViewById(R.id.conPass);
 
         Button signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(v -> {
@@ -50,9 +50,9 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+
     public boolean validatePhonenumber(){
         String phoneInput = phone.getText().toString().trim();
-
         if (phoneInput.isEmpty()) {
             phone.setError("Field can't be empty");
             return false;
