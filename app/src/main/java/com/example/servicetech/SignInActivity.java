@@ -47,75 +47,62 @@ public class SignInActivity extends AppCompatActivity {
             Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(homeIntent);
             confirmInput(v);
+
+            uploadFile();
         });
     }
-
 
     public boolean validatePhonenumber(){
         String phoneInput = phone.getText().toString().trim();
         if (phoneInput.isEmpty()) {
-            phone.setError("Field can't be empty");
-            return false;
+            phone.setError("Field can't be empty"); return false;
         }else {
-            phone.setError(null);
-            return true;
+            phone.setError(null);   return true;
         }
     }
     private boolean validateEmail() {
         String emailInput = mail.getText().toString().trim();
 
         if (emailInput.isEmpty()) {
-            mail.setError("Field can't be empty");
-            return false;
+            mail.setError("Field can't be empty");  return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            mail.setError("Please enter a valid email address");
-            return false;
+            mail.setError("Please enter a valid email address");    return false;
         } else {
-            mail.setError(null);
-            return true;
+            mail.setError(null);    return true;
         }
     }
     public boolean validatePassword() {
         String passwordInput = password.getText().toString().trim();
-
         if (passwordInput.isEmpty()) {
-            password.setError("Field can't be empty");
-            return false;
+            password.setError("Field can't be empty");  return false;
         }else {
-            password.setError(null);
-            return true;
+            password.setError(null);    return true;
         }
     }
     private boolean validateUsername() {
         String usernameInput = username.getText().toString().trim();
-
         if (usernameInput.isEmpty()) {
-            username.setError("Field can't be empty");
-            return false;
+            username.setError("Field can't be empty");  return false;
         } else if (usernameInput.length() > 15) {
-            username.setError("Username too long");
-            return false;
+            username.setError("Username too long"); return false;
         } else {
-            username.setError(null);
-            return true;
+            username.setError(null);    return true;
         }
     }
 
     public void confirmInput(View v) {
         if (!validateEmail() | !validatePhonenumber() | !validateUsername() | !validatePassword()) {
-            return;
-        }
-
-        String input = "Email: " + mail.getText().toString();
-        input += "\n";
-     //   input += "Username: " + textInputUsername.getEditText().getText().toString();
-       // input += "\n";
-        input += "phoneNumber: " + phone.getText().toString();
-        input += "\n";
+            return; }
+        String input = "Email: " + mail.getText().toString();   input += "\n";
+        input += "Username: " + username.getText().toString();  input += "\n";
+        input += "phoneNumber: " + phone.getText().toString();  input += "\n";
         input += "Password: " + password.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
     }
+    private void uploadFile(){
+       // SqlPersistenceStorageEngine storageEngine = SqlPersistenceStorageEngine.child() ;
 
+    }
     
 }
