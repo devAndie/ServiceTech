@@ -4,14 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.android.SqlPersistenceStorageEngine;
 
 import java.util.regex.Pattern;
@@ -28,14 +33,17 @@ public class SignInActivity extends AppCompatActivity {
             "(?=\\S+$)" +           //no white spaces
             ".{4,}" +               //at least 4 characters
             "$");
-
+    private static final String TAG = "MainActivity";
     private EditText fName, sName, mail, address, phone, password, confirmPassword, username;
+
+    private FirebaseAuth auth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        auth = FirebaseAuth.getInstance()
 
         fName = findViewById(R.id.fName);   sName = findViewById(R.id.surName);
         username = findViewById(R.id.username); mail = findViewById(R.id.mail);
@@ -56,28 +64,21 @@ public class SignInActivity extends AppCompatActivity {
         String phoneInput = phone.getText().toString().trim();
         if (phoneInput.isEmpty()) {
             phone.setError("Field can't be empty"); return false;
-        }else {
-            phone.setError(null);   return true;
-        }
+        }else { phone.setError(null);   return true; }
     }
     private boolean validateEmail() {
         String emailInput = mail.getText().toString().trim();
-
         if (emailInput.isEmpty()) {
             mail.setError("Field can't be empty");  return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             mail.setError("Please enter a valid email address");    return false;
-        } else {
-            mail.setError(null);    return true;
-        }
+        } else { mail.setError(null);    return true; }
     }
     public boolean validatePassword() {
         String passwordInput = password.getText().toString().trim();
         if (passwordInput.isEmpty()) {
             password.setError("Field can't be empty");  return false;
-        }else {
-            password.setError(null);    return true;
-        }
+        }else { password.setError(null);    return true; }
     }
     private boolean validateUsername() {
         String usernameInput = username.getText().toString().trim();
@@ -86,10 +87,8 @@ public class SignInActivity extends AppCompatActivity {
         } else if (usernameInput.length() > 15) {
             username.setError("Username too long"); return false;
         } else {
-            username.setError(null);    return true;
-        }
+            username.setError(null);    return true; }
     }
-
     public void confirmInput(View v) {
         if (!validateEmail() | !validatePhonenumber() | !validateUsername() | !validatePassword()) {
             return; }
@@ -104,5 +103,32 @@ public class SignInActivity extends AppCompatActivity {
        // SqlPersistenceStorageEngine storageEngine = SqlPersistenceStorageEngine.child() ;
 
     }
-    
+    public void basicReadWrite() {
+        // [START write_message]
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+        // [END write_message]
+
+        // [START read_message]
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        // [END read_message]
+    }
 }

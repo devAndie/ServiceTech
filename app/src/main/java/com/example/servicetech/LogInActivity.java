@@ -4,31 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LogInActivity extends AppCompatActivity {
-
     EditText name, password;
+    private static final String TAG = "LogInActivity";
 
-    private boolean validateUsername() {
-        String nameInput = name.getEditableText().toString().trim();
-        if (nameInput.isEmpty()) {
-            name.setError("Field can't be empty");
-            return false;
-        }else if (nameInput.length() > 12) {
-            name.setError("Username too long");
-            return false;
-        }else {
-            name.setError(null);
-            return  true;
-        }
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +65,20 @@ public class LogInActivity extends AppCompatActivity {
         else {
             password.setError(null);
         }
-    }*/
-
+    }
+    private boolean validateUsername() {
+        String nameInput = name.getEditableText().toString().trim();
+        if (nameInput.isEmpty()) {
+            name.setError("Field can't be empty");
+            return false;
+        }else if (nameInput.length() > 12) {
+            name.setError("Username too long");
+            return false;
+        }else {
+            name.setError(null);
+            return  true;
+        }
+    }
     public boolean validatePassword() {
         String passwordInput = password.getEditableText().toString().trim();
 
@@ -84,5 +90,27 @@ public class LogInActivity extends AppCompatActivity {
             return true;
         }
     }
+    public void basicReadWrite() {
+        // Read from the database
+        Query myRef;
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        // [END read_message]
+    }
+
+     */
 
 }
