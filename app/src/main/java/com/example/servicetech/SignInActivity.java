@@ -43,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance();
 
         fName = findViewById(R.id.fName);   sName = findViewById(R.id.surName);
         username = findViewById(R.id.username); mail = findViewById(R.id.mail);

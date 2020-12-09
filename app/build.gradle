@@ -35,7 +35,7 @@ dependencies {
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-auth:9.6.1'
+   // implementation 'com.google.firebase:firebase-auth:9.6.1'
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     def appcompat_version = "1.2.0"
