@@ -2,16 +2,20 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/add"
+        android:id="@+id/e_list"
         android:icon="@drawable/ic_baseline_queue_24"
-        android:title="New" />
+        android:title="Listings" />
     <item
-        android:id="@+id/pending"
+        android:id="@+id/progress"
         android:icon="@drawable/ic_baseline_pending_24"
         android:title="progress" />
     <item
         android:id="@+id/stake"
         android:icon="@drawable/ic_baseline_recent_actors_24"
-        android:title="stakes" />
+        android:title="I &amp; Q" />
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_baseline_panorama_fish_eye_24"
+        android:title="about" />
 
 </menu>

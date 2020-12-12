@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".TechnicianActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/technician_bottom_nav"
+        tools:layout_editor_absoluteY="675dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
