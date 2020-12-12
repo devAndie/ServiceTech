@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
 }
-
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.2"
@@ -39,6 +38,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     def appcompat_version = "1.2.0"
+
+    // Stripe Android SDK
+    // implementation 'com.stripe:stripe-android:16.1.1'
 
     implementation "androidx.appcompat:appcompat:1.2.0"
     // For loading and tinting drawables on older versions of the platform

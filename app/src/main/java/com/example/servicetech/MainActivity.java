@@ -8,20 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     Button login, signup;
     TextView head, intro;
 
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+       /* mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 //No one signed in
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
 
         }
+
+        */
         Button login = findViewById(R.id.log1);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
