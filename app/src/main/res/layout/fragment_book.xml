@@ -6,37 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/prog_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Progress"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/dth"
-            android:layout_width="217dp"
-            android:layout_height="40dp"
-            android:text="Details"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/cst"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:text="Cost"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="24sp" />
-    </LinearLayout>
-
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/stakes_adapter_layout" />
+        tools:listheader="@layout/list_header_layout"
+        tools:listitem="@layout/events_layout" />
 </LinearLayout>

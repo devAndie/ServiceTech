@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class StakesAdapter extends BaseAdapter {
+public class EventsAdapter extends BaseAdapter {
 
     LayoutInflater  mInflator;
-    Map<String, String> map;
-    List<String> Details;
-    List<String> Cost;
+    Map<String, Double> map;
+    List<String> Name;
+    List<Double> Cost;
 
-    public StakesAdapter(Context c, Map m){
+    public EventsAdapter(Context c, Map m){
         mInflator = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         map =m;
-        Details = new ArrayList<String>(map.keySet());
-        Cost = new ArrayList<String>(map.keySet());
+        Name = new ArrayList<String>(map.keySet());
+        Cost = new ArrayList<Double>(map.values());
     }
     @Override
     public int getCount() {
@@ -31,7 +31,7 @@ public class StakesAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return Details.get(position);
+        return Name.get(position);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class StakesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = mInflator.inflate(R.layout.fragment_book, null);
-        TextView details = (TextView) v.findViewById(R.id.detailsL);
-        TextView status = (TextView) v.findViewById(R.id.costL);
+        TextView name = (TextView) v.findViewById(R.id.detailsL);
+        TextView cost = (TextView) v.findViewById(R.id.costL);
 
-        details.setText(Details.get(position));
-        status.setText(Cost.get(position).toString());
+        name.setText(Name.get(position));
+        cost.setText("Kshs" + Cost.get(position).toString());
 
 
         return v;

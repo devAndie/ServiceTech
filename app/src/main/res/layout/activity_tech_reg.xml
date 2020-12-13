@@ -34,15 +34,6 @@
         app:layout_constraintTop_toBottomOf="@+id/specialty" />
 
     <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="130dp" />
-
-    <EditText
         android:id="@+id/time_avail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,12 +52,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Tether to Location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
+        app:layout_constraintTop_toBottomOf="@+id/time_avail" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/float_attach"

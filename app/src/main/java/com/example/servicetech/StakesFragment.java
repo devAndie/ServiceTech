@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StakesFragment extends Fragment {
-    StakesAdapter stakesAdapter;
+    EventsAdapter eventsAdapter;
     TextView details, cost;
     Map<String, String>stakeMap = new LinkedHashMap<String, String>();
     Context thisContext;
@@ -52,8 +52,8 @@ public class StakesFragment extends Fragment {
         String msg =" ";
         static final String JBDC_DRIVER = "";
         static final String DB_URL = " ://"+
-                DB_Strings.DATABASE_URL + "/" +
-                DB_Strings.DATABASE_NAME;
+                Db_Strings.DATABASE_URL + "/" +
+                Db_Strings.DATABASE_NAME;
 
 
         @Override
@@ -65,7 +65,7 @@ public class StakesFragment extends Fragment {
             try {
                 Class.forName(JBDC_DRIVER);
                 conn = DriverManager.getConnection(DB_URL,
-                        DB_Strings.USERNAME, DB_Strings.PASSWORD);
+                        Db_Strings.USERNAME, Db_Strings.PASSWORD);
 
                 stmt = conn.createStatement();
                 String sql = "select * from events";
@@ -115,8 +115,8 @@ public class StakesFragment extends Fragment {
         protected void onPostExecute(String msg) {
 
             if (stakeMap.size() > 0) {
-                stakesAdapter = new StakesAdapter(thisContext, stakeMap);
-                listv.setAdapter(stakesAdapter);
+                eventsAdapter = new EventsAdapter(thisContext, stakeMap);
+                listv.setAdapter(eventsAdapter);
             }
         }
     }

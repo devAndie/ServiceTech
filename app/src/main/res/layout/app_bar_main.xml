@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:background="#4CAF50"
         android:fitsSystemWindows="true">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_main"
@@ -23,21 +23,21 @@
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
 
-                />
+            />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="42dp"
-        android:layout_height="match_parent"
-
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="3dp"
-        app:backgroundTint="#FFFFFF"
-        app:icon="@drawable/ic_baseline_send_24"
-        app:iconTint="@color/black"
-        android:layout_marginRight="3dp"
-        android:layout_alignParentRight="true" />
-</RelativeLayout>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                app:backgroundTint="#FFFFFF"
+                app:icon="@drawable/ic_baseline_send_24"
+                app:iconTint="@color/black"
+                android:layout_marginRight="3dp"
+                android:layout_alignParentRight="true"
+            />
+        </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
