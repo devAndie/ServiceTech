@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 class background extends AsyncTask<String, Void, String> {
 
@@ -53,7 +54,7 @@ class background extends AsyncTask<String, Void, String> {
             http.setDoOutput(true);
 
             OutputStream ops = http.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(ops, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(ops, "UTF_8"));
 
             String data = URLEncoder.encode("user", "UTF-8")+"-"+URLEncoder.encode(user, "UTF-8")
                     +"&&"+URLEncoder.encode("pass", "UTF-8")+"-"+URLEncoder.encode(pass, "UTF-8");
