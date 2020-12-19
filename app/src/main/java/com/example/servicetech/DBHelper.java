@@ -9,18 +9,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ServiceTech.db";
-    public static final String CUSTOMERS_TABlE = "Customers";
-    public static final String CUSTOMERS_COLUMN_ID = "id";
-    public static final String CUSTOMERS_COLUMN_FNAME = "fname";
-    public static final String CUSTOMERS_COLUMN_SURNAME = "surname";
-    public static final String CUSTOMERS_COLUMN_USERNAME = "username";
-    public static final String CUSTOMERS_COLUMN_PHONE = "phone";
-    public static final String CUSTOMERS_COLUMN_EMAIL = "email";
-    public static final String CUSTOMERS_COLUMN_ADDRESS = "address";
-    public static final String CUSTOMERS_COLUMN_PASSWORD = "password";
+    public static final String  CUSTOMERS_TABlE = "Customers",
+            CUSTOMERS_COLUMN_ID = "id", CUSTOMERS_COLUMN_FNAME = "fname", CUSTOMERS_COLUMN_SURNAME = "surname",
+            CUSTOMERS_COLUMN_USERNAME = "username", CUSTOMERS_COLUMN_PHONE = "phone", CUSTOMERS_COLUMN_EMAIL = "email",
+            CUSTOMERS_COLUMN_ADDRESS = "address", CUSTOMERS_COLUMN_PASSWORD = "password";
+    public static String  EVENTS_TABlE = "Events",
+            EVENTS_COLUMN_ID = "id", EVENTS_COLUMN_TYPE = "type", EVENTS_COLUMN_SERVICE = "service",
+            EVENTS_COLUMN_TIME = "time", EVENTS_COLUMN_LOCATION = "location", EVENTS_COLUMN_IMG = "img",
+            EVENTS_COLUMN_CONTEXT = "context";
     private HashMap hp;
 
 //mydatabase.execSQL("CREATE TABLE IF NOT EXISTS TutorialsPoint(Username VARCHAR,Password VARCHAR);");
@@ -33,13 +33,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 // TODO Auto-generated method stub
-        String CreateCustomersTable = "CREATE TABLE " + CUSTOMERS_TABlE + "( " +
+        String Customers = "CREATE TABLE " + CUSTOMERS_TABlE + "( " +
                 CUSTOMERS_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ CUSTOMERS_COLUMN_FNAME +"TEXT, "+
                 CUSTOMERS_COLUMN_SURNAME +"TEXT, " + CUSTOMERS_COLUMN_USERNAME +"TEXT, " +
                 CUSTOMERS_COLUMN_PHONE + "INT, " + CUSTOMERS_COLUMN_EMAIL +" TEXT, " +
                 CUSTOMERS_COLUMN_ADDRESS + "TEXT" + CUSTOMERS_COLUMN_PASSWORD +"TEXT)";
 
-        db.execSQL(CreateCustomersTable);
+        String events = "create table " + EVENTS_TABlE + "(" +
+                EVENTS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + EVENTS_COLUMN_TYPE+" TEXT "+
+                EVENTS_COLUMN_SERVICE +" TEXT " + EVENTS_COLUMN_TIME +" TEXT "+
+                EVENTS_COLUMN_LOCATION +" TEXT "+EVENTS_COLUMN_IMG + " BLOB "+
+                EVENTS_COLUMN_CONTEXT +" TEXT )";
+        db.execSQL(events);
+        db.execSQL(Customers);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -76,18 +82,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public ArrayList<String> getAllCustomers() {
-        ArrayList<String> array_list = new ArrayList<String>();
+    public List<String> getAllCustomers() {
+        List<String> customers_list = new ArrayList<String>();
 
-        //hp = new HashMap();
+        hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from customers", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            array_list.add(res.getString(res.getColumnIndex(CUSTOMERS_COLUMN_FNAME)));
+            customers_list.add(res.getString(res.getColumnIndex(CUSTOMERS_COLUMN_FNAME)));
             res.moveToNext();
         }
-        return array_list;
+        return customers_list;
     }
 }
