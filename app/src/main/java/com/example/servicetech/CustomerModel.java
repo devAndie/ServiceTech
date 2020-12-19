@@ -14,7 +14,8 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
-    public CustomerModel(int id, String firstName, String lastName, String userName, String mail, String address,  int phone, String password) {
+    public CustomerModel(int id, String firstName, String lastName, String userName, String mail,
+                         String address,  int phone, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

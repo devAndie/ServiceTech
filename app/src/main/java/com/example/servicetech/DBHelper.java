@@ -23,10 +23,6 @@ public class DBHelper extends SQLiteOpenHelper {
             EVENTS_COLUMN_CONTEXT = "context";
     private HashMap hp;
 
-//mydatabase.execSQL("CREATE TABLE IF NOT EXISTS TutorialsPoint(Username VARCHAR,Password VARCHAR);");
-//mydatabase.execSQL("INSERT INTO TutorialsPoint VALUES('admin','admin');
-//SQLiteDatabase mydatabase = openOrCreateDatabase("your database name",MODE_PRIVATE,null);
-
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
     }
@@ -40,9 +36,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 CUSTOMERS_COLUMN_ADDRESS + "TEXT" + CUSTOMERS_COLUMN_PASSWORD +"TEXT)";
 
         String events = "create table " + EVENTS_TABlE + "(" +
-                EVENTS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + EVENTS_COLUMN_TYPE+" TEXT "+
-                EVENTS_COLUMN_SERVICE +" TEXT " + EVENTS_COLUMN_TIME +" TEXT "+
-                EVENTS_COLUMN_LOCATION +" TEXT "+EVENTS_COLUMN_IMG + " BLOB "+
+                EVENTS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + EVENTS_COLUMN_TYPE+" TEXT, "+
+                EVENTS_COLUMN_SERVICE +" TEXT, " + EVENTS_COLUMN_TIME +" TEXT, "+
+                EVENTS_COLUMN_LOCATION +" TEXT, "+EVENTS_COLUMN_IMG + " BLOB, "+
                 EVENTS_COLUMN_CONTEXT +" TEXT )";
         db.execSQL(events);
         db.execSQL(Customers);
@@ -70,6 +66,18 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+    public boolean addevent(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(EVENTS_COLUMN_TYPE, EventModel.getType());
+        cv.put(EVENTS_COLUMN_SERVICE, EventModel.getService());
+        cv.put(EVENTS_COLUMN_TIME, EventModel.getTime());
+        cv.put(EVENTS_COLUMN_LOCATION, EventModel.getLocation());
+        /* cv.put(EVENTS_COLUMN_IMG, EventModel.getImg()); */
+        cv.put(EVENTS_COLUMN_CONTEXT, EventModel.getContext());
+        db.insert(EVENTS_TABlE, null, cv);
+        return false;
     }
     public Cursor getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
