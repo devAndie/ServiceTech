@@ -52,10 +52,24 @@ public class SignInActivity extends AppCompatActivity {
 
         Button signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(v -> {
+            CustomerModel customerModel = null;
+            try {
+                customerModel = new CustomerModel(-1, fName.getText().toString(),
+                        sName.getText().toString(), username.getText().toString(), mail.getText().toString(),
+                        address.getText().toString(), Integer.parseInt(phone.getText().toString()),
+                        password.getText().toString()
+                );
+                Toast.makeText(SignInActivity.this, "account created successfully", Toast.LENGTH_SHORT).show(); ;
+            } catch (Exception e) {
+                Toast.makeText(SignInActivity.this, "error creating account", Toast.LENGTH_SHORT).show();
+            }
+            DBHelper dbHelper = new DBHelper(SignInActivity.this);
+            boolean success = dbHelper.addCustomers(customerModel);
+            Toast.makeText(SignInActivity.this, "Success= " +success, Toast.LENGTH_SHORT).show();
+
             Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(homeIntent);
             confirmInput(v);
-
             uploadFile();
         });
     }
