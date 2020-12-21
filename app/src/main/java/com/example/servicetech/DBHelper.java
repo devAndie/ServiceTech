@@ -13,14 +13,19 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ServiceTech.db";
-    public static final String  CUSTOMERS_TABlE = "Customers",
-            CUSTOMERS_COLUMN_ID = "id", CUSTOMERS_COLUMN_FNAME = "fname", CUSTOMERS_COLUMN_SURNAME = "surname",
-            CUSTOMERS_COLUMN_USERNAME = "username", CUSTOMERS_COLUMN_PHONE = "phone", CUSTOMERS_COLUMN_EMAIL = "email",
-            CUSTOMERS_COLUMN_ADDRESS = "address", CUSTOMERS_COLUMN_PASSWORD = "password";
+    public static final String  USERS_TABlE = "Users",
+            USERS_COLUMN_ID = "id", USERS_COLUMN_FNAME = "fname", USERS_COLUMN_SURNAME = "surname",
+            USERS_COLUMN_USERNAME = "username", USERS_COLUMN_PHONE = "phone", USERS_COLUMN_EMAIL = "email",
+            USERS_COLUMN_ADDRESS = "address", USERS_COLUMN_PASSWORD = "password";
     public static String  EVENTS_TABlE = "Events",
             EVENTS_COLUMN_ID = "id", EVENTS_COLUMN_TYPE = "type", EVENTS_COLUMN_SERVICE = "service",
             EVENTS_COLUMN_TIME = "time", EVENTS_COLUMN_LOCATION = "location", EVENTS_COLUMN_IMG = "img",
             EVENTS_COLUMN_CONTEXT = "context";
+    private String TECHNICIAN_TABlE = "Technicians",
+            TECHNICIAN_COLUMN_ID = "id", TECHNIAIN_COLUMN_FNAME= "fName", TECHNICIAN_COLUMN_SURNAME ="surName",
+            TECHNICIAN_COLUMN_USERNAME = "username", TECHNICIAN_COLUMN_PHONE = "phone",
+            TECHNICIAN_COLUMN_EMAIL = "mail", TECHNICIAN_COLUMN_ADDRESS = "address";
+
     private HashMap hp;
 
     public DBHelper(Context context) {
@@ -29,38 +34,47 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 // TODO Auto-generated method stub
-        String Customers = "CREATE TABLE " + CUSTOMERS_TABlE + "( " +
-                CUSTOMERS_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ CUSTOMERS_COLUMN_FNAME +"TEXT, "+
-                CUSTOMERS_COLUMN_SURNAME +"TEXT, " + CUSTOMERS_COLUMN_USERNAME +"TEXT, " +
-                CUSTOMERS_COLUMN_PHONE + "INT, " + CUSTOMERS_COLUMN_EMAIL +" TEXT, " +
-                CUSTOMERS_COLUMN_ADDRESS + "TEXT" + CUSTOMERS_COLUMN_PASSWORD +"TEXT)";
+        String Users = "CREATE TABLE " + USERS_TABlE + "( " +
+                USERS_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ USERS_COLUMN_FNAME +"TEXT, "+
+                USERS_COLUMN_SURNAME +"TEXT, " + USERS_COLUMN_USERNAME +"TEXT, " +
+                USERS_COLUMN_PHONE + "INT, " + USERS_COLUMN_EMAIL +" TEXT, " +
+                USERS_COLUMN_ADDRESS + "TEXT" + USERS_COLUMN_PASSWORD +"TEXT)";
 
         String events = "create table " + EVENTS_TABlE + "(" +
                 EVENTS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + EVENTS_COLUMN_TYPE+" TEXT, "+
                 EVENTS_COLUMN_SERVICE +" TEXT, " + EVENTS_COLUMN_TIME +" TEXT, "+
                 EVENTS_COLUMN_LOCATION +" TEXT, "+EVENTS_COLUMN_IMG + " BLOB, "+
                 EVENTS_COLUMN_CONTEXT +" TEXT )";
+        String Technicians = "CREATE TABLE " + TECHNICIAN_TABlE + "( " +
+                TECHNICIAN_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ TECHNIAIN_COLUMN_FNAME +"TEXT, "+
+                TECHNICIAN_COLUMN_SURNAME +"TEXT, " + TECHNICIAN_COLUMN_USERNAME +"TEXT, " +
+                TECHNICIAN_COLUMN_PHONE + "INT, " + TECHNICIAN_COLUMN_EMAIL +" TEXT, " +
+                TECHNICIAN_COLUMN_ADDRESS + "TEXT)";
+
+        db.execSQL(Users);
         db.execSQL(events);
-        db.execSQL(Customers);
+        db.execSQL(Technicians);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS Customers");
+        db.execSQL("DROP TABLE IF EXISTS Users");
+        db.execSQL("DROP TABLE IF EXISTS Events");
+        db.execSQL("DROP TABLE IF EXISTS Technicians");
         onCreate(db);
     }
     public boolean addCustomers (CustomerModel customerModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(CUSTOMERS_COLUMN_FNAME, CustomerModel.getFirstName());
-        cv.put(CUSTOMERS_COLUMN_SURNAME, CustomerModel.getLastName());
-        cv.put(CUSTOMERS_COLUMN_USERNAME, CustomerModel.getUserName());
-        cv.put(CUSTOMERS_COLUMN_PHONE, CustomerModel.getPhone());
-        cv.put(CUSTOMERS_COLUMN_EMAIL, CustomerModel.getMail());
-        cv.put(CUSTOMERS_COLUMN_ADDRESS, CustomerModel.getAddress());
-        cv.put(CUSTOMERS_COLUMN_PASSWORD, CustomerModel.getPassword());
+        cv.put(USERS_COLUMN_FNAME, CustomerModel.getFirstName());
+        cv.put(USERS_COLUMN_SURNAME, CustomerModel.getLastName());
+        cv.put(USERS_COLUMN_USERNAME, CustomerModel.getUserName());
+        cv.put(USERS_COLUMN_PHONE, CustomerModel.getPhone());
+        cv.put(USERS_COLUMN_EMAIL, CustomerModel.getMail());
+        cv.put(USERS_COLUMN_ADDRESS, CustomerModel.getAddress());
+        cv.put(USERS_COLUMN_PASSWORD, CustomerModel.getPassword());
 
-        long insert = db.insert(CUSTOMERS_TABlE, null, cv);
+        long insert = db.insert(USERS_TABlE, null, cv);
         if (insert == -1){
             return false;
         } else {
@@ -74,7 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(EVENTS_COLUMN_SERVICE, EventModel.getService());
         cv.put(EVENTS_COLUMN_TIME, EventModel.getTime());
         cv.put(EVENTS_COLUMN_LOCATION, EventModel.getLocation());
-        /* cv.put(EVENTS_COLUMN_IMG, EventModel.getImg()); */
+       // cv.put(EVENTS_COLUMN_IMG, EventModel.getImg());
         cv.put(EVENTS_COLUMN_CONTEXT, EventModel.getContext());
         db.insert(EVENTS_TABlE, null, cv);
         return false;
@@ -86,7 +100,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public int numberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, CUSTOMERS_COLUMN_FNAME);
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, USERS_COLUMN_FNAME);
         return numRows;
     }
 
@@ -95,11 +109,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from customers", null );
+        Cursor res =  db.rawQuery( "select * from Users", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            customers_list.add(res.getString(res.getColumnIndex(CUSTOMERS_COLUMN_FNAME)));
+            customers_list.add(res.getString(res.getColumnIndex(USERS_COLUMN_FNAME)));
             res.moveToNext();
         }
         return customers_list;

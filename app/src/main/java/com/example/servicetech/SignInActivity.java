@@ -50,6 +50,8 @@ public class SignInActivity extends AppCompatActivity {
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         password = findViewById(R.id.pass); confirmPassword = findViewById(R.id.conPass);
 
+        DBHelper dbHelper = new DBHelper(SignInActivity.this);
+
         Button signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(v -> {
             CustomerModel customerModel = null;
@@ -63,7 +65,7 @@ public class SignInActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(SignInActivity.this, "error creating account", Toast.LENGTH_SHORT).show();
             }
-            DBHelper dbHelper = new DBHelper(SignInActivity.this);
+
             boolean success = dbHelper.addCustomers(customerModel);
             Toast.makeText(SignInActivity.this, "Success= " +success, Toast.LENGTH_SHORT).show();
 
