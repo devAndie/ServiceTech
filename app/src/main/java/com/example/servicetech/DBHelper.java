@@ -85,18 +85,28 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public boolean addTchnician(TechnicianModel technicianModel){
+    public boolean addTechnician(TechnicianModel technicianModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TECHNICIAN_COLUMN_FNAME, CustomerModel.getFirstName());
-        cv.put(TECHNICIAN_COLUMN_SURNAME, );
-        cv.put(TECHNICIAN_COLUMN_);
-        cv.put(TECHNICIAN_COLUMN_
-                cv.put(TECHNICIAN_COLUMN_
-                        cv.put(TECHNICIAN_COLUMN_
+        cv.put(TECHNICIAN_COLUMN_SURNAME, CustomerModel.getLastName());
+        cv.put(TECHNICIAN_COLUMN_USERNAME, CustomerModel.getUserName());
+        cv.put(TECHNICIAN_COLUMN_PHONE, CustomerModel.getPhone());
+        cv.put(TECHNICIAN_COLUMN_EMAIL, CustomerModel.getMail());
+        cv.put(TECHNICIAN_COLUMN_ADDRESS, CustomerModel.getAddress());
+        cv.put(TECHNICIAN_COLUMN_SPECIALTY, TechnicianModel.getSpecialty());
+        cv.put(TECHNICIAN_COLUMN_EDUCATION, TechnicianModel.getEdLevel());
+        cv.put(TECHNICIAN_COLUMN_OPSTIME, TechnicianModel.getOpsTime());
+        cv.put(TECHNICIAN_COLUMN_TETHER, TechnicianModel.getLocTether());
 
+        long insert = db.insert(TECHNICIAN_TABlE, null, cv);
+        if (insert == -1){
+            return false;
+        } else {
+            return true;
+        }
     }
-    public boolean addevent(){
+    public boolean addEvent(){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(EVENTS_COLUMN_TYPE, EventModel.getType());
@@ -105,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(EVENTS_COLUMN_LOCATION, EventModel.getLocation());
        // cv.put(EVENTS_COLUMN_IMG, EventModel.getImg());
         cv.put(EVENTS_COLUMN_CONTEXT, EventModel.getContext());
+
         db.insert(EVENTS_TABlE, null, cv);
         return false;
     }

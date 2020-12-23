@@ -1,19 +1,19 @@
 package com.example.servicetech;
 
 public class TechnicianModel extends CustomerModel {
-    public String Specialty, edLevel, TimeOps, LocTether;
+    public static String Specialty, edLevel, OpsTime, LocTether;
 
     public TechnicianModel(int id, String firstName, String lastName, String userName, String mail,
                            String address, int phone, String password, String specialty,
-                           String edLevel, String timeOps, String locTether) {
+                           String edLevel, String opsTime, String locTether) {
         super(id, firstName, lastName, userName, mail, address, phone, password);
         Specialty = specialty;
         this.edLevel = edLevel;
-        TimeOps = timeOps;
+        OpsTime = opsTime;
         LocTether = locTether;
     }
 
-    public String getSpecialty() {
+    public static String getSpecialty() {
         return Specialty;
     }
 
@@ -21,7 +21,7 @@ public class TechnicianModel extends CustomerModel {
         Specialty = specialty;
     }
 
-    public String getEdLevel() {
+    public static String getEdLevel() {
         return edLevel;
     }
 
@@ -29,15 +29,15 @@ public class TechnicianModel extends CustomerModel {
         this.edLevel = edLevel;
     }
 
-    public String getTimeOps() {
-        return TimeOps;
+    public static String getOpsTime() {
+        return OpsTime;
     }
 
-    public void setTimeOps(String timeOps) {
-        TimeOps = timeOps;
+    public void setOpsTime(String opsTime) {
+        OpsTime = opsTime;
     }
 
-    public String getLocTether() {
+    public static String getLocTether() {
         return LocTether;
     }
 
@@ -50,7 +50,7 @@ public class TechnicianModel extends CustomerModel {
         return "TechnicianModel{" +
                 "Specialty='" + Specialty + '\'' +
                 ", edLevel='" + edLevel + '\'' +
-                ", TimeOps='" + TimeOps + '\'' +
+                ", TimeOps='" + OpsTime + '\'' +
                 ", LocTether='" + LocTether + '\'' +
                 '}';
     }
