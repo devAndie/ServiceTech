@@ -121,6 +121,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.prog_dr:
                 fragmentClass = ProgressFragment.class;
                 break;
+            case R.id.mil_d:
+                fragmentClass = MilestoneFragment.class;
+                break;
             case R.id.pay_dr:
                 fragmentClass = PaymentFragment.class;
                 break;
