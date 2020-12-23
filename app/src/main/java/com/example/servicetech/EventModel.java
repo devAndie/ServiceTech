@@ -83,8 +83,5 @@ public class EventModel {
         EventModel.img = img;
     }
 
-    @Override
-    public String toString() {
-        return "EventModel{}";
-    }
+
 }
