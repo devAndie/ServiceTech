@@ -22,9 +22,11 @@ public class DBHelper extends SQLiteOpenHelper {
             EVENTS_COLUMN_TIME = "time", EVENTS_COLUMN_LOCATION = "location", EVENTS_COLUMN_IMG = "img",
             EVENTS_COLUMN_CONTEXT = "context";
     private String TECHNICIAN_TABlE = "Technicians",
-            TECHNICIAN_COLUMN_ID = "id", TECHNIAIN_COLUMN_FNAME= "fName", TECHNICIAN_COLUMN_SURNAME ="surName",
+            TECHNICIAN_COLUMN_ID = "id", TECHNICIAN_COLUMN_FNAME= "fName", TECHNICIAN_COLUMN_SURNAME ="surName",
             TECHNICIAN_COLUMN_USERNAME = "username", TECHNICIAN_COLUMN_PHONE = "phone",
-            TECHNICIAN_COLUMN_EMAIL = "mail", TECHNICIAN_COLUMN_ADDRESS = "address";
+            TECHNICIAN_COLUMN_EMAIL = "mail", TECHNICIAN_COLUMN_ADDRESS = "address", TECHNICIAN_COLUMN_SPECIALTY = "specialty",
+    TECHNICIAN_COLUMN_EDUCATION = "EDUC_LVL", TECHNICIAN_COLUMN_OPSTIME = "OpsTime",
+    TECHNICIAN_COLUMN_TETHER = "tether";
 
     private HashMap hp;
 
@@ -46,10 +48,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 EVENTS_COLUMN_LOCATION +" TEXT, "+EVENTS_COLUMN_IMG + " BLOB, "+
                 EVENTS_COLUMN_CONTEXT +" TEXT )";
         String Technicians = "CREATE TABLE " + TECHNICIAN_TABlE + "( " +
-                TECHNICIAN_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ TECHNIAIN_COLUMN_FNAME +"TEXT, "+
-                TECHNICIAN_COLUMN_SURNAME +"TEXT, " + TECHNICIAN_COLUMN_USERNAME +"TEXT, " +
-                TECHNICIAN_COLUMN_PHONE + "INT, " + TECHNICIAN_COLUMN_EMAIL +" TEXT, " +
-                TECHNICIAN_COLUMN_ADDRESS + "TEXT)";
+                TECHNICIAN_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ TECHNICIAN_COLUMN_FNAME +"TEXT, "+
+                TECHNICIAN_COLUMN_SURNAME +"TEXT, " + TECHNICIAN_COLUMN_USERNAME + "TEXT, " +
+                TECHNICIAN_COLUMN_PHONE + "INTEGER, " + TECHNICIAN_COLUMN_EMAIL + " TEXT, " +
+                TECHNICIAN_COLUMN_ADDRESS + " TEXT, " + TECHNICIAN_COLUMN_SPECIALTY + " TEXT, " +
+                TECHNICIAN_COLUMN_EDUCATION+ " TEXT, " + TECHNICIAN_COLUMN_OPSTIME + "TEXT, " +
+                TECHNICIAN_COLUMN_TETHER+ " TEXT )";
 
         db.execSQL(Users);
         db.execSQL(events);
@@ -80,6 +84,17 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+    public boolean addTchnician(TechnicianModel technicianModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TECHNICIAN_COLUMN_FNAME, CustomerModel.getFirstName());
+        cv.put(TECHNICIAN_COLUMN_SURNAME, );
+        cv.put(TECHNICIAN_COLUMN_);
+        cv.put(TECHNICIAN_COLUMN_
+                cv.put(TECHNICIAN_COLUMN_
+                        cv.put(TECHNICIAN_COLUMN_
+
     }
     public boolean addevent(){
         SQLiteDatabase db = this.getWritableDatabase();
