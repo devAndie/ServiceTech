@@ -10,7 +10,7 @@ public class EventModel {
     private static String location;
     private static String address;
     private static String context;
-    private static Blob img;
+    private static byte[] img;
 
     //constructors
 
@@ -75,11 +75,11 @@ public class EventModel {
         EventModel.context = context;
     }
 
-    public static Blob getImg() {
+    public static byte[] getImg() {
         return img;
     }
 
-    public static void setImg(Blob img) {
+    public static void setImg(byte[] img) {
         EventModel.img = img;
     }
 

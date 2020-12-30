@@ -75,7 +75,8 @@ public class BookFragment extends Fragment {
         GetData retrieveData = new GetData();
         retrieveData.execute("");
 
-        //super.onViewCreated(view, savedInstanceState);
+//        getQuotations();
+
     }
 
     private class GetData extends AsyncTask<String, String, String>{

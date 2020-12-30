@@ -24,9 +24,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private String TECHNICIAN_TABlE = "Technicians",
             TECHNICIAN_COLUMN_ID = "id", TECHNICIAN_COLUMN_FNAME= "fName", TECHNICIAN_COLUMN_SURNAME ="surName",
             TECHNICIAN_COLUMN_USERNAME = "username", TECHNICIAN_COLUMN_PHONE = "phone",
-            TECHNICIAN_COLUMN_EMAIL = "mail", TECHNICIAN_COLUMN_ADDRESS = "address", TECHNICIAN_COLUMN_SPECIALTY = "specialty",
-    TECHNICIAN_COLUMN_EDUCATION = "EDUC_LVL", TECHNICIAN_COLUMN_OPSTIME = "OpsTime",
-    TECHNICIAN_COLUMN_TETHER = "tether";
+            TECHNICIAN_COLUMN_EMAIL = "mail", TECHNICIAN_COLUMN_ADDRESS = "address",
+            TECHNICIAN_COLUMN_SPECIALTY = "specialty", TECHNICIAN_COLUMN_EDUCATION = "EDUC_LVL",
+            TECHNICIAN_COLUMN_OPSTIME = "OpsTime", TECHNICIAN_COLUMN_TETHER = "tether";
+
+    private  String QUOTATION_TABLE =  "Quotations", QUOT_COL_ID = "id", QUOT_COL_STATUS = "Status ",
+            QUOT_COL_ITEMS = "items ", QUOT_COL_TOTAL = "total";
 
     private HashMap hp;
 
@@ -47,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 EVENTS_COLUMN_SERVICE +" TEXT, " + EVENTS_COLUMN_TIME +" TEXT, "+
                 EVENTS_COLUMN_LOCATION +" TEXT, "+EVENTS_COLUMN_IMG + " BLOB, "+
                 EVENTS_COLUMN_CONTEXT +" TEXT )";
+
         String Technicians = "CREATE TABLE " + TECHNICIAN_TABlE + "( " +
                 TECHNICIAN_COLUMN_ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+ TECHNICIAN_COLUMN_FNAME +"TEXT, "+
                 TECHNICIAN_COLUMN_SURNAME +"TEXT, " + TECHNICIAN_COLUMN_USERNAME + "TEXT, " +
@@ -54,17 +58,23 @@ public class DBHelper extends SQLiteOpenHelper {
                 TECHNICIAN_COLUMN_ADDRESS + " TEXT, " + TECHNICIAN_COLUMN_SPECIALTY + " TEXT, " +
                 TECHNICIAN_COLUMN_EDUCATION+ " TEXT, " + TECHNICIAN_COLUMN_OPSTIME + "TEXT, " +
                 TECHNICIAN_COLUMN_TETHER+ " TEXT )";
+        String Quotations = "CREATE TABLE " + QUOTATION_TABLE +"(" +
+                QUOT_COL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "+ QUOT_COL_STATUS +"TEXT, "+
+                QUOT_COL_ITEMS + "TEXT, " + QUOT_COL_STATUS + "TEXT )";
 
         db.execSQL(Users);
         db.execSQL(events);
         db.execSQL(Technicians);
+        db.execSQL(Quotations);
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS Users");
         db.execSQL("DROP TABLE IF EXISTS Events");
         db.execSQL("DROP TABLE IF EXISTS Technicians");
+        db.execSQL("DROP TABLe IF eXISTS Quotations");
         onCreate(db);
     }
     public boolean addCustomers (CustomerModel customerModel) {
@@ -113,10 +123,20 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(EVENTS_COLUMN_SERVICE, EventModel.getService());
         cv.put(EVENTS_COLUMN_TIME, EventModel.getTime());
         cv.put(EVENTS_COLUMN_LOCATION, EventModel.getLocation());
-       // cv.put(EVENTS_COLUMN_IMG, EventModel.getImg());
+        cv.put(EVENTS_COLUMN_IMG, EventModel.getImg());
         cv.put(EVENTS_COLUMN_CONTEXT, EventModel.getContext());
 
         db.insert(EVENTS_TABlE, null, cv);
+        return false;
+    }
+    public boolean addQuotation(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(QUOT_COL_ITEMS, QuotationModel.getItems());
+        cv.put(QUOT_COL_STATUS, QuotationModel.getStatus());
+        cv.put(QUOT_COL_TOTAL, QuotationModel.getTotal());
+
+        db.insert(QUOTATION_TABLE, null, cv);
         return false;
     }
     public Cursor getData(int id) {
@@ -130,6 +150,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
+    public List<String> getQuotations(){
+        List<String> Quot_list = new ArrayList<String>();
+        hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from Quotations", null);
+        res.moveToFirst();
+        while (res.isAfterLast() == false){
+            Quot_list.add(res.getString(res.getColumnIndex(QUOT_COL_ID)));
+            res.moveToNext();
+        }
+        return Quot_list;
+    }
     public List<String> getAllCustomers() {
         List<String> customers_list = new ArrayList<String>();
 
