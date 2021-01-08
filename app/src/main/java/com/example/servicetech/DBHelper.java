@@ -95,6 +95,27 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public Cursor getData(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from customers where id="+id+"", null );
+        return res;
+    }
+    public List<String> getAllCustomers() {
+        List<String> customers_list = new ArrayList<String>();
+
+        hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from Users", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            customers_list.add(res.getString(res.getColumnIndex(USERS_COLUMN_FNAME)));
+            res.moveToNext();
+        }
+        return customers_list;
+    }
+
+
     public boolean addTechnician(TechnicianModel technicianModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -129,6 +150,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(EVENTS_TABlE, null, cv);
         return false;
     }
+    public int numberOfRows(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, EVENTS_COLUMN_TYPE);
+        return numRows;
+    }
+
     public boolean addQuotation(){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -138,16 +165,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(QUOTATION_TABLE, null, cv);
         return false;
-    }
-    public Cursor getData(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from customers where id="+id+"", null );
-        return res;
-    }
-    public int numberOfRows(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, USERS_COLUMN_FNAME);
-        return numRows;
     }
 
     public List<String> getQuotations(){
@@ -161,19 +178,5 @@ public class DBHelper extends SQLiteOpenHelper {
             res.moveToNext();
         }
         return Quot_list;
-    }
-    public List<String> getAllCustomers() {
-        List<String> customers_list = new ArrayList<String>();
-
-        hp = new HashMap();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from Users", null );
-        res.moveToFirst();
-
-        while(res.isAfterLast() == false){
-            customers_list.add(res.getString(res.getColumnIndex(USERS_COLUMN_FNAME)));
-            res.moveToNext();
-        }
-        return customers_list;
     }
 }

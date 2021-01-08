@@ -74,6 +74,7 @@ public class BookFragment extends Fragment {
         progressTxt.setText("");
         GetData retrieveData = new GetData();
         retrieveData.execute("");
+        DBHelper.getQuotations()
 
 //        getQuotations();
 
