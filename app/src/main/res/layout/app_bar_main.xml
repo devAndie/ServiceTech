@@ -28,11 +28,12 @@
                 />
 
             <ImageButton
+                android:id="@+id/setngs"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/toolbar_main"
-                android:layout_toRightOf="@+id/toolbar_main"
                 android:foregroundGravity="right"
                 android:src="@drawable/ic_baseline_settings_24" />
         </RelativeLayout>
