@@ -81,7 +81,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         }
     }
 
-    public static void showImagePickerOptions(AboutActivity context, PickerOptionListener listener) {
+    public static void showImagePickerOptions(TechSettingsActivity context, PickerOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
@@ -249,7 +249,7 @@ public class ImagePickerActivity extends AppCompatActivity {
      * useful to clear some memory
      * @param context
      */
-    public static void clearCache(AboutActivity context) {
+    public static void clearCache(TechSettingsActivity context) {
         File path = new File(context.getExternalCacheDir(), "camera");
         if (path.exists() && path.isDirectory()) {
             for (File child : path.listFiles()) {

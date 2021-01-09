@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -68,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         ImageButton settings = findViewById(R.id.setngs);
         settings.setOnClickListener(v -> {
-            Intent Settings = new Intent(HomeActivity.this, SettingsActivity.class);
+            Intent Settings = new Intent(HomeActivity.this, TechSettingsActivity.class);
             startActivity(Settings);
         });
     }
@@ -104,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFrag = new EventFragment();
                         break;
                     case R.id.about:
-                        selectedFrag = new AboutActivity();
+                        selectedFrag = new AboutFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
