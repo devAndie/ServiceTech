@@ -10,7 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     DashboardFragment dashboardFragment;
     EventFragment eventFragment;
-    AboutFragment aboutFragment;
+    AboutActivity aboutFragment;
 
     DrawerLayout mDrawer;
     Toolbar toolbar;
@@ -62,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
             homeFragment = new HomeFragment();
             dashboardFragment = new DashboardFragment();
             eventFragment = new EventFragment();
-            aboutFragment = new AboutFragment();
+            aboutFragment = new AboutActivity();
         }
     }
 
@@ -97,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFrag = new EventFragment();
                         break;
                     case R.id.about:
-                        selectedFrag = new AboutFragment();
+                        selectedFrag = new AboutActivity();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -131,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = LocationFragment.class;
                 break;
             case R.id.stt_d:
-                fragmentClass = SettingsFragment.class;
+                fragmentClass = WalletActivity.class;
                 break;
             case R.id.sup_d:
                 fragmentClass = SupportFragment.class;

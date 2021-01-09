@@ -13,9 +13,5 @@
         android:id="@+id/stake"
         android:icon="@drawable/ic_baseline_recent_actors_24"
         android:title="I &amp; Q" />
-    <item
-        android:id="@+id/about"
-        android:icon="@drawable/ic_baseline_panorama_fish_eye_24"
-        android:title="about" />
 
 </menu>

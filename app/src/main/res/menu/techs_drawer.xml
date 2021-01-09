@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_baseline_request_quote_24"
+        android:title="Credit Score" />
+    <item
+        android:icon="@drawable/ic_baseline_payment_24"
+        android:title="Payments" />
+    <item
+        android:icon="@drawable/ic_baseline_person_pin_circle_24"
+        android:title="Home Base" />
+    <item android:title="Security" />
+</menu>

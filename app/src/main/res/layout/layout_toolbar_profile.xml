@@ -134,4 +134,5 @@
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -82,7 +81,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         }
     }
 
-    public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
+    public static void showImagePickerOptions(AboutActivity context, PickerOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
@@ -248,8 +247,9 @@ public class ImagePickerActivity extends AppCompatActivity {
     /**
      * Calling this will delete the images from cache directory
      * useful to clear some memory
+     * @param context
      */
-    public static void clearCache(Context context) {
+    public static void clearCache(AboutActivity context) {
         File path = new File(context.getExternalCacheDir(), "camera");
         if (path.exists() && path.isDirectory()) {
             for (File child : path.listFiles()) {
