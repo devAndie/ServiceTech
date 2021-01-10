@@ -13,10 +13,18 @@ public class EventModel {
     private static byte[] img;
 
     //constructors
+    public EventModel() {
+    }
 
     public EventModel(int id, String Type, String Service, String Time, String location,
                       String address, String context, Blob img) {
-    //    this.id - id;
+        this.id = id;
+        this.Type = Type;
+        this.Service = Service;
+        this.Time = Time;
+        this.location = location;
+        this.address = address;
+        this.context = context;
     }
 
     public static int getId() {

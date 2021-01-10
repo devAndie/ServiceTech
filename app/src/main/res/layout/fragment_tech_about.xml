@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.3m"
+                android:text="43"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_count"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_condensed"
-                android:text="@string/followers"
+                android:text="@string/written"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>
@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_condensed"
-                android:text="@string/following"
+                android:text="@string/credit_score"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>

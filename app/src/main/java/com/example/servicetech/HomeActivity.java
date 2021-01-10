@@ -23,8 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     DashboardFragment dashboardFragment;
-    EventFragment eventFragment;
-    AboutActivity aboutFragment;
+    UserWhereAboutFragment userWhereAboutFragment;
 
     DrawerLayout mDrawer;
     Toolbar toolbar;
@@ -62,12 +61,11 @@ public class HomeActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             homeFragment = new HomeFragment();
             dashboardFragment = new DashboardFragment();
-            eventFragment = new EventFragment();
-            aboutFragment = new AboutActivity();
+            userWhereAboutFragment = new UserWhereAboutFragment();
         }
         ImageButton settings = findViewById(R.id.setngs);
         settings.setOnClickListener(v -> {
-            Intent Settings = new Intent(HomeActivity.this, TechSettingsActivity.class);
+            Intent Settings = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(Settings);
         });
     }
@@ -100,10 +98,10 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFrag = new HomeFragment();
                         break;
                     case R.id.event:
-                        selectedFrag = new EventFragment();
+                        selectedFrag = new DashboardFragment();
                         break;
                     case R.id.about:
-                        selectedFrag = new AboutFragment();
+                        selectedFrag = new UserWhereAboutFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

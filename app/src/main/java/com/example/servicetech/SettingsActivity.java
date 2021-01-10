@@ -31,9 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class TechSettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
     ImageButton profile;
-    private static final String TAG = AboutActivity.class.getSimpleName();
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     public static final int REQUEST_IMAGE = 100;
 
     @BindView(R.id.img_profile)
@@ -42,18 +42,17 @@ public class TechSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tech_settings);
+        setContentView(R.layout.activity_settings);
 
         loadProfileDefault();
         ImagePickerActivity.clearCache(this);
 
 
-        CardView regTech = findViewById(R.id.paycard);
+        CardView regTech = findViewById(R.id.logOut);
         regTech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent techReg = new Intent(TechSettingsActivity.this, TechRegActivity.class);
-                startActivity(techReg);
+
             }
         });
     }
@@ -106,7 +105,7 @@ public class TechSettingsActivity extends AppCompatActivity {
     }
 
     private void launchCameraIntent() {
-        Intent intent = new Intent(TechSettingsActivity.this, ImagePickerActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, ImagePickerActivity.class);
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE);
 
         // setting aspect ratio
@@ -123,7 +122,7 @@ public class TechSettingsActivity extends AppCompatActivity {
     }
 
     private void launchGalleryIntent() {
-        Intent intent = new Intent(TechSettingsActivity.this, ImagePickerActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, ImagePickerActivity.class);
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE);
 
         // setting aspect ratio
@@ -158,7 +157,7 @@ public class TechSettingsActivity extends AppCompatActivity {
      * NOTE: Keep proper title and message depending on your app
      */
     private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(TechSettingsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
         builder.setTitle(getString(R.string.dialog_permission_title));
         builder.setMessage(getString(R.string.dialog_permission_message));
         builder.setPositiveButton(getString(R.string.go_to_settings), (dialog, which) -> {

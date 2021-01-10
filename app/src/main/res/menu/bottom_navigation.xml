@@ -10,7 +10,7 @@
     <item
         android:id="@+id/event"
         android:icon="@drawable/ic_baseline_home_repair_service_24"
-        android:title="event" />
+        android:title="shops" />
     <item
         android:id="@+id/about"
         android:icon="@drawable/ic_baseline_panorama_fish_eye_24"
