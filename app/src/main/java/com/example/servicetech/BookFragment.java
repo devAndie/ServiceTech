@@ -74,11 +74,11 @@ public class BookFragment extends Fragment {
         progressTxt.setText("");
         GetData retrieveData = new GetData();
         retrieveData.execute("");
-        DBHelper.getQuotations()
+        //DBHelper.getQuotations();
 
-//        getQuotations();
 
     }
+
 
     private class GetData extends AsyncTask<String, String, String>{
 

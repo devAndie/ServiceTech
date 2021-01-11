@@ -31,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private  String QUOTATION_TABLE =  "Quotations", QUOT_COL_ID = "id", QUOT_COL_STATUS = "Status ",
             QUOT_COL_ITEMS = "items ", QUOT_COL_TOTAL = "total";
 
-    private HashMap hp;
+    private static HashMap hp;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
@@ -61,7 +61,6 @@ public class DBHelper extends SQLiteOpenHelper {
         String Quotations = "CREATE TABLE " + QUOTATION_TABLE +"(" +
                 QUOT_COL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "+ QUOT_COL_STATUS +"TEXT, "+
                 QUOT_COL_ITEMS + "TEXT, " + QUOT_COL_STATUS + "TEXT )";
-
         db.execSQL(Users);
         db.execSQL(events);
         db.execSQL(Technicians);

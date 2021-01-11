@@ -10,11 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,10 +23,6 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        EditText name = findViewById(R.id.user);
-        EditText password = findViewById(R.id.pass);
-
-
         Button logIn =findViewById(R.id.log2);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,14 +30,14 @@ public class LogInActivity extends AppCompatActivity {
 
                 Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeIntent);
-                //validInputs();
-                //validateUsername();
-                //validatePassword();
+                validInputs();
+                validateUsername();
+                validatePassword();
             }
         });
     }
 
-    /*public void validInputs() {
+    public void validInputs() {
         EditText username = findViewById(R.id.user);
         EditText password = findViewById(R.id.pass);
 
@@ -90,27 +81,4 @@ public class LogInActivity extends AppCompatActivity {
             return true;
         }
     }
-    public void basicReadWrite() {
-        // Read from the database
-        Query myRef;
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-        // [END read_message]
-    }
-
-     */
-
 }

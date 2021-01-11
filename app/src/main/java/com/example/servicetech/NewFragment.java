@@ -35,6 +35,7 @@ public class NewFragment extends Fragment {
         submit.setOnClickListener(v -> {
             Intent bookIntent = new Intent(getContext(), BookFragment.class);
             startActivity(bookIntent);
+            submit();
         });
         ImageButton itmImg = getView().findViewById(R.id.itm_img);
         itmImg.setOnClickListener(v -> {
@@ -47,6 +48,8 @@ public class NewFragment extends Fragment {
 //            Intent locationPin = new Intent(Intent.CATEGORY_APP_MAPS);
 //            startActivity(locationPin);
         });
+
+
     }
     public void submit(){
         String item = getString(0, id.item_type);

@@ -23,6 +23,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         tools:listheader="@layout/list_header_layout"
         tools:listitem="@layout/events_layout" />
 </LinearLayout>
