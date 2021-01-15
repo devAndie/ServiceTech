@@ -63,11 +63,6 @@ public class HomeActivity extends AppCompatActivity {
             dashboardFragment = new DashboardFragment();
             userWhereAboutFragment = new UserWhereAboutFragment();
         }
-        ImageButton settings = findViewById(R.id.setngs);
-        settings.setOnClickListener(v -> {
-            Intent Settings = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(Settings);
-        });
     }
 
     @Override
@@ -116,31 +111,15 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.new_d:
                 fragmentClass = NewFragment.class;
                 break;
-            case R.id.avail_d:
-                fragmentClass = StakesFragment.class;
-                break;
             case R.id.book_d:
                 fragmentClass = BookFragment.class;
                 break;
             case R.id.prog_dr:
                 fragmentClass = ProgressFragment.class;
                 break;
-            case R.id.mil_d:
-                fragmentClass = MilestoneFragment.class;
-                break;
             case R.id.pay_dr:
                 fragmentClass = PaymentFragment.class;
                 break;
-            case R.id.loc_dr:
-                fragmentClass = LocationFragment.class;
-                break;
-            case R.id.stt_d:
-                fragmentClass = WalletActivity.class;
-                break;
-            case R.id.sup_d:
-                fragmentClass = SupportFragment.class;
-                break;
-            
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();

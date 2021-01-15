@@ -24,7 +24,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.File;
@@ -49,13 +49,6 @@ public class UserWhereAboutFragment extends Fragment {
             public void onClick(View v) {
                 Intent techReg = new Intent(getContext(), TechRegActivity.class);
                 startActivity(techReg);
-            }
-        });
-        CardView Articles = view.findViewById(R.id.Bkmk);
-        Articles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
         CardView Wallet = view.findViewById(R.id.wallet);
@@ -86,7 +79,8 @@ public class UserWhereAboutFragment extends Fragment {
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               Intent LogIn = new Intent(getContext(), LogInActivity.class);
+               startActivity(LogIn);
             }
         });
     }

@@ -1,5 +1,41 @@
 <resources>
     <string name="app_name">ServiceTech</string>
+
+    <string-array name="technicians">
+        <item>Lucius Fox</item>
+        <item>Tonny Kross</item>
+        <item>Serena Williams</item>
+    </string-array>
+    <string-array name="Affiliation">
+        <item>Networking</item>
+        <item>Data Recovery</item>
+        <item>Computer Hardware</item>
+    </string-array>
+
+    <string-array name="users">
+        <item>Judge Judy</item>
+        <item>Ramesh Vishwal</item>
+        <item>John Dexter</item>
+        <item>Ronny Chang</item>
+    </string-array>
+    <string-array name="items">
+        <item>Desktop</item>
+        <item>Macbook</item>
+    </string-array>
+    <string-array name="rItems">
+        <item>Monitor</item>
+        <item>RJ45</item>
+        <item>Cable</item>
+    </string-array>
+    <string-array name="description">
+        <item>Lopus opus dei random text</item>
+        <item>lorem ipsum et dolar random text</item>
+    </string-array>
+    <string-array name="cost">
+        <item>Ksh 300</item>
+        <item>Ksh 650</item>
+    </string-array>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -16,7 +52,7 @@
     <string name="lbl_choose_from_gallery">Choose from gallery</string>
     <string name="toast_image_intent_null">Image picker option is missing!</string>
 
-    <string name="article_content">Lorem Ipsum is simply dummy text of the printing and typesetting industry  it over 2000 years old.</string>
+    <string name="article_content"> </string>
     <!-- font families -->
     <string name="font_family_light">sans-serif-light</string>
     <string name="font_family_medium">sans-serif-medium</string>

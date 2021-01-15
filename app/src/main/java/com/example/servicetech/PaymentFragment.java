@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.Intent;
 import android.media.session.MediaSession;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,22 +21,22 @@ public class PaymentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_payment_stripe, container, false);
+
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-  /*      Bundle extras = getIntent().getExtras();
-        amount = extras.getInt("plan_price");
-        name = extras.getString("plan_name");
 
-        //Also, a Stripe instance will be created using the *Publishable Test Key*:
-        try {
-            stripe = new Stripe("[YOUR_PK_TEST_KEY_HERE]");
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        }
-   */
+        Button submit = view.findViewById(R.id.submitButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(getContext(), HomeActivity.class);
+                startActivity(home);
+            }
+        });
 
     }
 /*    public void submitCard(View view) {

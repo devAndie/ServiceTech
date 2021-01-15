@@ -1,12 +1,15 @@
 package com.example.servicetech;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,12 +26,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StakesFragment extends Fragment {
-    EventsAdapter eventsAdapter;
-    TextView details, cost;
+    StakeAdapter stakeAdapter;
     Map<String, String>stakeMap = new LinkedHashMap<String, String>();
     Context thisContext;
     ListView listv;
-
+    String[] technician, rItems, description, cost;
 
     @Nullable
     @Override
@@ -42,11 +44,25 @@ public class StakesFragment extends Fragment {
 
         Resources res = getResources();
         listv = view.findViewById(R.id.list);
+        technician = res.getStringArray(R.array.technicians);
+        rItems = res.getStringArray(R.array.rItems);
+        cost = res.getStringArray(R.array.cost);
+        description = res.getStringArray(R.array.description);
 
-        new getEvents();
+        stakeAdapter = new StakeAdapter(thisContext, technician, rItems, description);
+        listv.setAdapter(stakeAdapter);
 
-        //super.onViewCreated(view, savedInstanceState);
+        listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // Intent Progress = new Intent(getContext(), ProgressFragment.class);
+               // startActivity(Progress);
+            }
+        });
+
     }
+
+    /*
     private class getEvents extends AsyncTask<String, String, String> {
 
         String msg =" ";
@@ -120,6 +136,8 @@ public class StakesFragment extends Fragment {
             }
         }
     }
+
+     */
 }
 
 

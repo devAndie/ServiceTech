@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,16 +10,19 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-//import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.android.SqlPersistenceStorageEngine;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignInActivity extends AppCompatActivity {
@@ -34,45 +38,96 @@ public class SignInActivity extends AppCompatActivity {
             ".{4,}" +               //at least 4 characters
             "$");
     private static final String TAG = "MainActivity";
-    private EditText fName, sName, mail, address, phone, password, confirmPassword, username;
-
-   // private FirebaseAuth auth;
-
+    private EditText Name, mail, address, phone, password, conf_Pwd;
+    private ProgressBar progressBar;
+    private FirebaseAuth auth;
+    FirebaseFirestore firebaseFirestore;
+    DocumentReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-     //   auth = FirebaseAuth.getInstance();
 
-        fName = findViewById(R.id.fName);   sName = findViewById(R.id.surName);
-        username = findViewById(R.id.username); mail = findViewById(R.id.mail);
+        Name = findViewById(R.id.username); mail = findViewById(R.id.mail);
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
-        password = findViewById(R.id.pass); confirmPassword = findViewById(R.id.conPass);
+        password = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
+
+        firebaseFirestore=FirebaseFirestore.getInstance();
+        ref = firebaseFirestore.collection("users").document();
+
+
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
 
         DBHelper dbHelper = new DBHelper(SignInActivity.this);
 
-        Button signIn = findViewById(R.id.sign_in);
-        signIn.setOnClickListener(v -> {
-            CustomerModel customerModel = null;
-            try {
-                customerModel = new CustomerModel(-1, fName.getText().toString(),
-                        sName.getText().toString(), username.getText().toString(), mail.getText().toString(),
-                        address.getText().toString(), Integer.parseInt(phone.getText().toString()),
-                        password.getText().toString()
-                );
-                Toast.makeText(SignInActivity.this, "account created successfully", Toast.LENGTH_SHORT).show(); ;
-            } catch (Exception e) {
-                Toast.makeText(SignInActivity.this, "error creating account", Toast.LENGTH_SHORT).show();
+        Button signUp = findViewById(R.id.sign_in);
+        signUp.setOnClickListener(v -> {
+            if(Name.getText().toString().equals("")) {
+                Toast.makeText(SignInActivity.this, "Please type a username", Toast.LENGTH_SHORT).show();
+     
+            }else if(mail.getText().toString().equals("")) {
+                Toast.makeText(SignInActivity.this, "Please type an email id", Toast.LENGTH_SHORT).show();
+     
+            }else if(password.getText().toString().equals("")){
+                Toast.makeText(SignInActivity.this, "Please type a password", Toast.LENGTH_SHORT).show();
+     
+            }else if(!conf_Pwd.getText().toString().equals(password.getText().toString())){
+                Toast.makeText(SignInActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
+     
+            }else {
+                ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            Toast.makeText(SignInActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Map<String, Object> reg_entry = new HashMap<>();
+                            reg_entry.put("Name", Name.getText().toString());
+                            reg_entry.put("Email", mail.getText().toString());
+                            reg_entry.put("Password", password.getText().toString());
+                            
+                            //   String myId = ref.getId();
+                            firebaseFirestore.collection("client")
+                            .add(reg_entry)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(SignInActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("Error", e.getMessage());
+                                }
+                            });
+                        }
+                    }
+                });
             }
-
-            boolean success = dbHelper.addCustomers(customerModel);
-            Toast.makeText(SignInActivity.this, "Success= " +success, Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, "Success signing in ", Toast.LENGTH_SHORT).show();
 
             Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(homeIntent);
             confirmInput(v);
-            uploadFile();
+        });
+        Button logIn = findViewById(R.id.log_in);
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LogIn = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(LogIn);
+            }
+        });
+        Button tchRg = findViewById(R.id.reg_s);
+        tchRg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent TechReg = new Intent(getApplicationContext(), TechRegActivity.class);
+                startActivity(TechReg);
+            }
         });
     }
 
@@ -97,54 +152,22 @@ public class SignInActivity extends AppCompatActivity {
         }else { password.setError(null);    return true; }
     }
     private boolean validateUsername() {
-        String usernameInput = username.getText().toString().trim();
+        String usernameInput = Name.getText().toString().trim();
         if (usernameInput.isEmpty()) {
-            username.setError("Field can't be empty");  return false;
+            Name.setError("Field can't be empty");  return false;
         } else if (usernameInput.length() > 15) {
-            username.setError("Username too long"); return false;
+            Name.setError("Username too long"); return false;
         } else {
-            username.setError(null);    return true; }
+            Name.setError(null);    return true; }
     }
     public void confirmInput(View v) {
         if (!validateEmail() | !validatePhonenumber() | !validateUsername() | !validatePassword()) {
             return; }
         String input = "Email: " + mail.getText().toString();   input += "\n";
-        input += "Username: " + username.getText().toString();  input += "\n";
+        input += "Username: " + Name.getText().toString();  input += "\n";
         input += "phoneNumber: " + phone.getText().toString();  input += "\n";
         input += "Password: " + password.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
-    }
-    private void uploadFile(){
-       // SqlPersistenceStorageEngine storageEngine = SqlPersistenceStorageEngine.child() ;
-
-    }
-    public void basicReadWrite() {
-        // [START write_message]
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-        // [END write_message]
-
-        // [START read_message]
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-        // [END read_message]
     }
 }

@@ -32,12 +32,14 @@ import static java.sql.DriverManager.*;
 
 public class BookFragment extends Fragment {
     FragmentActivity listener;
-    EventsAdapter eventsAdapter;
+    ListingAdapter listingAdapter;
     Context thisContext;
     ListView lv;
     TextView progressTxt;
     ProgressBar progressBar;
     Map<String, Double> eventsMap = new LinkedHashMap<String, Double>();
+    String[] items, cost, description;
+
 
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -45,16 +47,6 @@ public class BookFragment extends Fragment {
             this.listener = (FragmentActivity) context;
         }
     }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ArrayList<String> details = new ArrayList<String>();
-        ArrayList<Double> cost = new ArrayList<Double>();
-//        stakesAdapter = new StakesAdapter(getActivity(), (Map) details);
-    }
-
 
     @Nullable
     @Override
@@ -67,19 +59,23 @@ public class BookFragment extends Fragment {
 
         Resources res = getResources();
         ListView lv = view.findViewById(R.id.list);
-        lv.setAdapter(eventsAdapter);
+        description = res.getStringArray(R.array.description);
+        cost = res.getStringArray(R.array.cost);
+        items = res.getStringArray(R.array.items);
+
         thisContext = getContext();
         progressTxt = view.findViewById(R.id.prog_txt);
 
-        progressTxt.setText("");
-        GetData retrieveData = new GetData();
-        retrieveData.execute("");
-        //DBHelper.getQuotations();
+        listingAdapter = new ListingAdapter(thisContext, items, cost, description);
 
+        lv.setAdapter(listingAdapter);
+        progressTxt.setText("");
+        //   GetData retrieveData = new GetData();
+       // retrieveData.execute("");
 
     }
 
-
+/*
     private class GetData extends AsyncTask<String, String, String>{
 
         String msg = "";
@@ -150,4 +146,5 @@ public class BookFragment extends Fragment {
             }
         }
     }
+ */
 }
