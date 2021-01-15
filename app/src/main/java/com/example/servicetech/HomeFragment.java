@@ -23,12 +23,6 @@ public class HomeFragment extends Fragment {
     NewFragment newFragment;
     ProgressFragment progressFragment;
     StakesFragment stakesFragment;
-    DrawerLayout mDrawer;
-    Toolbar toolbar;
-    NavigationView nvDrawer;
-    ActionBarDrawerToggle drawerToggle;
-
-    ActionBar bar;
     FragmentActivity listener;
 
     @Nullable

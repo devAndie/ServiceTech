@@ -10,7 +10,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -25,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class SignInActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     public static final int MY_PASSWORD_DIALOG_ID = 4;
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
@@ -39,7 +38,6 @@ public class SignInActivity extends AppCompatActivity {
             "$");
     private static final String TAG = "MainActivity";
     private EditText Name, mail, address, phone, password, conf_Pwd;
-    private ProgressBar progressBar;
     private FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
@@ -53,39 +51,41 @@ public class SignInActivity extends AppCompatActivity {
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         password = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
 
-        firebaseFirestore=FirebaseFirestore.getInstance();
-        ref = firebaseFirestore.collection("users").document();
+//        firebaseFirestore=FirebaseFirestore.getInstance();
+//        ref = firebaseFirestore.collection("users").document();
 
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        DBHelper dbHelper = new DBHelper(SignInActivity.this);
+        DBHelper dbHelper = new DBHelper(RegisterActivity.this);
 
         Button signUp = findViewById(R.id.sign_in);
         signUp.setOnClickListener(v -> {
             if(Name.getText().toString().equals("")) {
-                Toast.makeText(SignInActivity.this, "Please type a username", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Please type a username", Toast.LENGTH_SHORT).show();
      
             }else if(mail.getText().toString().equals("")) {
-                Toast.makeText(SignInActivity.this, "Please type an email id", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Please type an email id", Toast.LENGTH_SHORT).show();
      
             }else if(password.getText().toString().equals("")){
-                Toast.makeText(SignInActivity.this, "Please type a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Please type a password", Toast.LENGTH_SHORT).show();
      
             }else if(!conf_Pwd.getText().toString().equals(password.getText().toString())){
-                Toast.makeText(SignInActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
      
             }else {
                 ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()){
-                            Toast.makeText(SignInActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
                         } else {
                             Map<String, Object> reg_entry = new HashMap<>();
-                            reg_entry.put("Name", Name.getText().toString());
+                            reg_entry.put("Username", Name.getText().toString());
+                            reg_entry.put("Phone No", phone.getText().toString());
                             reg_entry.put("Email", mail.getText().toString());
+                            reg_entry.put("Address", address.getText().toString());
                             reg_entry.put("Password", password.getText().toString());
                             
                             //   String myId = ref.getId();
@@ -94,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(SignInActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -107,7 +107,7 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
             }
-            Toast.makeText(SignInActivity.this, "Success signing in ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "Success signing in ", Toast.LENGTH_SHORT).show();
 
             Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(homeIntent);
@@ -119,14 +119,6 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent LogIn = new Intent(getApplicationContext(), LogInActivity.class);
                 startActivity(LogIn);
-            }
-        });
-        Button tchRg = findViewById(R.id.reg_s);
-        tchRg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent TechReg = new Intent(getApplicationContext(), TechRegActivity.class);
-                startActivity(TechReg);
             }
         });
     }
