@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/itm_img"
             android:layout_width="@dimen/toolbar_profile_width"
             android:layout_height="@dimen/toolbar_profile_width"
             android:layout_marginTop="@dimen/activity_padding"
@@ -24,10 +24,11 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/img_plus"
-            android:layout_width="@dimen/ic_plus_width"
-            android:layout_height="@dimen/ic_plus_width"
-            android:layout_alignBottom="@id/img_profile"
+            android:layout_width="22dp"
+            android:layout_height="28dp"
+            android:layout_alignBottom="@id/itm_img"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="1dp"
             android:src="@drawable/ic_baseline_add_24"
             app:civ_shadow="true"
             app:civ_shadow_radius="1" />

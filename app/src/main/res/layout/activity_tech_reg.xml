@@ -8,29 +8,28 @@
     tools:context=".TechRegActivity">
 
     <EditText
-        android:id="@+id/specialty"
+        android:id="@+id/tPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Specialty"
+        android:text="Phone No"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
 
     <EditText
-        android:id="@+id/ed_lvl"
+        android:id="@+id/specialty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="education Level"
+        android:text="Specialty"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specialty" />
+        app:layout_constraintTop_toBottomOf="@+id/tPhone" />
 
     <EditText
         android:id="@+id/tether"
@@ -42,7 +41,7 @@
         android:inputType="textPersonName"
         android:text="Tether to Location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tconPass" />
+        app:layout_constraintTop_toBottomOf="@+id/specialty" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/float_attach"
@@ -51,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         app:layout_constraintStart_toEndOf="@+id/att_txt"
-        app:layout_constraintTop_toBottomOf="@+id/tether"
+        app:layout_constraintTop_toBottomOf="@+id/tconPass"
         app:srcCompat="@drawable/ic_baseline_add_circle_outline_24" />
 
     <TextView
@@ -59,11 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:text="Attach certificates"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tether" />
+        app:layout_constraintTop_toBottomOf="@+id/tconPass" />
 
     <Button
         android:id="@+id/tech_rgt"
@@ -103,12 +101,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_lvl" />
+        app:layout_constraintTop_toBottomOf="@+id/tether" />
 
     <EditText
         android:id="@+id/tconPass"

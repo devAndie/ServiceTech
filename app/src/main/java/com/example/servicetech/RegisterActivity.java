@@ -36,9 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
             "(?=\\S+$)" +           //no white spaces
             ".{4,}" +               //at least 4 characters
             "$");
-    private static final String TAG = "MainActivity";
     private EditText Name, mail, address, phone, password, conf_Pwd;
-    private FirebaseAuth auth;
+    FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
 
@@ -51,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         password = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
 
-//        firebaseFirestore=FirebaseFirestore.getInstance();
-//        ref = firebaseFirestore.collection("users").document();
+        firebaseFirestore=FirebaseFirestore.getInstance();
+        ref = firebaseFirestore.collection("customers").document();
 
 
         //Get Firebase auth instance
@@ -75,35 +74,32 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
      
             }else {
-                ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()){
-                            Toast.makeText(RegisterActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Map<String, Object> reg_entry = new HashMap<>();
-                            reg_entry.put("Username", Name.getText().toString());
-                            reg_entry.put("Phone No", phone.getText().toString());
-                            reg_entry.put("Email", mail.getText().toString());
-                            reg_entry.put("Address", address.getText().toString());
-                            reg_entry.put("Password", password.getText().toString());
-                            
-                            //   String myId = ref.getId();
-                            firebaseFirestore.collection("client")
-                            .add(reg_entry)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(RegisterActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Error", e.getMessage());
-                                }
-                            });
-                        }
+                ref.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()){
+                        Toast.makeText(RegisterActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Map<String, Object> reg_entry = new HashMap<>();
+                        reg_entry.put("Username", Name.getText().toString());
+                        reg_entry.put("Phone No", phone.getText().toString());
+                        reg_entry.put("Email", mail.getText().toString());
+                        reg_entry.put("Address", address.getText().toString());
+                        reg_entry.put("Password", password.getText().toString());
+
+                        //String myId = ref.getId();
+                        firebaseFirestore.collection("customers")
+                        .add(reg_entry)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(RegisterActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Error", e.getMessage());
+                            }
+                        });
                     }
                 });
             }

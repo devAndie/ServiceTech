@@ -1,15 +1,15 @@
 package com.example.servicetech;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,11 +18,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.servicetech.R.id;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class NewFragment extends Fragment {
+    EditText item, service, location, notes;
+    Button submit, itemImage, cancel;
+    FirebaseAuth auth;
+    FirebaseFirestore firebaseFirestore;
+    DocumentReference ref;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,31 +44,62 @@ public class NewFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button submit = getView().findViewById(R.id.submit);
+        itemImage = view.findViewById(id.img_plus);
+        submit = getView().findViewById(R.id.submit);
+        cancel = view.findViewById(id.cncl);
+
+        firebaseFirestore= FirebaseFirestore.getInstance();
+        ref = firebaseFirestore.collection("events").document();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         submit.setOnClickListener(v -> {
             Intent bookIntent = new Intent(getContext(), BookFragment.class);
             startActivity(bookIntent);
             submit();
         });
-        ImageButton itmImg = getView().findViewById(R.id.itm_img);
-        itmImg.setOnClickListener(v -> {
-//                Intent cam = new Intent(Intent.ACTION_CAMERA_BUTTON);
-//                startActivity(cam);
-        });
-
-        Button locPin = getView().findViewById(R.id.pin);
-        locPin.setOnClickListener(v -> {
-//            Intent locationPin = new Intent(Intent.CATEGORY_APP_MAPS);
-//            startActivity(locationPin);
-        });
 
 
     }
     public void submit(){
-        String item = getString(0, id.item_type);
-        String service = getString(0, id.service);
-        String descr = getString(0, R.id.info);
+        if(item.getText().toString().equals("")) {
+            Toast.makeText(getContext(), "Please type a username", Toast.LENGTH_SHORT).show();
+        }else if(service.getText().toString().equals("")) {
+            Toast.makeText(getContext(), "Please type a service", Toast.LENGTH_SHORT).show();
+        }else if(location.getText().toString().equals("")) {
+            Toast.makeText(getContext(), "Please provide a Location", Toast.LENGTH_SHORT).show();
+        }else {
+            ref.get().addOnSuccessListener(documentSnapshot -> {
+                Map<String, Object> reg_entry = new HashMap<>();
+                reg_entry.put("Item", item.getText().toString());
+                reg_entry.put("Service", service.getText().toString());
+                reg_entry.put("Location", location.getText().toString());
+                reg_entry.put("Notes", notes.getText().toString());
+                //reg_entry.put("Item Image", itmImg.getText().toString());
 
-//        String sql = "Insert * to database"
+                //String myId = ref.getId();
+                firebaseFirestore.collection("events")
+                        .add(reg_entry)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                               Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Error", e.getMessage());
+                            }
+                        })
+                ;
+            });
+        }
+        Toast.makeText(getContext(), "event submitted successfully ", Toast.LENGTH_SHORT).show();
+
     }
 }

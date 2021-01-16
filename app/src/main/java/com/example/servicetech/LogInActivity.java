@@ -57,7 +57,7 @@ public class LogInActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
                                     for(QueryDocumentSnapshot doc : task.getResult()){
-                                        String a=doc.getString("Email");
+                                        String a=doc.getString("Username");
                                         String b=doc.getString("Password");
                                         String a1 = logIns.getText().toString().trim();
                                         String b1 = pwd.getText().toString().trim();

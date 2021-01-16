@@ -10,149 +10,127 @@
     android:overScrollMode="always"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Load Item Image"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        <ImageView
+            android:id="@+id/itm_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_profile_width"
+            android:layout_below="@+id/txt"
+            android:layout_marginBottom="@dimen/activity_padding"
+            android:background="@drawable/ic_baseline_add_photo_alternate_24"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/img_plus"
+            android:layout_width="22dp"
+            android:layout_height="28dp"
+            android:layout_alignBottom="@id/itm_img"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="1dp"
+            android:src="@drawable/ic_baseline_add_24" />
+    </RelativeLayout>
+
+
     <EditText
         android:id="@+id/item_type"
-        android:layout_width="262dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:hint="what is the  item"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <EditText
         android:id="@+id/service"
-        android:layout_width="262dp"
-        android:layout_height="41dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Install / Repair"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_type" />
 
-    <TextView
-        android:id="@+id/time_v"
-        android:layout_width="258dp"
-        android:layout_height="40dp"
+    <EditText
+        android:id="@+id/loc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:text="Best time "
+        android:layout_marginEnd="24dp"
+        android:hint="equipment's Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/service" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="8am-12noon"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_v" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="113dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="12pm-5pm"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toEndOf="@+id/checkBox"
-        app:layout_constraintTop_toBottomOf="@+id/time_v" />
-
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="early mornings."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
-
-    <CheckBox
-        android:id="@+id/checkBox4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="Late evening"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toEndOf="@+id/checkBox3"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
-
-    <Button
-        android:id="@+id/pin"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="8dp"
-        android:text="Location"
-        app:backgroundTint="#045C08"
-        app:icon="@drawable/ic_baseline_person_pin_circle_24"
-        app:iconPadding="10dp"
-        app:layout_constraintStart_toEndOf="@+id/loc"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
-
-    <TextView
-        android:id="@+id/loc"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        android:text="equipment's Location"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/itm_img"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loc"
-        app:srcCompat="@drawable/dreamstime_m_117494793" />
-
     <EditText
         android:id="@+id/info"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="124dp"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Additional info"
+        android:hint="Notes for the technician"
         android:inputType="textMultiLine"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itm_img" />
+        app:layout_constraintTop_toBottomOf="@+id/loc" />
 
     <Button
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:text="Submit"
         app:backgroundTint="#098750"
-        app:layout_constraintStart_toEndOf="@+id/info"
-        app:layout_constraintTop_toBottomOf="@+id/pin" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cncl"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
+
+    <Button
+        android:id="@+id/cncl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintEnd_toStartOf="@+id/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

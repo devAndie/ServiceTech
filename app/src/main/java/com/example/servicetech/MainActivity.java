@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    Button login, signup;
+    Button login, signup, techReg;
     TextView head, intro;
 
     @Override
@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(v -> {
             Intent signupIntent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(signupIntent);
+        });
+        techReg = findViewById(R.id.techReg);
+        techReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent TechRegister = new Intent(MainActivity.this, TechRegActivity.class);
+                startActivity(TechRegister);
+            }
         });
     }
 }
