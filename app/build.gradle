@@ -29,7 +29,6 @@ android {
 }
 
 dependencies {
-
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation "androidx.appcompat:appcompat-resources:1.2.0"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -39,16 +38,15 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:26.1.1')
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-database:19.5.1'
-    implementation 'com.google.firebase:firebase-storage:19.2.0'
-    implementation 'com.google.firebase:firebase-auth:20.0.1'
-    implementation 'com.google.firebase:firebase-core:17.0.0'
-    implementation 'com.google.firebase:firebase-firestore:20.1.0'
-    def appcompat_version = "1.2.0"
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'com.stripe:stripe-android:16.1.1'
     implementation 'com.stripe:stripe-java:1.47.0'

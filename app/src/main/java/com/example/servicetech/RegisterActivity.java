@@ -13,9 +13,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,10 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
             "(?=\\S+$)" +           //no white spaces
             ".{4,}" +               //at least 4 characters
             "$");
+    private static final String TAG = RegisterActivity.class.getSimpleName();
+    //private val TAG:String = this.javaClass.simpleName;
     private EditText Name, mail, address, phone, password, conf_Pwd;
     FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,53 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button signUp = findViewById(R.id.sign_in);
         signUp.setOnClickListener(v -> {
-            if(Name.getText().toString().equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type a username", Toast.LENGTH_SHORT).show();
-     
-            }else if(mail.getText().toString().equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type an email id", Toast.LENGTH_SHORT).show();
-     
-            }else if(password.getText().toString().equals("")){
-                Toast.makeText(RegisterActivity.this, "Please type a password", Toast.LENGTH_SHORT).show();
-     
-            }else if(!conf_Pwd.getText().toString().equals(password.getText().toString())){
-                Toast.makeText(RegisterActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
-     
-            }else {
-                ref.get().addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()){
-                        Toast.makeText(RegisterActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Map<String, Object> reg_entry = new HashMap<>();
-                        reg_entry.put("Username", Name.getText().toString());
-                        reg_entry.put("Phone No", phone.getText().toString());
-                        reg_entry.put("Email", mail.getText().toString());
-                        reg_entry.put("Address", address.getText().toString());
-                        reg_entry.put("Password", password.getText().toString());
-
-                        //String myId = ref.getId();
-                        firebaseFirestore.collection("customers")
-                        .add(reg_entry)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(RegisterActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("Error", e.getMessage());
-                            }
-                        });
-                    }
-                });
-            }
-            Toast.makeText(RegisterActivity.this, "Success signing in ", Toast.LENGTH_SHORT).show();
-
-            Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeIntent);
             confirmInput(v);
+            createAccount();
         });
         Button logIn = findViewById(R.id.log_in);
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +86,74 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(LogIn);
             }
         });
+    }
+    private void createAccount(){
+        if(Name.getText().toString().equals("")) {
+            Toast.makeText(RegisterActivity.this, "Please type a username", Toast.LENGTH_SHORT).show();
+
+        }else if(mail.getText().toString().equals("")) {
+            Toast.makeText(RegisterActivity.this, "Please type an email id", Toast.LENGTH_SHORT).show();
+
+        }else if(password.getText().toString().equals("")){
+            Toast.makeText(RegisterActivity.this, "Please type a password", Toast.LENGTH_SHORT).show();
+
+        }else {
+            ref.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()){
+                    Toast.makeText(RegisterActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
+                }else if(!conf_Pwd.getText().toString().equals(password.getText().toString())){
+                    Toast.makeText(RegisterActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Map<String, Object> reg_entry = new HashMap<>();
+                    reg_entry.put("Username", Name.getText().toString());
+                    reg_entry.put("Phone No", phone.getText().toString());
+                    reg_entry.put("Email", mail.getText().toString());
+                    reg_entry.put("Address", address.getText().toString());
+                    reg_entry.put("Password", password.getText().toString());
+
+                    auth.createUserWithEmailAndPassword(mail.getText().toString(), password.getText().toString())
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseUser user = auth.getCurrentUser();
+
+                                //String myId = ref.getId();
+                                firebaseFirestore.collection("customers")
+                                     .add(reg_entry)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Toast.makeText(RegisterActivity.this, "Registration successful",
+                                                               Toast.LENGTH_SHORT).show();
+
+                                                Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                                                startActivity(homeActivity);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                  Log.d("Error", e.getMessage());
+                                            }
+                                        }
+                                     )
+                                ;
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                               Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                    });
+                }
+            });
+        }
+
     }
 
     public boolean validatePhonenumber(){

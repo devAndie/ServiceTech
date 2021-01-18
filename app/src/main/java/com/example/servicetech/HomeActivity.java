@@ -11,11 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -95,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.event:
                         selectedFrag = new DashboardFragment();
                         break;
-                    case R.id.about:
+                    case R.id.scdule:
                         selectedFrag = new UserWhereAboutFragment();
                         break;
                 }

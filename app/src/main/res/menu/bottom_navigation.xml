@@ -9,10 +9,10 @@
         />
     <item
         android:id="@+id/event"
-        android:icon="@drawable/ic_baseline_home_repair_service_24"
-        android:title="shops" />
+        android:icon="@drawable/ic_baseline_wysiwyg_24"
+        android:title="Stakes" />
     <item
-        android:id="@+id/about"
-        android:icon="@drawable/ic_baseline_panorama_fish_eye_24"
-        android:title="about" />
+        android:id="@+id/scdule"
+        android:icon="@drawable/ic_baseline_event_24"
+        android:title="schedule" />
 </menu>
