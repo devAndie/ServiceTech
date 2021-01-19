@@ -1,6 +1,7 @@
 package com.example.servicetech;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +19,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.servicetech.R.id;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +41,9 @@ public class NewFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
+    StorageReference storageRef;
+    UploadTask uploadTask;
+    private Uri urlItemImage;
 
 
     @Nullable
@@ -65,6 +75,7 @@ public class NewFragment extends Fragment {
 
 
     }
+
     public void submit(){
         if(item.getText().toString().equals("")) {
             Toast.makeText(getContext(), "Please type a username", Toast.LENGTH_SHORT).show();

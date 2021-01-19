@@ -8,16 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
-    Button login, signup, techReg;
+    Button login, tech;
     TextView head, intro;
+    FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login = findViewById(R.id.log1);
+        login = findViewById(R.id.customer);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -26,17 +30,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        signup = findViewById(R.id.signUp);
-        signup.setOnClickListener(v -> {
-            Intent signupIntent = new Intent(MainActivity.this, RegisterActivity.class);
-            startActivity(signupIntent);
-        });
-        techReg = findViewById(R.id.techReg);
-        techReg.setOnClickListener(new View.OnClickListener() {
+        tech = findViewById(R.id.technician);
+        tech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent TechRegister = new Intent(MainActivity.this, TechRegActivity.class);
-                startActivity(TechRegister);
+                Intent Tech = new Intent(MainActivity.this, TechLogInActivity.class);
+                startActivity(Tech);
             }
         });
     }

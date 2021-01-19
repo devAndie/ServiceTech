@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/wl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="Welcome to serviceTech"
+        android:textAlignment="center"
+        android:textColor="@color/teal_700"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="319dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/wl"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_baseline_person_outline_24">
+
+    </ImageView>
+
+
+    <EditText
+        android:id="@+id/tmail"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/tpwd"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tmail"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        android:hint="Password" />
+
+    <Button
+        android:id="@+id/tlogin"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tpwd"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/holo_orange_light"
+        android:text="LOGIN" />
+
+    <ProgressBar
+        android:id="@+id/prg_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:layout_below="@id/tlogin"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/dha"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prg_bar"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="8dp"
+        android:text="Do not have an account?" />
+
+    <Button
+        android:id="@+id/tregister"
+        android:layout_width="283dp"
+        android:layout_height="36dp"
+        android:layout_below="@id/dha"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary"
+        android:text="Register" />
+
+
+</RelativeLayout>

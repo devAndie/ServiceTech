@@ -23,10 +23,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class LogInActivity extends AppCompatActivity {
+
+    private static final String TAG = LogInActivity.class.getSimpleName();
+
     EditText mail, pwd;
     Button login, register;
     ProgressBar progress;
-    private static final String TAG = "LogInActivity";
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth auth;
     DocumentReference ref;
@@ -43,71 +45,100 @@ public class LogInActivity extends AppCompatActivity {
         register = findViewById(R.id.btn_register);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        login.setOnClickListener(this::onClick);
-        register.setOnClickListener(this::onClick);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logIn();
+                /*
+                Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(homeActivity);
+                 */
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Register = new Intent(LogInActivity.this, RegisterActivity.class);
+                startActivity(Register);
+            }
+        });
 
     }
 
-    public void onClick(View v){
-        switch(v.getId()){
-            case R.id.btn_login:
-                if(mail.getText().toString().equals("")){
-                    Toast.makeText(LogInActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
-                }else if( pwd.getText().toString().equals("")){
-                    Toast.makeText(LogInActivity.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
-                }
-                firebaseFirestore.collection("client")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot doc : task.getResult()){
-                                        String a=doc.getString("Username");
-                                        String b=doc.getString("Password");
-                                        String a1 = mail.getText().toString().trim();
-                                        String b1 = pwd.getText().toString().trim();
-                                        if(a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
-                                            Intent home = new Intent(LogInActivity.this, HomeActivity.class);
-                                            startActivity(home);
-                                            Toast.makeText(LogInActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
-                                            break;
-                                        }else
-                                            Toast.makeText(LogInActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
+    public void logIn(){
+
+        String password = pwd.getText().toString();
+        String email = mail.getText().toString();
+
+        if(mail.getText().toString().equals("")){
+            Toast.makeText(LogInActivity.this, "Please enter valid email",
+                            Toast.LENGTH_SHORT).show();
+        }else if(pwd.getText().toString().equals("")){
+            Toast.makeText(LogInActivity.this, "Please enter valid password",
+                            Toast.LENGTH_SHORT).show();
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = auth.getCurrentUser();
+
+                        updateUI(user);
+/*                        firebaseFirestore.collection("customers").get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                String a = doc.getString("Username");
+                                                String b = doc.getString("Password");
+                                                String a1 = mail.getText().toString().trim();
+                                                String b1 = pwd.getText().toString().trim();
+                                                if (a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
+                                                    Toast.makeText(LogInActivity.this, "Logged In",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    updateUI(user);
+                                                    break;
+                                                } else {
+                                                    Toast.makeText(LogInActivity.this, "Cannot login,incorrect Email and Password",
+                                                            Toast.LENGTH_SHORT).show();
+
+                                                    updateUI(null);
+                                                }
+                                            }
+                                        } else {
+                                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                            Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                            updateUI(null);
+
+                                        }
                                     }
-                                }
-                            }
-                        });
-                break;
-            case R.id.btn_register:
-                Intent register_view=new Intent(LogInActivity.this, RegisterActivity.class);
-                startActivity(register_view);
-                break;
+                                });
+ */
+                    }else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                }
+            });
         }
     }
-    private void logIn(){
-        auth.signInWithEmailAndPassword(mail.getText().toString(), pwd.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = auth.getCurrentUser();
 
-
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LogInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-                            // ...
-                        }
-
-                        // ...
-                    }
-                });
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeActivity);
+        } else {
+            Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
+            startActivity(reload);
+        }
     }
 }

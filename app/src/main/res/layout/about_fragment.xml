@@ -37,7 +37,6 @@
             android:layout_below="@+id/itm_img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-13dp"
-            android:fontFamily="@string/font_family_medium"
             android:text="@string/profile_title"
             android:textColor="@color/purple_700"
             android:textSize="@dimen/profile_title" />

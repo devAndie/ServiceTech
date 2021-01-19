@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,7 +28,9 @@ public class QuotationFragment extends Fragment {
     Button submit;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
+    FirebaseAuth auth;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
     @Override
@@ -36,6 +40,14 @@ public class QuotationFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            String uid = user.getUid();
+        }
+
+        submit=view.findViewById(R.id.sbmt);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +67,7 @@ public class QuotationFragment extends Fragment {
         }else {
             ref.get().addOnSuccessListener(documentSnapshot -> {
                 Map<String, Object> reg_entry = new HashMap<>();
+                reg_entry.put("Technician", user.getDisplayName());
                 reg_entry.put("Item1", item1.getText().toString());
                 reg_entry.put("Cost1", cost1.getText().toString());
                 reg_entry.put("Item2", item2.getText().toString());

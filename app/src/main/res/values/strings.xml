@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">ServiceTech</string>
+    <string name="welcome_note">Welcome to ServiceTech,
+        a service acquisition app</string>
+    <string name="catch_phrase">Unlimited Services on the palms
+        of your hands</string>
+    <string name="continua">Continue As a;</string>
+
 
     <string-array name="technicians">
         <item>Lucius Fox</item>
