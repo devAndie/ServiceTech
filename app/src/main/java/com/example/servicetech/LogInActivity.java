@@ -34,17 +34,45 @@ public class LogInActivity extends AppCompatActivity {
     DocumentReference ref;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+         if (currentUser == null) {
+            // No user is signed in
+        } else {
+            // User logged in
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         mail = findViewById(R.id.logins);
         pwd = findViewById(R.id.login_pwd);
         progress = findViewById(R.id.prg_bar);
         login = findViewById(R.id.btn_login);
         register = findViewById(R.id.btn_register);
+        
+        mAuthListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public  void  onAuthStateChanged(@NonNull FirebaseAuth auth){
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user!=null){
+                    Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
+       
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,8 +14,18 @@ public class MainActivity extends AppCompatActivity {
     Button login, tech;
     TextView head, intro;
     FirebaseAuth auth;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    
+    
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+    }
 
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,5 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(Tech);
             }
         });
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(mAuthListener);
     }
 }

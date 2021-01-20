@@ -31,17 +31,46 @@ public class TechLogInActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth auth;
     DocumentReference ref;
+    FirebaseAuth.AuthStateListener mAuthListener;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            // No user is signed in
+        } else {
+            // User logged in
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tech_log_in);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
         mail = findViewById(R.id.tmail);
         pwd = findViewById(R.id.tpwd);
         progress = findViewById(R.id.prg_bar);
         login = findViewById(R.id.tlogin);
         register = findViewById(R.id.tregister);
+
+        mAuthListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public  void  onAuthStateChanged(@NonNull FirebaseAuth auth){
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user!=null){
+                    Intent intent = new Intent(TechLogInActivity.this, TechnicianActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         login.setOnClickListener(new View.OnClickListener() {

@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/itm_img"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_profile_width"
+            android:layout_height="100dp"
             android:layout_below="@+id/txt"
             android:layout_marginBottom="@dimen/activity_padding"
             android:background="@drawable/ic_baseline_add_photo_alternate_24"
