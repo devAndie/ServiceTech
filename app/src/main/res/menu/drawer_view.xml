@@ -5,11 +5,11 @@
         <item
             android:id="@+id/new_d"
             android:icon="@drawable/ic_baseline_add_circle_outline_24"
-            android:title="new" />
+            android:title="Request a service" />
         <item
             android:id="@+id/book_d"
             android:icon="@drawable/ic_baseline_book_24"
-            android:title="Book" />
+            android:title="availabl" />
         <item
             android:id="@+id/prog_dr"
             android:icon="@drawable/ic_baseline_pending_24"

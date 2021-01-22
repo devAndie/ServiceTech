@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,7 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomeFragment extends Fragment {
 
-    NewFragment newFragment;
+    RequestServiceFragment requestServiceFragment;
     ProgressFragment progressFragment;
     StakesFragment stakesFragment;
     FragmentActivity listener;
@@ -29,15 +25,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null){
-            newFragment = new NewFragment();
+            requestServiceFragment = new RequestServiceFragment();
             progressFragment = new ProgressFragment();
             stakesFragment = new StakesFragment();
         }
         return inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
-        //    return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -47,7 +39,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void insertNestedFragment(){
-        Fragment newFragment = new NewFragment();
+        Fragment newFragment = new RequestServiceFragment();
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, newFragment).commit();
 
@@ -58,7 +50,7 @@ public class HomeFragment extends Fragment {
                 Fragment selectedFrag = null;
                 switch (item.getItemId()){
                     case  R.id.new_d:
-                        selectedFrag = new NewFragment();
+                        selectedFrag = new RequestServiceFragment();
                         break;
                     case  R.id.prog_dr:
                         selectedFrag = new ProgressFragment();

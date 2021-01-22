@@ -25,23 +25,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class LogInActivity extends AppCompatActivity {
 
     private static final String TAG = LogInActivity.class.getSimpleName();
-
     EditText mail, pwd;
     Button login, register;
     ProgressBar progress;
     FirebaseFirestore firebaseFirestore;
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     DocumentReference ref;
 
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(mAuthListener);
+        auth.addAuthStateListener(mAuthListener);
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = auth.getCurrentUser();
          if (currentUser == null) {
             // No user is signed in
         } else {
+             updateUI(currentUser);
             // User logged in
         }
     }
@@ -51,7 +52,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         mail = findViewById(R.id.logins);
@@ -62,7 +63,7 @@ public class LogInActivity extends AppCompatActivity {
         
         mAuthListener = new FirebaseAuth.AuthStateListener(){
             @Override
-            public  void  onAuthStateChanged(@NonNull FirebaseAuth auth){
+            public void onAuthStateChanged(@NonNull FirebaseAuth auth){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
                     Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
@@ -76,11 +77,18 @@ public class LogInActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logIn();
-                /*
                 Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeActivity);
-                 */
+
+                if(mail.getText().toString().equals("")){
+                    Toast.makeText(LogInActivity.this, "Please enter valid email",
+                            Toast.LENGTH_SHORT).show();
+                }else if(pwd.getText().toString().equals("")){
+                    Toast.makeText(LogInActivity.this, "Please enter valid password",
+                            Toast.LENGTH_SHORT).show();
+                //} else {
+                //    logIn();
+                }
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -98,68 +106,58 @@ public class LogInActivity extends AppCompatActivity {
         String password = pwd.getText().toString();
         String email = mail.getText().toString();
 
-        if(mail.getText().toString().equals("")){
-            Toast.makeText(LogInActivity.this, "Please enter valid email",
-                            Toast.LENGTH_SHORT).show();
-        }else if(pwd.getText().toString().equals("")){
-            Toast.makeText(LogInActivity.this, "Please enter valid password",
-                            Toast.LENGTH_SHORT).show();
-        } else {
-            auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success");
+                    FirebaseUser user = auth.getCurrentUser();
 
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success");
-                        FirebaseUser user = auth.getCurrentUser();
+                    updateUI(user);
 
-                        updateUI(user);
-/*                        firebaseFirestore.collection("customers").get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                String a = doc.getString("Username");
-                                                String b = doc.getString("Password");
-                                                String a1 = mail.getText().toString().trim();
-                                                String b1 = pwd.getText().toString().trim();
-                                                if (a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
-                                                    Toast.makeText(LogInActivity.this, "Logged In",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    updateUI(user);
-                                                    break;
-                                                } else {
-                                                    Toast.makeText(LogInActivity.this, "Cannot login,incorrect Email and Password",
-                                                            Toast.LENGTH_SHORT).show();
-
-                                                    updateUI(null);
-                                                }
-                                            }
-                                        } else {
-                                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                            Toast.makeText(LogInActivity.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
-                                            updateUI(null);
-
-                                        }
+/*                  firebaseFirestore.collection("customers").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot doc : task.getResult()) {
+                                    String a = doc.getString("Username");
+                                    String b = doc.getString("Password");
+                                    String a1 = mail.getText().toString().trim();
+                                    String b1 = pwd.getText().toString().trim();
+                                    if (a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
+                                        Toast.makeText(LogInActivity.this, "Logged In",
+                                            Toast.LENGTH_SHORT).show();
+                                        updateUI(user);
+                                        break;
+                                    } else {
+                                        Toast.makeText(LogInActivity.this, "Cannot login,incorrect Email and Password",
+                                            Toast.LENGTH_SHORT).show();
+                                         updateUI(null);
                                     }
-                                });
- */
-                    }else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(LogInActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                        updateUI(null);
-                    }
-                }
-            });
-        }
-    }
+                              }
+                              } else {
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                                updateUI(null);
 
+                              }
+                          }
+                 });
+ */
+                }else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                    Toast.makeText(LogInActivity.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+            }
+        });
+    }
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);

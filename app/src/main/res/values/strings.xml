@@ -7,6 +7,7 @@
     <string name="continua">Continue As a;</string>
 
 
+
     <string-array name="technicians">
         <item>Lucius Fox</item>
         <item>Tonny Kross</item>
@@ -45,9 +46,9 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
-    <string name="profile_desc">Rowan Sebastian Atkinson CBE is a computer technician an a part time article writer</string>
-    <string name="profile_mail">rowanartkinson@gmail.com</string>
-    <string name="profile_title">Mr Bean</string>
+    <string name="profile_desc">computer technician</string>
+    <string name="profile_mail">examplemail@gmail.com</string>
+    <string name="profile_title">Testing Name</string>
     <string name="posts">Completed events</string>
     <string name="read">Articles read</string>
     <string name="written">Articles written</string>

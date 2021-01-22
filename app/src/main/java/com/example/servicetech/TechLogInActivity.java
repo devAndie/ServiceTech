@@ -14,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,36 +32,44 @@ public class TechLogInActivity extends AppCompatActivity {
     Button login, register;
     ProgressBar progress;
     FirebaseFirestore firebaseFirestore;
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
     DocumentReference ref;
-    FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(mAuthListener);
+        auth.addAuthStateListener(mAuthListener);
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser == null) {
             // No user is signed in
         } else {
+            updateUI(currentUser);
             // User logged in
+        }
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tech_log_in);
+        setContentView(R.layout.activity_log_in);
+
+        mail = findViewById(R.id.logins);
+        pwd = findViewById(R.id.login_pwd);
+        progress = findViewById(R.id.prg_bar);
+        login = findViewById(R.id.btn_login);
+        register = findViewById(R.id.btn_register);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        mail = findViewById(R.id.tmail);
-        pwd = findViewById(R.id.tpwd);
-        progress = findViewById(R.id.prg_bar);
-        login = findViewById(R.id.tlogin);
-        register = findViewById(R.id.tregister);
+        auth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener(){
             @Override
@@ -72,11 +83,20 @@ public class TechLogInActivity extends AppCompatActivity {
             }
         };
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logIn();
+                Intent homeActivity = new Intent(getApplicationContext(), TechnicianActivity.class);
+                startActivity(homeActivity);
+
+                if(mail.getText().toString().equals("")){
+                    Toast.makeText(TechLogInActivity.this, "Please enter valid email",
+                            Toast.LENGTH_SHORT).show();
+                }else if(pwd.getText().toString().equals("")){
+                    Toast.makeText(TechLogInActivity.this, "Please enter valid password",
+                            Toast.LENGTH_SHORT).show();
+                } //else
+                    //logIn();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -88,41 +108,52 @@ public class TechLogInActivity extends AppCompatActivity {
         });
 
     }
+    private void signIn(String email, String password){
+        Log.d(TAG, "signIn:" + email);
+
+        auth.signInWithEmailAndPassword(email, password).
+        addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, " Verification : signIn With Email:onComplete:" + task.isSuccessful());
+                //  If sign in succeeds i.e if task.isSuccessful(); returns true then the auth state listener will be notified and logic to handle the
+                // signed in user can be handled in the listener.
+
+
+                // If sign in fails, display a message to the user.
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "signInWithEmail:failed", task.getException());
+                    Toast.makeText(TechLogInActivity.this, "Please enter valid password",
+                            Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+            }
+        });
+    }
 
     public void logIn(){
-
         String password = pwd.getText().toString();
         String email = mail.getText().toString();
 
-        if(mail.getText().toString().equals("")){
-            Toast.makeText(TechLogInActivity.this, "Please enter valid email",
-                    Toast.LENGTH_SHORT).show();
-        }else if(pwd.getText().toString().equals("")){
-            Toast.makeText(TechLogInActivity.this, "Please enter valid password",
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener(TechLogInActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success");
+                    FirebaseUser user = auth.getCurrentUser();
 
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = auth.getCurrentUser();
-
-                                updateUI(user);
-
-                            }else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(TechLogInActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            }
-                        }
-                    });
-        }
+                    updateUI(user);
+                }else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                    Toast.makeText(TechLogInActivity.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+            }
+        });
     }
 
     private void updateUI(FirebaseUser user) {

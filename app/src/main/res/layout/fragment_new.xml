@@ -5,21 +5,72 @@
     android:id="@+id/newFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DCD782"
     android:isScrollContainer="true"
     android:overScrollMode="always"
     android:scrollbarAlwaysDrawVerticalTrack="true">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/event_name_la"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Item Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/pss"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="Please enter the type of service "
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@+id/item_type_la"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_name_la" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/item_type_la"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pss">
+
+        <EditText
+            android:id="@+id/event_type_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Installation, Repair, Maintenance or Upgrade"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/item_type_la">
 
         <TextView
             android:id="@+id/txt"
@@ -37,78 +88,60 @@
         <ImageView
             android:id="@+id/itm_img"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/txt"
             android:layout_marginBottom="@dimen/activity_padding"
-            android:background="@drawable/ic_baseline_add_photo_alternate_24"
             android:scaleType="centerInside" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_plus"
-            android:layout_width="22dp"
-            android:layout_height="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/itm_img"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="1dp"
-            android:src="@drawable/ic_baseline_add_24" />
+            android:src="@drawable/ic_baseline_add_circle_outline_24" />
     </RelativeLayout>
 
-
-    <EditText
-        android:id="@+id/item_type"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/locWrap"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:hint="what is the  item"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-    <EditText
-        android:id="@+id/service"
-        android:layout_width="0dp"
+        <EditText
+            android:id="@+id/loc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="equipment's Location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notewrap"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:hint="Install / Repair"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_type" />
+        app:layout_constraintTop_toBottomOf="@+id/locWrap">
 
-    <EditText
-        android:id="@+id/loc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="equipment's Location"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service" />
-
-    <EditText
-        android:id="@+id/info"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Notes for the technician"
-        android:inputType="textMultiLine"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toTopOf="@+id/submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loc" />
+        <EditText
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Notes for the technician"
+            android:inputType="textMultiLine"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/submit"
@@ -119,10 +152,9 @@
         android:layout_marginEnd="24dp"
         android:text="Submit"
         app:backgroundTint="#098750"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cncl"
-        app:layout_constraintTop_toBottomOf="@+id/info" />
+        app:layout_constraintTop_toBottomOf="@+id/notewrap" />
 
     <Button
         android:id="@+id/cncl"
@@ -132,9 +164,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@android:string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info" />
+        app:layout_constraintTop_toBottomOf="@+id/notewrap" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

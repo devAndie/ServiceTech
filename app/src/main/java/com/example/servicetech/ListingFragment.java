@@ -19,7 +19,7 @@ import java.util.List;
 public class ListingFragment extends Fragment {
 
     FragmentActivity listener;
-    StakeAdapter stakeAdapter;
+    ListingAdapter listingAdapter;
     String[] technician, rItems, description, cost;
 
     Context thisContext;
@@ -27,8 +27,9 @@ public class ListingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_listings, container, false);
+        if (savedInstanceState == null){
+        }
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -49,8 +50,8 @@ public class ListingFragment extends Fragment {
         cost = res.getStringArray(R.array.cost);
         description = res.getStringArray(R.array.description);
 
-        listView.setAdapter(stakeAdapter);
-        stakeAdapter = new StakeAdapter(thisContext, technician, rItems, description);
+//        listView.setAdapter(listingAdapter);
+//        listingAdapter = new ListingAdapter(thisContext, technician, rItems, description);
 
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,57 +14,100 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Welcome to serviceTech"
         android:textAlignment="center"
         android:textColor="@color/teal_700"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="319dp"
+        android:layout_width="0dp"
         android:layout_height="105dp"
         android:layout_below="@id/wl"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_baseline_person_outline_24">
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/servtech_logo_400x400"
+        app:layout_constraintBottom_toTopOf="@+id/lmwrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wl">
 
     </ImageView>
 
-
-    <EditText
-        android:id="@+id/logins"
-        android:layout_width="275dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lmwrapper"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="8dp"
-        android:hint="Username" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/lpwrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    <EditText
-        android:id="@+id/login_pwd"
-        android:layout_width="275dp"
+        <EditText
+            android:id="@+id/logins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lpwrapper"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logins"
+        android:layout_below="@id/lmwrapper"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:hint="Password" />
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lmwrapper">
+
+        <EditText
+            android:id="@+id/login_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="281dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_pwd"
+        android:layout_below="@+id/lpwrapper"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/holo_orange_light"
-        android:text="LOGIN" />
+        android:text="LOGIN"
+        app:layout_constraintBottom_toTopOf="@+id/prg_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lpwrapper" />
 
     <ProgressBar
         android:id="@+id/prg_bar"
@@ -72,30 +116,47 @@
         android:layout_below="@id/btn_login"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/dimen_20dp"
-        android:visibility="invisible" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/dha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView
         android:id="@+id/dha"
         android:layout_width="262dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/prg_bar"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="Do not have an account?" />
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="Do not have an account?"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prg_bar" />
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="283dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/dha"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/colorPrimary"
-        android:text="Register" />
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dha" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

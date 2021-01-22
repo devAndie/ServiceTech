@@ -19,7 +19,7 @@ public class TechnicianActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navList);
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        getSupportFragmentManager().beginTransaction().replace(R.id.tech_container,
                 new ListingFragment()).commit();
 
     }
@@ -30,7 +30,7 @@ public class TechnicianActivity extends AppCompatActivity {
             case R.id.listng:
                 selectedFrag = new ListingFragment();
                 break;
-            case R.id.event:
+            case R.id.tprogress:
                 selectedFrag = new ProgressFragment();
                 break;
             case R.id.quat:

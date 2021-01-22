@@ -42,9 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
             "$");
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private EditText Name, mail, address, phone, pwd, conf_Pwd;
+    Button signUp, logIn;
     FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
+
 
 
     @Override
@@ -55,22 +57,36 @@ public class RegisterActivity extends AppCompatActivity {
         Name = findViewById(R.id.username); mail = findViewById(R.id.mail);
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         pwd = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
+        logIn = findViewById(R.id.log_in);
+        signUp = findViewById(R.id.sign_in);
+
+        String password = pwd.getText().toString();
+        String passConf = conf_Pwd.getText().toString();
 
         firebaseFirestore=FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("customers").document();
-
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        DBHelper dbHelper = new DBHelper(RegisterActivity.this);
 
-        Button signUp = findViewById(R.id.sign_in);
         signUp.setOnClickListener(v -> {
-            confirmInput(v);
-            createAccount();
+            if(Name.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "Please type a username",
+                        Toast.LENGTH_SHORT).show();
+            }else if(mail.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "Please type an email id",
+                        Toast.LENGTH_SHORT).show();
+            }else if(password.equals("")){
+                Toast.makeText(RegisterActivity.this, "Please type a password",
+                        Toast.LENGTH_SHORT).show();
+            }else if(!passConf.equals(password)){
+                Toast.makeText(RegisterActivity.this, "Password mismatch",
+                        Toast.LENGTH_SHORT).show();
+            }else
+                confirmInput(v);
+                createAccount();
         });
-        Button logIn = findViewById(R.id.log_in);
+
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,80 +97,65 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount(){
-        if(Name.getText().toString().equals("")) {
-            Toast.makeText(RegisterActivity.this, "Please type a username",
+        String user = Name.getText().toString();
+        String password = pwd.getText().toString();
+        String Phone = phone.getText().toString();
+        String email = mail.getText().toString();
+        String Address = address.getText().toString();
+        String passConf = conf_Pwd.getText().toString();
+
+        ref.get().addOnSuccessListener(documentSnapshot -> {
+
+            if (documentSnapshot.exists()){
+                Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
                     Toast.LENGTH_SHORT).show();
+            } else {
+                Map<String, Object> customer = new HashMap<>();
+                customer.put("Username", user);
+                customer.put("Phone No", Phone);
+                customer.put("Email", email);
+                customer.put("Address", Address);
+                customer.put("Password", password);
 
-        }else if(mail.getText().toString().equals("")) {
-            Toast.makeText(RegisterActivity.this, "Please type an email id",
-                    Toast.LENGTH_SHORT).show();
+                auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = auth.getCurrentUser();
 
-        }else if(pwd.getText().toString().equals("")){
-            Toast.makeText(RegisterActivity.this, "Please type a password",
-                    Toast.LENGTH_SHORT).show();
-
-        }else {
-            ref.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()){
-                    Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
-                            Toast.LENGTH_SHORT).show();
-                }else if(!conf_Pwd.getText().toString().equals(pwd.getText().toString())){
-                    Toast.makeText(RegisterActivity.this, "Password mismatch",
-                            Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Map<String, Object> customer = new HashMap<>();
-                    customer.put("Username", Name.getText().toString());
-                    customer.put("Phone No", phone.getText().toString());
-                    customer.put("Email", mail.getText().toString());
-                    customer.put("Address", address.getText().toString());
-                    customer.put("Password", pwd.getText().toString());
-
-                    String user = Name.getText().toString();
-                    String password = pwd.getText().toString();
-                    String email = mail.getText().toString();
-
-                    auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            //String myId = ref.getId();
+                            firebaseFirestore.collection("customers")
+                            .add(customer)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        FirebaseUser user = auth.getCurrentUser();
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(RegisterActivity.this, "Registration successful",
+                                        Toast.LENGTH_SHORT).show();
 
-                                        //String myId = ref.getId();
-                                        firebaseFirestore.collection("customers")
-                                                .add(customer)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        Toast.makeText(RegisterActivity.this, "Registration successful",
-                                                                Toast.LENGTH_SHORT).show();
-
-                                                        updateUI(user);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("Error", e.getMessage());
-                                                        updateUI(null);
-                                                    }
-                                        });
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                        updateUI(null);
-                                    }
+                                    updateUI(user);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("Error", e.getMessage());
+                                    updateUI(null);
                                 }
                             });
-                }
-            });
-        }
-
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+            }
+        });
     }
     private void updateUI(FirebaseUser user) {
         if (user != null) {

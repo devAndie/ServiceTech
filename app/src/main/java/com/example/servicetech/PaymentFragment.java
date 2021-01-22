@@ -26,10 +26,7 @@ public class PaymentFragment extends Fragment {
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        Button submit = view.findViewById(R.id.submitButton);
+/*        Button submit = view.findViewById(R.id.submitButton);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +36,7 @@ public class PaymentFragment extends Fragment {
         });
 
     }
-/*    public void submitCard(View view) {
+    public void submitCard(View view) {
         // TODO: replace with your own test key
         TextView cardNumberField = (TextView) view.findViewById(R.id.cardNumber);
         TextView monthField = (TextView) view.findViewById(R.id.month);

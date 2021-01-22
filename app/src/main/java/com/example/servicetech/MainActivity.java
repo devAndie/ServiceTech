@@ -15,15 +15,6 @@ public class MainActivity extends AppCompatActivity {
     TextView head, intro;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener mAuthListener;
-    
-    
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        firebaseAuth.addAuthStateListener(mAuthListener);
-    }
-
 
     
     @Override
@@ -49,9 +40,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firebaseAuth.removeAuthStateListener(mAuthListener);
-    }
+
 }
