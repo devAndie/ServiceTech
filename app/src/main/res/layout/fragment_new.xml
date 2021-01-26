@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/newFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:isScrollContainer="true"
-    android:overScrollMode="always"
-    android:scrollbarAlwaysDrawVerticalTrack="true">
+    tools:context=".HomeActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/newFrag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/event_name_la"
@@ -25,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Item Name"
+            android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="equipment's Location"
+            android:inputType="text"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,3 +176,4 @@
         app:layout_constraintTop_toBottomOf="@+id/notewrap" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

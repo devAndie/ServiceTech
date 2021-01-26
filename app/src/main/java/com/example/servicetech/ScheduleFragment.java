@@ -8,12 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ScheduleFragment extends Fragment {
+    private static final String TAG = "ScheduleFragment";
+    private FirebaseFirestore firestoreDB;
+    private RecyclerView eventsRecyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".TechRegActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".TechRegActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -15,7 +20,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/mWrap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +43,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/noWrap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,9 +121,9 @@
             android:ems="10"
             android:hint="Tether to Location"
             android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passWrap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,16 +137,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tWrap">
 
-        <EditText
+            <EditText
             android:id="@+id/tPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/conWrap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -151,31 +154,28 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/tech_rgt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passWrap">
 
-        <EditText
+            <EditText
             android:id="@+id/tconPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Confirm Password"
             android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/tech_rgt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
         android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/conWrap" />
@@ -187,11 +187,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tech_rgt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conWrap" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

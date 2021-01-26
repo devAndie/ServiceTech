@@ -108,9 +108,8 @@ public class RequestServiceFragment extends Fragment {
             }
         });
         submit.setOnClickListener(v -> {
-
             Intent bookIntent = new Intent(getContext(), BookFragment.class);
-            startActivity(bookIntent);
+
             if(item.getText().toString().equals("")) {
                 Toast.makeText(getContext(), "Please type a username", Toast.LENGTH_SHORT).show();
             }else if(service.getText().toString().equals("")) {
@@ -118,7 +117,8 @@ public class RequestServiceFragment extends Fragment {
             }else if(location.getText().toString().equals("")) {
                 Toast.makeText(getContext(), "Please provide a Location", Toast.LENGTH_SHORT).show();
             }else
-                submit();
+                startActivity(bookIntent);
+//                submit();
 
         });
 
@@ -128,7 +128,7 @@ public class RequestServiceFragment extends Fragment {
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_CAMERA_BUTTON/*ACTION_GET_CONTENT*/);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
     @Override

@@ -34,9 +34,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.customer_home);
 
-        mDrawer = findViewById(R.id.draw_lay);
+/*        mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar_main);
 
@@ -61,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
             dashboardFragment = new DashboardFragment();
             userWhereAboutFragment = new UserWhereAboutFragment();
         }
+
+ */
     }
 
     @Override

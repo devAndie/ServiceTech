@@ -13,10 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class ListingFragment extends Fragment {
+    private static final String TAG = "ListingFragment";
+    private FirebaseFirestore firestoreDB;
+    private RecyclerView eventsRecyclerView;
 
     FragmentActivity listener;
     ListingAdapter listingAdapter;
@@ -27,8 +35,19 @@ public class ListingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null){
-        }
+        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
+
+
+        LinearLayoutManager recyclerLayoutManager =
+                new LinearLayoutManager(getActivity().getApplicationContext());
+        eventsRecyclerView.setLayoutManager(recyclerLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(eventsRecyclerView.getContext(),
+                        recyclerLayoutManager.getOrientation());
+        eventsRecyclerView.addItemDecoration(dividerItemDecoration);
+
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -42,7 +61,6 @@ public class ListingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ListView listView = view.findViewById(R.id.listList);
 
         Resources res = getResources();
         technician = res.getStringArray(R.array.technicians);

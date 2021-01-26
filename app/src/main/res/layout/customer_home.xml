@@ -57,7 +57,7 @@
     </androidx.drawerlayout.widget.DrawerLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
+        android:id="@+id/bottomNav_t"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
