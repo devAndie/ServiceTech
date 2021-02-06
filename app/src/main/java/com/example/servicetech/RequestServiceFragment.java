@@ -50,20 +50,15 @@ public class RequestServiceFragment extends Fragment {
     ImageView itemImage;
     Button submit, cancel;
     ImageButton  itemImg;
-    Spinner servSpinner;
-    FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     FirebaseStorage storage;
     StorageReference storageReference;
-    private FirebaseFirestore firestoreDB;
     private int docId;
     DocumentReference ref;
-    StorageReference storageRef;
     StorageReference ImgRef;
     UploadTask uploadTask;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
-    private Uri urlItemImage;
     private View View;
 
 
@@ -71,9 +66,6 @@ public class RequestServiceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View = inflater.inflate(R.layout.fragment_new, container, false);
-
-
-
 
         return View;
     }
@@ -88,9 +80,8 @@ public class RequestServiceFragment extends Fragment {
         itemImage = getView().findViewById(id.itm_img);
         itemImg = getView().findViewById(id.img_plus);
 
-        firestoreDB = FirebaseFirestore.getInstance();
         firebaseFirestore= FirebaseFirestore.getInstance();
-        ref = firebaseFirestore.collection("events").document();
+        ref = firebaseFirestore.collection("Service Requests").document();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -128,7 +119,7 @@ public class RequestServiceFragment extends Fragment {
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_CAMERA_BUTTON/*ACTION_GET_CONTENT*/);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
     @Override
@@ -192,8 +183,8 @@ public class RequestServiceFragment extends Fragment {
             reg_entry.put("Notes", notes.getText().toString());
             reg_entry.put("Item Image Uri", ImgRef.getPath());
 
-            //String myId = ref.getId();
-            firebaseFirestore.collection("events")
+            String svId = ref.getId();
+            firebaseFirestore.collection("Service Requests")
             .add(reg_entry)
             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override

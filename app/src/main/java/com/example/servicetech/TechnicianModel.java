@@ -1,57 +1,82 @@
 package com.example.servicetech;
 
-public class TechnicianModel extends CustomerModel {
-    public static String Specialty, edLevel, OpsTime, LocTether;
+public class TechnicianModel {
+    public static String Names, mail, Specialty, Tether, password;
+    public static int id, phoneNo;
 
-    public TechnicianModel(int id, String firstName, String lastName, String userName, String mail,
-                           String address, int phone, String password, String specialty,
-                           String edLevel, String opsTime, String locTether) {
-        super(id, firstName, lastName, userName, mail, address, phone, password);
-        Specialty = specialty;
-        this.edLevel = edLevel;
-        OpsTime = opsTime;
-        LocTether = locTether;
+    public TechnicianModel() {
+    }
+
+    public TechnicianModel(int id, String Names, int phoneNo,
+                           String mail, String Specialty, String Tether, String password) {
+        this.id = id;
+        this.Names = Names;
+        this.mail = mail;
+        this.Specialty = Specialty;
+        this.phoneNo = phoneNo;
+        this.Tether = Tether;
+        this.password = password;
+
+    }
+
+    public static String getNames() {
+        return Names;
+    }
+
+    public static void setNames(String names) {
+        Names = names;
+    }
+
+    public static String getMail() {
+        return mail;
+    }
+
+    public static void setMail(String mail) {
+        TechnicianModel.mail = mail;
     }
 
     public static String getSpecialty() {
         return Specialty;
     }
 
-    public void setSpecialty(String specialty) {
+    public static void setSpecialty(String specialty) {
         Specialty = specialty;
     }
 
-    public static String getEdLevel() {
-        return edLevel;
+    public static String getTether() {
+        return Tether;
     }
 
-    public void setEdLevel(String edLevel) {
-        this.edLevel = edLevel;
+    public static void setTether(String tether) {
+        Tether = tether;
     }
 
-    public static String getOpsTime() {
-        return OpsTime;
+    public static String getPassword() {
+        return password;
     }
 
-    public void setOpsTime(String opsTime) {
-        OpsTime = opsTime;
+    public static void setPassword(String password) {
+        TechnicianModel.password = password;
     }
 
-    public static String getLocTether() {
-        return LocTether;
+    public static int getId() {
+        return id;
     }
 
-    public void setLocTether(String locTether) {
-        LocTether = locTether;
+    public static void setId(int id) {
+        TechnicianModel.id = id;
+    }
+
+    public static int getPhoneNo() {
+        return phoneNo;
+    }
+
+    public static void setPhoneNo(int phoneNo) {
+        TechnicianModel.phoneNo = phoneNo;
     }
 
     @Override
     public String toString() {
-        return "TechnicianModel{" +
-                "Specialty='" + Specialty + '\'' +
-                ", edLevel='" + edLevel + '\'' +
-                ", TimeOps='" + OpsTime + '\'' +
-                ", LocTether='" + LocTether + '\'' +
-                '}';
+        return "TechnicianModel{}";
     }
 }

@@ -2,11 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/config"
         android:icon="@drawable/ic_baseline_request_quote_24"
-        android:title="Credit Score" />
+        android:title="Settings" />
     <item
+        android:id="@+id/wallet"
         android:icon="@drawable/ic_baseline_payment_24"
-        android:title="Payments" />
+        android:title="Wallet" />
     <item
         android:icon="@drawable/ic_baseline_person_pin_circle_24"
         android:title="Home Base" />
@@ -14,6 +16,11 @@
         android:icon="@drawable/ic_baseline_fingerprint_24"
         android:title="Security" />
     <item
+        android:id="@+id/swapt"
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="Swap Account" />
+    <item
+        android:id="@+id/logout"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:title="Log Out" />
 </menu>

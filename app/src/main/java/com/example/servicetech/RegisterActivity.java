@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        Name = findViewById(R.id.username); mail = findViewById(R.id.mail);
+        Name = findViewById(R.id.c_name); mail = findViewById(R.id.mail);
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         pwd = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
         logIn = findViewById(R.id.log_in);
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount(){
-        String user = Name.getText().toString();
+        String Names = Name.getText().toString();
         String password = pwd.getText().toString();
         String Phone = phone.getText().toString();
         String email = mail.getText().toString();
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             } else {
                 Map<String, Object> customer = new HashMap<>();
-                customer.put("Username", user);
+                customer.put("Names", Names);
                 customer.put("Phone No", Phone);
                 customer.put("Email", email);
                 customer.put("Address", Address);

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -54,37 +55,44 @@ public class TechRegActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()){
                         Toast.makeText(TechRegActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
                     } else {
-                        Map<String, Object> reg_entry = new HashMap<>();
-                        reg_entry.put("Name", Name.getText().toString());
-                        reg_entry.put("Phone No", phone.getText().toString());
-                        reg_entry.put("Email", mail.getText().toString());
-                        reg_entry.put("Specialty", specialty.getText().toString());
-                        reg_entry.put("Tether", tether.getText().toString());
-                        reg_entry.put("Tether", pwd.getText().toString());
-                        //reg_entry.put("Certificates" );
+                        Map<String, Object> Technician = new HashMap<>();
+                        Technician.put("Name", Name.getText().toString());
+                        Technician.put("Phone No", phone.getText().toString());
+                        Technician.put("Email", mail.getText().toString());
+                        Technician.put("Specialty", specialty.getText().toString());
+                        Technician.put("Tether", tether.getText().toString());
+                        Technician.put("Password", pwd.getText().toString());
 
-                        //String myId = ref.getId();
+                        String myId = ref.getId();
+
                         firebaseFirestore.collection("Technicians")
-                                .add(reg_entry)
+                                .add(Technician)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(TechRegActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TechRegActivity.this, "Successfully added",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent TechHome = new Intent(getApplicationContext(), TechnicianActivity.class);
+                                        startActivity(TechHome);
+
+                                        Toast.makeText(TechRegActivity.this, "Registration Successful",
+                                                Toast.LENGTH_SHORT).show();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Log.d("Error", e.getMessage());
+                                        Intent reload = new Intent(TechRegActivity.this, TechRegActivity.class);
+                                        startActivity(reload);
                                     }
                                 });
                     }
                 });
             }
-            Toast.makeText(TechRegActivity.this, "Registration Successful ", Toast.LENGTH_SHORT).show();
 
-            Intent TechReg = new Intent(getApplicationContext(), TechnicianActivity.class);
-            startActivity(TechReg);
+            Intent TechHome = new Intent(getApplicationContext(), TechnicianActivity.class);
+            startActivity(TechHome);
         });
     }
 }

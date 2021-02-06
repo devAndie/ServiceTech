@@ -19,7 +19,7 @@
             android:icon="@drawable/ic_baseline_book_24"
             android:title="Settings" />
         <item
-            android:id="@+id/swap"
+            android:id="@+id/swapt"
             android:icon="@drawable/ic_baseline_supervisor_account_24"
             android:title="Switch Account" />
         <item

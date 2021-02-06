@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,9 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity {
-    private HomeFragment homeFragment;
-    private DashboardFragment dashboardFragment;
-    private UserWhereAboutFragment userWhereAboutFragment;
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -29,7 +27,6 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private FragmentActivity listener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
-
-        if (savedInstanceState == null) {
-            homeFragment = new HomeFragment();
-            dashboardFragment = new DashboardFragment();
-            userWhereAboutFragment = new UserWhereAboutFragment();
-        }
+                new RequestServiceFragment()).commit();
 
     }
 
@@ -114,16 +105,22 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = ProgressFragment.class;
                 break;
             case R.id.pay_dr:
-                fragmentClass = WalletActivity.class;
+                fragmentClass = WalletFragment.class;
                 break;
             case R.id.settings:
                 fragmentClass = SettingsActivity.class;
+//                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+//                startActivity(settings);
                 break;
-            case R.id.swap:
+            case R.id.swapt:
                 fragmentClass = MainActivity.class;
+//                Intent main = new Intent(getApplicationContext(), MainActivity.class);
+//               startActivity(main);
                 break;
             case R.id.exit:
                 fragmentClass = LogInActivity.class;
+//                Intent logIn = new Intent(getApplicationContext(), LogInActivity.class);
+//                startActivity(logIn);
                 break;
         }
         try {

@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -110,6 +111,13 @@ public class TechnicianActivity extends AppCompatActivity {
             case R.id.pay_dr:
                 fragmentClass = PaymentFragment.class;
                 break;
+            case R.id.swapt:
+                Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(main);
+                break;
+            case R.id.logout:
+                Intent logIn = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(logIn);
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
