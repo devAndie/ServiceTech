@@ -35,7 +35,7 @@ public class ListingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
+/*        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
 
 
         LinearLayoutManager recyclerLayoutManager =
@@ -46,7 +46,7 @@ public class ListingFragment extends Fragment {
                 new DividerItemDecoration(eventsRecyclerView.getContext(),
                         recyclerLayoutManager.getOrientation());
         eventsRecyclerView.addItemDecoration(dividerItemDecoration);
-
+ */
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }

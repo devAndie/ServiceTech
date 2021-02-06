@@ -7,7 +7,7 @@
     tools:context=".TechnicianActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/draw_lay"
+        android:id="@+id/t_draw_lay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,19 +45,21 @@
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
+            android:id="@+id/t_nav_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:isScrollContainer="true"
             android:overScrollMode="ifContentScrolls"
+            android:visibility="visible"
             app:headerLayout="@layout/nav_header"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:menu="@menu/techs_drawer" />
+            app:menu="@menu/techs_drawer"
+            tools:visibility="visible" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
+        android:id="@+id/bottomNav_t"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

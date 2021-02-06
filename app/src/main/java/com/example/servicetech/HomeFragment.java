@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
                     case  R.id.prog_dr:
                         selectedFrag = new ProgressFragment();
                         break;
-                    case  R.id.book_d:
+                    case  R.id.settings:
                         selectedFrag = new StakesFragment();
                         break;
                 }

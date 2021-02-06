@@ -1,5 +1,7 @@
 package com.example.servicetech;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,11 +19,11 @@ import com.google.android.material.navigation.NavigationView;
 
 public class TechnicianActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
-    DrawerLayout nDrawer;
-    Toolbar toolbar;
-    NavigationView navigationView;
-    ActionBarDrawerToggle drawerToggle;
+    private BottomNavigationView bottomNav;
+    private DrawerLayout nDrawer;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +33,9 @@ public class TechnicianActivity extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottomNav_t);
         bottomNav.setOnNavigationItemSelectedListener(navList);
 
-/*        navigationView = findViewById(R.id.t_nav_view);
+        navigationView = findViewById(R.id.t_nav_view);
         toolbar = findViewById(R.id.toolbar_main);
         nDrawer = findViewById(R.id.t_draw_lay);
-
 
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -42,8 +44,8 @@ public class TechnicianActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-*/
 
+        setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.tech_container,
                 new ListingFragment()).commit();
@@ -70,6 +72,15 @@ public class TechnicianActivity extends AppCompatActivity {
                 selectedFrag).commit();
         return true;
     };
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, nDrawer, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
@@ -90,7 +101,7 @@ public class TechnicianActivity extends AppCompatActivity {
             case R.id.new_d:
                 fragmentClass = RequestServiceFragment.class;
                 break;
-            case R.id.book_d:
+            case R.id.settings:
                 fragmentClass = BookFragment.class;
                 break;
             case R.id.prog_dr:
@@ -113,6 +124,28 @@ public class TechnicianActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
 
         nDrawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (nDrawer.isDrawerOpen(GravityCompat.START)){
+            nDrawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
 }

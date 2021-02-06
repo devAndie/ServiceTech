@@ -19,16 +19,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity {
-    HomeFragment homeFragment;
-    DashboardFragment dashboardFragment;
-    UserWhereAboutFragment userWhereAboutFragment;
+    private HomeFragment homeFragment;
+    private DashboardFragment dashboardFragment;
+    private UserWhereAboutFragment userWhereAboutFragment;
 
-    DrawerLayout mDrawer;
-    Toolbar toolbar;
-    BottomNavigationView bottomNav;
-    NavigationView navigationView;
-    ActionBarDrawerToggle drawerToggle;
-    FragmentActivity listener;
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNav;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
+    private FragmentActivity listener;
 
 
     @Override
@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
 
-/*        mDrawer = findViewById(R.id.draw_lay);
+        mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar_main);
 
@@ -62,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
             userWhereAboutFragment = new UserWhereAboutFragment();
         }
 
- */
     }
 
     @Override
@@ -89,14 +88,14 @@ public class HomeActivity extends AppCompatActivity {
             navList = item -> {
                 Fragment selectedFrag = null;
                 switch (item.getItemId()) {
-                    case R.id.home:
-                        selectedFrag = new HomeFragment();
+                    case R.id.request:
+                        selectedFrag = new RequestServiceFragment();
                         break;
                     case R.id.event:
                         selectedFrag = new DashboardFragment();
                         break;
-                    case R.id.scdule:
-                        selectedFrag = new UserWhereAboutFragment();
+                    case R.id.schedule:
+                        selectedFrag = new ScheduleFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -111,14 +110,20 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.new_d:
                 fragmentClass = RequestServiceFragment.class;
                 break;
-            case R.id.book_d:
-                fragmentClass = BookFragment.class;
-                break;
             case R.id.prog_dr:
                 fragmentClass = ProgressFragment.class;
                 break;
             case R.id.pay_dr:
-                fragmentClass = PaymentFragment.class;
+                fragmentClass = WalletActivity.class;
+                break;
+            case R.id.settings:
+                fragmentClass = SettingsActivity.class;
+                break;
+            case R.id.swap:
+                fragmentClass = MainActivity.class;
+                break;
+            case R.id.exit:
+                fragmentClass = LogInActivity.class;
                 break;
         }
         try {
@@ -126,7 +131,6 @@ public class HomeActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
