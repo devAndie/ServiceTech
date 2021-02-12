@@ -63,7 +63,7 @@ public class TechnicianActivity extends AppCompatActivity {
                 selectedFrag = new ProgressFragment();
                 break;
             case R.id.quat:
-                selectedFrag = new QuotationFragment();
+                selectedFrag = new ScheduleFragment();
                 break;
             case R.id.tabout:
                 selectedFrag = new UserWhereAboutFragment();

@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/design_default_color_background"
     tools:context=".TechnicianActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/t_draw_lay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:overScrollMode="ifContentScrolls"
         app:layout_scrollFlags="scroll|enterAlways"
         tools:openDrawer="start">
 
@@ -33,13 +34,14 @@
                 android:id="@+id/tech_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/design_default_color_background"
+                android:isScrollContainer="true"
+                android:overScrollMode="ifContentScrolls"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/act_bar"
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:isScrollContainer="true"
-                android:overScrollMode="ifContentScrolls">
+                app:layout_scrollFlags="scroll|enterAlways">
 
             </FrameLayout>
         </LinearLayout>

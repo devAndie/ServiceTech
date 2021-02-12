@@ -3,7 +3,6 @@ package com.example.servicetech;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.xml.namespace.QName;
-
-import static java.sql.DriverManager.*;
-
 public class BookFragment extends Fragment {
     FragmentActivity listener;
-    ListingAdapter listingAdapter;
+    ListingRecyclerViewAdapter listingRecyclerViewAdapter;
     Context thisContext;
     ListView lv;
     TextView progressTxt;
@@ -66,9 +55,9 @@ public class BookFragment extends Fragment {
         thisContext = getContext();
         progressTxt = view.findViewById(R.id.prog_txt);
 
-        listingAdapter = new ListingAdapter(thisContext, items, cost, description);
+        listingRecyclerViewAdapter = new ListingRecyclerViewAdapter(thisContext, items, cost, description);
 
-        lv.setAdapter(listingAdapter);
+        lv.setAdapter(listingRecyclerViewAdapter);
         progressTxt.setText("");
         //   GetData retrieveData = new GetData();
        // retrieveData.execute("");

@@ -56,7 +56,7 @@ public class TechRegActivity extends AppCompatActivity {
                         Toast.makeText(TechRegActivity.this, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
                     } else {
                         Map<String, Object> Technician = new HashMap<>();
-                        Technician.put("Name", Name.getText().toString());
+                        Technician.put("Names", Name.getText().toString());
                         Technician.put("Phone No", phone.getText().toString());
                         Technician.put("Email", mail.getText().toString());
                         Technician.put("Specialty", specialty.getText().toString());
@@ -65,7 +65,7 @@ public class TechRegActivity extends AppCompatActivity {
 
                         String myId = ref.getId();
 
-                        firebaseFirestore.collection("Technicians")
+                        firebaseFirestore.collection("technicians")
                                 .add(Technician)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
@@ -91,8 +91,8 @@ public class TechRegActivity extends AppCompatActivity {
                 });
             }
 
-            Intent TechHome = new Intent(getApplicationContext(), TechnicianActivity.class);
-            startActivity(TechHome);
+            //Intent TechHome = new Intent(getApplicationContext(), TechnicianActivity.class);
+            //startActivity(TechHome);
         });
     }
 }

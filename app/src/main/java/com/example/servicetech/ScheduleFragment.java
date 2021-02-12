@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,11 +38,23 @@ public class ScheduleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+        @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         firestoreDB = FirebaseFirestore.getInstance();
 
-        scheduleRecyclerView = getView().findViewById(R.id.events_lst);
+        scheduleRecyclerView = view.findViewById(R.id.events_lst);
+
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
         scheduleRecyclerView.setLayoutManager(recyclerLayoutManager);
@@ -52,18 +65,45 @@ public class ScheduleFragment extends Fragment {
         scheduleRecyclerView.addItemDecoration(dividerItemDecoration);
 
         Button button = getView().findViewById(R.id.view_event);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewEvents();
-            }
-        });
+        button.setOnClickListener(v -> viewEvents());
 
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
-    }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+        firestoreDB.collection("Appointments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Appointment> appointmentList = new ArrayList<>();
+
+                            for(DocumentSnapshot doc : task.getResult()){
+                                Appointment apt = doc.toObject(Appointment.class);
+
+                                apt.setId(doc.getId());
+                                appointmentList.add(apt);
+
+                                Log.d(TAG, doc.getId() + " => " + doc.getData());
+                            }
+                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
+                                    ScheduleRecyclerViewAdapter(appointmentList,
+                                    getActivity(), firestoreDB);
+                            scheduleRecyclerView.setAdapter(recyclerViewAdapter);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        firestoreDB.collection("Appointments")
+                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                            doc.getDocument().toObject(EventModel.class);
+                            //do something...
+                        }
+                    }
+                });
+
+
     }
 
     public void viewEvents() {
@@ -73,22 +113,23 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void getDocumentsFromCollection(String eventType) {
-        firestoreDB.collection("Service Requests")
-                .whereEqualTo("type", eventType)
+        firestoreDB.collection("Appointments")
+                .whereEqualTo("Service type", eventType)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<Event> eventList = new ArrayList<>();
+                            List<Appointment> appointmentList = new ArrayList<>();
 
                             for(DocumentSnapshot doc : task.getResult()){
-                                Event e = doc.toObject(Event.class);
-                                //e.setId(doc.getId());
-                                eventList.add(e);
+                                Appointment apt = doc.toObject(Appointment.class);
+
+                                //apt.setId(doc.getId());
+                                appointmentList.add(apt);
                             }
                             ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(eventList,
+                                    ScheduleRecyclerViewAdapter(appointmentList,
                                     getActivity(), firestoreDB);
                             scheduleRecyclerView.setAdapter(recyclerViewAdapter);
 
@@ -98,13 +139,13 @@ public class ScheduleFragment extends Fragment {
                     }
                 });
 
-        firestoreDB.collection("Service Requests")
-                .whereEqualTo("type", eventType)
+        firestoreDB.collection("Appointments")
+                .whereEqualTo("Service type", eventType)
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                         for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-                            doc.getDocument().toObject(Event.class);
+                            doc.getDocument().toObject(EventModel.class);
                             //do something...
                         }
                     }

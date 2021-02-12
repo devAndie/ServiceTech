@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,14 +43,21 @@ public class QuotationFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            String uid = user.getUid();
-        }
+        // Reference to an image file in Cloud Storage
+        StorageReference storageReference =  FirebaseStorage.getInstance().getReference().child("myimage");
 
-        submit=view.findViewById(R.id.sbmt);
+/*
+        ImageView image = (ImageView)findViewById(R.id.imageView);
+
+// Load the image using Glide
+        Glide.with(this)
+                .using(new FirebaseImageLoader())
+                .load(storageReference)
+                .into(image );
+*/
+
+
+        submit=view.findViewById(R.id.schedule);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

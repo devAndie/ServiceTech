@@ -2,12 +2,11 @@ package com.example.servicetech;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +16,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListingFragment extends Fragment {
@@ -26,26 +33,19 @@ public class ListingFragment extends Fragment {
     private FirebaseFirestore firestoreDB;
     private RecyclerView eventsRecyclerView;
 
+
     FragmentActivity listener;
-    ListingAdapter listingAdapter;
-    String[] technician, rItems, description, cost;
+    ListingRecyclerViewAdapter listingRecyclerViewAdapter;
+
+
 
     Context thisContext;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-/*        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
 
-        LinearLayoutManager recyclerLayoutManager =
-                new LinearLayoutManager(getActivity().getApplicationContext());
-        eventsRecyclerView.setLayoutManager(recyclerLayoutManager);
-
-        DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(eventsRecyclerView.getContext(),
-                        recyclerLayoutManager.getOrientation());
-        eventsRecyclerView.addItemDecoration(dividerItemDecoration);
- */
+        getListings();
 
         return inflater.inflate(R.layout.fragment_listings, container, false);
     }
@@ -60,18 +60,60 @@ public class ListingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
 
-        Resources res = getResources();
-        technician = res.getStringArray(R.array.technicians);
-        rItems = res.getStringArray(R.array.rItems);
-        cost = res.getStringArray(R.array.cost);
-        description = res.getStringArray(R.array.description);
+        LinearLayoutManager recyclerLayoutManager =
+                new LinearLayoutManager(getActivity().getApplicationContext());
+        eventsRecyclerView.setLayoutManager(recyclerLayoutManager);
 
-//        listView.setAdapter(listingAdapter);
-//        listingAdapter = new ListingAdapter(thisContext, technician, rItems, description);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(eventsRecyclerView.getContext(),
+                        recyclerLayoutManager.getOrientation());
+        eventsRecyclerView.addItemDecoration(dividerItemDecoration);
+
+
 
     }
 
+    public void getListings() {
+        firestoreDB.collection("Service Requests")
+                .whereEqualTo("picked", null)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<EventModel> listingList = new ArrayList<>();
+
+                            for(DocumentSnapshot doc : task.getResult()){
+                                EventModel listing = doc.toObject(EventModel.class);
+
+                                listing.setId(doc.getId());
+                                listingList.add(listing);
+
+                                Log.d(TAG, doc.getId() + " => " + doc.getData());
+                            }
+                            ListingRecyclerViewAdapter listingRecyclerViewAdapter = new
+                                    ListingRecyclerViewAdapter(listingList,
+                                    getActivity(), firestoreDB);
+                            eventsRecyclerView.setAdapter(listingRecyclerViewAdapter);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        firestoreDB.collection("Service Requests")
+                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                            doc.getDocument().toObject(EventModel.class);
+                            //do something...
+                        }
+                    }
+                });
+
+    }
 
 
 }

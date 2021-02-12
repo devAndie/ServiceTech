@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }else
                 confirmInput(v);
-                createAccount();
+                //createAccount();
         });
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -172,5 +172,6 @@ public class RegisterActivity extends AppCompatActivity {
         input += "phoneNumber: " + phone.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+        createAccount();
     }
 }

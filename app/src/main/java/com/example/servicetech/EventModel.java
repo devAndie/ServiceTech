@@ -1,95 +1,80 @@
 package com.example.servicetech;
 
-import java.sql.Blob;
+import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class EventModel {
-    private static int id;
-    private static String Type;
-    private static String Service;
-    private static String Time;
-    private static String location;
-    private static String address;
-    private static String context;
-    private static byte[] img;
+    private String id, itemName, Service, location, notes, imageURL, picked;
 
     //constructors
     public EventModel() {
     }
 
-    public EventModel(int id, String Type, String Service, String Time, String location,
-                      String address, String context, Blob img) {
+    public EventModel(String id, String itemName, String Service, String location,
+                      String notes, String imageURL, String picked) {
         this.id = id;
-        this.Type = Type;
+        this.itemName = itemName;
         this.Service = Service;
-        this.Time = Time;
         this.location = location;
-        this.address = address;
-        this.context = context;
+        this.notes = notes;
+        this.imageURL = imageURL;
+        this.picked = picked;
     }
 
-    public static int getId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        EventModel.id = id;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public static String getType() {
-        return Type;
+    public void setService(String service) {
+        this.Service = service;
     }
 
-    public static void setType(String type) {
-        Type = type;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public static String getService() {
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public String getService() {
         return Service;
     }
 
-    public static void setService(String service) {
-        Service = service;
-    }
-
-    public static String getTime() {
-        return Time;
-    }
-
-    public static void setTime(String time) {
-        Time = time;
-    }
-
-    public static String getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public static void setLocation(String location) {
-        EventModel.location = location;
+    public String getNotes() {
+        return notes;
     }
 
-    public static String getAddress() {
-        return address;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public static void setAddress(String address) {
-        EventModel.address = address;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public static String getContext() {
-        return context;
+    public String getPicked() {
+        return picked;
     }
 
-    public static void setContext(String context) {
-        EventModel.context = context;
+    public void setPicked(String picked) {
+        this.picked = picked;
     }
-
-    public static byte[] getImg() {
-        return img;
-    }
-
-    public static void setImg(byte[] img) {
-        EventModel.img = img;
-    }
-
-
 }
+

@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFrag = new DashboardFragment();
                         break;
                     case R.id.schedule:
-                        selectedFrag = new ScheduleFragment();
+                        selectedFrag = new AppointmentsFragment();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

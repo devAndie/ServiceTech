@@ -16,39 +16,56 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.core.view.Event;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.BreakIterator;
 import java.util.List;
 
 public class ScheduleRecyclerViewAdapter extends
-        RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
 
-    public TextView name;
-    public TextView place;
-    public TextView startTime;
+    private String[] mDataSet;
 
-    public Button edit;
-    public Button delete;
-
-    private List<Event> eventsList;
+    private List<Appointment> appointmentList;
     private Context context;
     private FirebaseFirestore firestoreDB;
 
-    public ScheduleRecyclerViewAdapter(List<Event> list, Context ctx, FirebaseFirestore firestore) {
-        eventsList = list;
+    public ScheduleRecyclerViewAdapter(List<Appointment> list, Context ctx, FirebaseFirestore firestore) {
+        appointmentList = list;
         context = ctx;
         firestoreDB = firestore;
     }
 
     @Override
+    public void onClick(View v) {
+
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView itemName, serviceType, place, startTime;
+        Button update, attend;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            itemName = view.findViewById(R.id.name_tv);
+            serviceType = view.findViewById(R.id.serviceType_tv);
+            place = view.findViewById(R.id.place_tv);
+            startTime = view.findViewById(R.id.start_time_tv);
+            update = view.findViewById(R.id.edit_event_b);
+            attend = view.findViewById(R.id.delete_event_b);
+        }
+
+    }
+
+    @Override
     public int getItemCount() {
-        return eventsList.size();
+        return appointmentList.size();
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder
+    public ScheduleRecyclerViewAdapter.ViewHolder
     onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_event_item, parent, false);
@@ -59,83 +76,69 @@ public class ScheduleRecyclerViewAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        /*name = view.findViewById(R.id.name_tv);
-        place = view.findViewById(R.id.place_tv);
-        startTime = view.findViewById(R.id.start_time_tv);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        edit = view.findViewById(R.id.edit_event_b);
-        delete = view.findViewById(R.id.delete_event_b);
-        
         final int itemPos = position;
-        final Event event = eventsList.get(position);
-        holder.name.setText(event.getName());
-        holder.place.setText(event.getPlace());
-        holder.startTime.setText("" + event.getStartTime());
+        final Appointment appointment =  appointmentList.get(position);
+        holder.itemName.setText(appointment.getItemName());
+        holder.serviceType.setText(appointment.getPlace());
+        holder.place.setText(appointment.getPlace());
+        holder.startTime.setText(appointment.getStartTime());
 
-        holder.edit.setOnClickListener(new View.OnClickListener() {
+        holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editEventFragment(event);
+                editEventFragment(appointment);
             }
         });
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+       /* holder.getAttend().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteEvent(event.getId(), itemPos);
             }
         });
 
-         */
+        */
 
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView name;
-        public TextView place;
-        public TextView startTime;
-
-        public Button edit;
-        public Button delete;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            name = view.findViewById(R.id.name_tv);
-            place = view.findViewById(R.id.place_tv);
-            startTime = view.findViewById(R.id.start_time_tv);
-
-            edit = view.findViewById(R.id.edit_event_b);
-            delete = view.findViewById(R.id.delete_event_b);
-        }
-    }
-    private void editEventFragment(Event event){
+    private void editEventFragment(Appointment appointment){
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         Bundle bundle=new Bundle();
-        bundle.putParcelable("event", (Parcelable) event);
+        bundle.putParcelable("event", (Parcelable) appointment);
 
         ScheduleFragment scheduleFragment = new ScheduleFragment();
         scheduleFragment.setArguments(bundle);
 
         fm.beginTransaction().replace(R.id.tech_container, scheduleFragment).commit();
     }
-    private void deleteEvent(String docId, final int position){
-        firestoreDB.collection("events").document(docId).delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+    /*private void addDocumentToCollection(EventModel event){
+        firestoreDB.collection("events")
+                .add(event)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        eventsList.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, eventsList.size());
-                        Toast.makeText(context,
-                                "Event document has been deleted",
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Event document added - id: "
+                                + documentReference.getId());
+                        restUi();
+                        Toast.makeText(getActivity(),
+                                "Event document has been added",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding event document", e);
+                        Toast.makeText(getActivity(),
+                                "Event document could not be added",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
+     */
 
 
 }

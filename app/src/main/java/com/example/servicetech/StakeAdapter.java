@@ -37,14 +37,14 @@ public class StakeAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = sInflater.inflate(R.layout.events_layout, null);
 
-        TextView nametxt = v.findViewById(R.id.lorem);
-        TextView desctxt = v.findViewById(R.id.loctxt);
+       // TextView nametxt = v.findViewById(R.id.event_name_la);
+       // TextView desctxt = v.findViewById(R.id.);
 
         String name = technician[i];
         String desc = description[i];
 
-        nametxt.setText(name);
-        desctxt.setText(desc);
+       // nametxt.setText(name);
+       // desctxt.setText(desc);
 
         return v;
     }
