@@ -31,8 +31,6 @@ public class TechnicianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.technician_home);
 
-        bottomNav = findViewById(R.id.bottomNav_t);
-        bottomNav.setOnNavigationItemSelectedListener(navList);
 
         navigationView = findViewById(R.id.t_nav_view);
         toolbar = findViewById(R.id.toolbar_main);
@@ -52,27 +50,6 @@ public class TechnicianActivity extends AppCompatActivity {
                 new ListingFragment()).commit();
 
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener
-            navList = item -> {
-        Fragment selectedFrag = null;
-        switch (item.getItemId()) {
-            case R.id.listng:
-                selectedFrag = new ListingFragment();
-                break;
-            case R.id.tprogress:
-                selectedFrag = new ProgressFragment();
-                break;
-            case R.id.quat:
-                selectedFrag = new ScheduleFragment();
-                break;
-            case R.id.tabout:
-                selectedFrag = new UserWhereAboutFragment();
-                break;
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.tech_container,
-                selectedFrag).commit();
-        return true;
-    };
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -103,7 +80,7 @@ public class TechnicianActivity extends AppCompatActivity {
                 fragmentClass = RequestServiceFragment.class;
                 break;
             case R.id.settings:
-                fragmentClass = BookFragment.class;
+                fragmentClass = SettingsActivity.class;
                 break;
             case R.id.prog_dr:
                 fragmentClass = ProgressFragment.class;

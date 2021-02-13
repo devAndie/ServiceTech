@@ -77,7 +77,7 @@ public class ListingFragment extends Fragment {
 
     public void getListings() {
         firestoreDB.collection("Service Requests")
-                .whereEqualTo("picked", null)
+                .whereEqualTo("picked", "Not picked")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

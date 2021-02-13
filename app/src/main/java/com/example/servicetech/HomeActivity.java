@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private BottomNavigationView bottomNav;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private FragmentActivity listener;
@@ -37,8 +35,6 @@ public class HomeActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar_main);
 
-        bottomNav = findViewById(R.id.bottomNav);
-        bottomNav.setOnNavigationItemSelectedListener(navList);
 
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -75,25 +71,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
         );
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener
-            navList = item -> {
-                Fragment selectedFrag = null;
-                switch (item.getItemId()) {
-                    case R.id.request:
-                        selectedFrag = new RequestServiceFragment();
-                        break;
-                    case R.id.event:
-                        selectedFrag = new DashboardFragment();
-                        break;
-                    case R.id.schedule:
-                        selectedFrag = new AppointmentsFragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        selectedFrag).commit();
-                return true;
-            };
-
     public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass = null;
@@ -111,16 +88,6 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = SettingsActivity.class;
 //                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
 //                startActivity(settings);
-                break;
-            case R.id.swapt:
-                fragmentClass = MainActivity.class;
-//                Intent main = new Intent(getApplicationContext(), MainActivity.class);
-//               startActivity(main);
-                break;
-            case R.id.exit:
-                fragmentClass = LogInActivity.class;
-//                Intent logIn = new Intent(getApplicationContext(), LogInActivity.class);
-//                startActivity(logIn);
                 break;
         }
         try {

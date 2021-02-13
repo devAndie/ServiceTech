@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@android:style/Widget.DeviceDefault.ScrollView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:scrollbarStyle="insideInset"
     android:scrollbars="vertical"
     tools:context=".HomeActivity">
@@ -23,6 +23,7 @@
             android:text="Request a service"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintBottom_toTopOf="@+id/item_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,12 +34,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="5dp"
             android:hint="Item Name"
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintBottom_toTopOf="@+id/pss"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rqsv_tv"/>
+            app:layout_constraintTop_toBottomOf="@+id/rqsv_tv" />
 
         <TextView
             android:id="@+id/pss"
@@ -62,20 +65,24 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
 
+            android:layout_marginBottom="8dp"
             android:hint="Installation, Repair, Maintenance or Upgrade"
             android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pss"/>
+            app:layout_constraintTop_toBottomOf="@+id/pss" />
 
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/dimen_40dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/loc_el"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_type_la">
@@ -96,36 +103,39 @@
             <ImageView
                 android:id="@+id/itm_img"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_below="@+id/txt"
-                android:layout_marginBottom="@dimen/activity_padding"
-                android:background="@drawable/ic_baseline_add_photo_alternate_24"
-                android:scaleType="centerInside" />
+                android:layout_marginTop="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/ic_baseline_image_24"
+                android:cropToPadding="true" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/img_plus"
-                android:layout_width="22dp"
-                android:layout_height="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/itm_img"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="1dp"
-                android:src="@drawable/ic_baseline_add_24" />
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/ic_baseline_add_circle_outline_24" />
         </RelativeLayout>
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/locWrap"
+            android:id="@+id/loc_el"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Equipment's Location"
             android:inputType="text"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintBottom_toTopOf="@+id/notewrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"/>
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notewrap"
@@ -134,21 +144,26 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Notes for the technician"
             android:inputType="textMultiLine"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintBottom_toTopOf="@+id/submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locWrap"/>
+            app:layout_constraintTop_toBottomOf="@+id/loc_el" />
 
         <Button
             android:id="@+id/submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
             android:text="Submit"
             app:backgroundTint="#098750"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cncl"
             app:layout_constraintTop_toBottomOf="@+id/notewrap" />
@@ -158,8 +173,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@android:string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/submit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/notewrap" />

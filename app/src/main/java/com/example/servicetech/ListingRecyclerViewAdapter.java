@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -87,7 +86,7 @@ public class ListingRecyclerViewAdapter extends
         Bundle bundle=new Bundle();
         bundle.putParcelable("event", (Parcelable) event);
 
-        QuotationFragment createSchedule = new QuotationFragment();
+        BookingFragment createSchedule = new BookingFragment();
         createSchedule.setArguments(bundle);
 
         fm.beginTransaction().replace(R.id.tech_container, createSchedule).commit();

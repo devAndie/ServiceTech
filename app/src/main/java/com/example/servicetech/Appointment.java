@@ -1,40 +1,23 @@
 package com.example.servicetech;
 
-public class Appointment {
-    private String id, itemName, serviceType, place, startTime;
+public class Appointment extends EventModel{
+    private String recommendation, startTime, date;
 
-    public Appointment(){
-    }
-    public Appointment(String id, String itemName, String serviceType, String place, String startTime) {
-        this.id = id;
-        this.itemName = itemName;
-        this.serviceType = serviceType;
+   // public Appointment(){}
+
+    public Appointment(String id, String itemName, String Service, String location, String notes, String imageURL, String picked, String recommendation, String startTime, String date) {
+        super(id, itemName, Service, location, notes, imageURL, picked);
+        this.recommendation = recommendation;
         this.startTime = startTime;
-        this.place = place;
+        this.date = date;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getRecommendation() {
+        return recommendation;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
+    public void setRecommendation(String recommendation) {
+        this.recommendation = recommendation;
     }
 
     public String getStartTime() {
@@ -45,10 +28,11 @@ public class Appointment {
         this.startTime = startTime;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getDate() {
+        return date;
     }
-    public String getId(){
-        return id;
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

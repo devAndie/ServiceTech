@@ -1,6 +1,5 @@
 package com.example.servicetech;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -26,7 +25,6 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-//import com.google.firebase.database.core.view.Event;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,20 +32,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -95,14 +87,14 @@ public class RequestServiceFragment extends Fragment {
         currentUser = mAuth.getCurrentUser();
 
         item = view.findViewById(id.item_name);
-        service = view.findViewById(id.event_type_a);
-        location = view.findViewById(id.loc);
-        notes = view.findViewById(id.info);
+        service = view.findViewById(id.item_type_la);
+        itemImage = getView().findViewById(id.itm_img);
+        location = view.findViewById(id.loc_el);
+        notes = view.findViewById(id.notewrap);
 
+        itemImg = getView().findViewById(id.img_plus);
         submit = getView().findViewById(id.submit);
         cancel = getView().findViewById(id.cncl);
-        itemImage = getView().findViewById(id.itm_img);
-        itemImg = getView().findViewById(id.img_plus);
 
         firestoreDB = FirebaseFirestore.getInstance();
         ref = firestoreDB.collection("Service Requests").document();
@@ -115,8 +107,6 @@ public class RequestServiceFragment extends Fragment {
         itemImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                //startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 chooseImage();
             }
         });
@@ -179,13 +169,13 @@ public class RequestServiceFragment extends Fragment {
         final EventModel event = new EventModel();
         event.setItemName(((TextView)getActivity().findViewById(id.item_name)).getText().toString());
         event.setService(((TextView)getActivity()
-                .findViewById(id.event_type_a)).getText().toString());
+                .findViewById(id.item_type_la)).getText().toString());
         event.setLocation(((TextView)getActivity()
-                .findViewById(R.id.loc)).getText().toString());
+                .findViewById(id.loc_el)).getText().toString());
         event.setNotes(((TextView)getActivity()
-                .findViewById(R.id.info)).getText().toString());
+                .findViewById(id.notewrap)).getText().toString());
         event.setImageURL(imageURL);
-        event.setPicked(null);
+        event.setPicked("Not picked");
 
         return event;
     }
@@ -321,7 +311,7 @@ public class RequestServiceFragment extends Fragment {
     }
     private void restUi() {
         Intent i = new Intent();
-        i.setClass(getActivity(), AppointmentsFragment.class);
+        i.setClass(getActivity(), AppointmentFragment.class);
         startActivity(i);
     }
     public String GetDate() {

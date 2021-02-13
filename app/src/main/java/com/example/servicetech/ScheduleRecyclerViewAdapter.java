@@ -81,8 +81,8 @@ public class ScheduleRecyclerViewAdapter extends
         final int itemPos = position;
         final Appointment appointment =  appointmentList.get(position);
         holder.itemName.setText(appointment.getItemName());
-        holder.serviceType.setText(appointment.getPlace());
-        holder.place.setText(appointment.getPlace());
+        holder.serviceType.setText(appointment.getService());
+        holder.place.setText(appointment.getLocation());
         holder.startTime.setText(appointment.getStartTime());
 
         holder.update.setOnClickListener(new View.OnClickListener() {
