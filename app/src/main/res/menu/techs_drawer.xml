@@ -2,19 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/config"
+        android:id="@+id/listing"
         android:icon="@drawable/ic_baseline_request_quote_24"
-        android:title="Settings" />
+        android:title="Listings" />
     <item
-        android:id="@+id/wallet"
+        android:id="@+id/td_schedule"
+        android:icon="@drawable/ic_baseline_payment_24"
+        android:title="Schedule" />
+    <item
+        android:id="@+id/td_wallet"
         android:icon="@drawable/ic_baseline_payment_24"
         android:title="Wallet" />
     <item
-        android:icon="@drawable/ic_baseline_person_pin_circle_24"
-        android:title="Home Base" />
-    <item
-        android:icon="@drawable/ic_baseline_fingerprint_24"
-        android:title="Security" />
+        android:id="@+id/td_setting"
+        android:icon="@drawable/ic_baseline_support_24"
+        android:title="Settings" />
     <item
         android:id="@+id/swapt"
         android:icon="@drawable/ic_baseline_supervisor_account_24"

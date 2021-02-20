@@ -36,11 +36,11 @@
         android:minHeight="0dp"
         android:text="Pick"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/delete_event_b"
+        app:layout_constraintRight_toLeftOf="@+id/att_event"
         app:layout_constraintTop_toBottomOf="@+id/start_time_tv" />
 
     <Button
-        android:id="@+id/delete_event_b"
+        android:id="@+id/att_event"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

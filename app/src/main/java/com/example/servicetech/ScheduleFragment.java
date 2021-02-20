@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ScheduleFragment extends Fragment {
     private static final String TAG = "ScheduleFragment";
@@ -67,7 +68,7 @@ public class ScheduleFragment extends Fragment {
         Button button = getView().findViewById(R.id.view_event);
         button.setOnClickListener(v -> viewEvents());
 
-        firestoreDB.collection("Appointments")
+        firestoreDB.collection("events")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -141,7 +142,7 @@ public class ScheduleFragment extends Fragment {
 
         firestoreDB.collection("Appointments")
                 .whereEqualTo("Service type", eventType)
-                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                .addSnapshotListener(requireActivity(), new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                         for(DocumentChange doc : documentSnapshots.getDocumentChanges()){

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.servicetech.R.id;
 import com.google.android.gms.tasks.Continuation;
@@ -59,7 +60,7 @@ public class RequestServiceFragment extends Fragment {
     private DatabaseReference databaseReference, childReference;
     private FirebaseFirestore firestoreDB;
     private FirebaseAuth mAuth;
-    private String docId, picked;
+    private String docID, docId, picked;
     private StorageReference mStorageRef;
     private boolean isEdit;
     private Uri itemimg;
@@ -91,16 +92,14 @@ public class RequestServiceFragment extends Fragment {
         itemImage = getView().findViewById(id.itm_img);
         location = view.findViewById(id.loc_el);
         notes = view.findViewById(id.notewrap);
-
         itemImg = getView().findViewById(id.img_plus);
         submit = getView().findViewById(id.submit);
         cancel = getView().findViewById(id.cncl);
 
         firestoreDB = FirebaseFirestore.getInstance();
-        ref = firestoreDB.collection("Service Requests").document();
+        ref = firestoreDB.collection("events").document();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
         mStorageRef = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -114,7 +113,7 @@ public class RequestServiceFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Reload();
             }
         });
         EventModel event = null;
@@ -167,6 +166,7 @@ public class RequestServiceFragment extends Fragment {
     }
     private EventModel createEventObj(){
         final EventModel event = new EventModel();
+        event.setId(docID);
         event.setItemName(((TextView)getActivity().findViewById(id.item_name)).getText().toString());
         event.setService(((TextView)getActivity()
                 .findViewById(id.item_type_la)).getText().toString());
@@ -180,72 +180,6 @@ public class RequestServiceFragment extends Fragment {
         return event;
     }
 
-  /*  public void submit(){
-        ImgRef = storageReference.child("images/"+ UUID.randomUUID().toString());
-        
-        if(itemImg != null){
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            ImgRef = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ImgRef.putFile(itemimg)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Uploaded",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Failed "+e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-            ref.get().addOnSuccessListener(documentSnapshot -> {
-                Map<String, Object> reg_entry = new HashMap<>();
-                reg_entry.put("Item", item.getText().toString());
-                reg_entry.put("Service type", service.getText().toString());
-                reg_entry.put("Location", location.getText().toString());
-                reg_entry.put("Notes", notes.getText().toString());
-                reg_entry.put("Item Image Uri", ImgRef.getPath());
-
-                String svId = ref.getId();
-                firestoreDB.collection("Service Requests")
-                        .add(reg_entry)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                showAppointments();
-                                Toast.makeText(getContext(), "Successfully added",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("Error", e.getMessage());
-                            }
-                        });
-            });
-        } else
-            Toast.makeText(getContext(), "Input item image",
-                Toast.LENGTH_SHORT).show();
-    }
-   */
     public void UploadImages() {
         try {
             String strFileName = GetDate() + "img.jpg";
@@ -277,6 +211,7 @@ public class RequestServiceFragment extends Fragment {
                                 , Toast.LENGTH_LONG).show();
                     }
 
+                    docID = currentUser.getUid()+ GetDate();
                     addEvent();
                 }
             });
@@ -313,6 +248,10 @@ public class RequestServiceFragment extends Fragment {
         Intent i = new Intent();
         i.setClass(getActivity(), AppointmentFragment.class);
         startActivity(i);
+    }
+    public void Reload(){
+        Intent reload = new Intent(getContext(), RequestServiceFragment.class);
+        startActivity(reload);
     }
     public String GetDate() {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");

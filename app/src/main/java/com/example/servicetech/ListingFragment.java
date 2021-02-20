@@ -45,8 +45,6 @@ public class ListingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        getListings();
-
         return inflater.inflate(R.layout.fragment_listings, container, false);
     }
 
@@ -62,6 +60,8 @@ public class ListingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
 
+        firestoreDB = FirebaseFirestore.getInstance();
+
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
         eventsRecyclerView.setLayoutManager(recyclerLayoutManager);
@@ -72,6 +72,7 @@ public class ListingFragment extends Fragment {
         eventsRecyclerView.addItemDecoration(dividerItemDecoration);
 
 
+        getListings();
 
     }
 
@@ -102,7 +103,7 @@ public class ListingFragment extends Fragment {
                         }
                     }
                 });
-        firestoreDB.collection("Service Requests")
+/*        firestoreDB.collection("Service Requests")
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -112,7 +113,7 @@ public class ListingFragment extends Fragment {
                         }
                     }
                 });
-
+ */
     }
 
 
