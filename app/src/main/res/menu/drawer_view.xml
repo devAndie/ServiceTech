@@ -3,21 +3,38 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/new_d"
+            android:id="@+id/cd_new"
             android:icon="@drawable/ic_baseline_add_circle_outline_24"
             android:title="Request new service" />
         <item
-            android:id="@+id/prog_dr"
+            android:id="@+id/pending"
             android:icon="@drawable/ic_baseline_pending_24"
-            android:title="Active Appointments" />
+            android:title="Pending" />
         <item
-            android:id="@+id/pay_dr"
-            android:icon="@drawable/ic_baseline_event_24"
+            android:id="@+id/cd_scheduled"
+            android:icon="@drawable/ic_baseline_schedule_24"
+            android:title="Scheduled" />
+
+        <item
+            android:id="@+id/cd_progress"
+            android:icon="@drawable/ic_baseline_timelapse_24"
+            android:title="In progress" />
+        <item
+            android:id="@+id/cd_completed"
+            android:icon="@drawable/ic_baseline_check_24"
+            android:title="Completed" />
+        <item
+            android:id="@+id/cd_wallet"
+            android:icon="@drawable/ic_baseline_payment_24"
             android:title="Wallet" />
         <item
-            android:id="@+id/settings"
+            android:id="@+id/cd_settings"
             android:icon="@drawable/ic_baseline_support_24"
             android:title="Settings" />
-
+        <item
+            android:id="@+id/cd_logout"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:title="Log Out"
+            />
     </group>
 </menu>

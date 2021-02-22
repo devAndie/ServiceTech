@@ -85,7 +85,7 @@ public class TechnicianActivity extends AppCompatActivity {
             case R.id.prog_dr:
                 fragmentClass = ProgressFragment.class;
                 break;
-            case R.id.pay_dr:
+            case R.id.cd_wallet:
                 fragmentClass = PaymentFragment.class;
                 break;
             case R.id.swapt:

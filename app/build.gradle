@@ -59,6 +59,8 @@ dependencies {
     implementation 'com.stripe:stripe-android:16.1.1'
     implementation 'com.stripe:stripe-java:1.47.0'
     implementation "com.karumi:dexter:5.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 
     testImplementation 'junit:junit:4.+'

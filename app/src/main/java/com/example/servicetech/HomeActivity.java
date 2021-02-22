@@ -15,10 +15,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity {
+ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -75,20 +75,31 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = null;
         switch (menuItem.getItemId()) {
-            case R.id.new_d:
+            case R.id.cd_new:
                 fragmentClass = RequestServiceFragment.class;
                 break;
-            case R.id.prog_dr:
+            case R.id.pending:
+                fragmentClass = StatusFragment.class;
+                break;
+            case R.id.cd_scheduled:
+                fragmentClass = ScheduleFragment.class;
+                break;
+            case R.id.cd_progress:
                 fragmentClass = ProgressFragment.class;
                 break;
-            case R.id.pay_dr:
+            case R.id.cd_completed:
+                fragmentClass = CompleteFragment.class;
+                break;
+            case R.id.cd_wallet:
                 fragmentClass = WalletFragment.class;
                 break;
-            case R.id.settings:
+            case R.id.cd_settings:
                 fragmentClass = SettingsActivity.class;
 //                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
 //                startActivity(settings);
                 break;
+            case R.id.cd_logout:
+                logout();
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -104,6 +115,10 @@ public class HomeActivity extends AppCompatActivity {
         mDrawer.closeDrawer(GravityCompat.START);
     }
 
+    private void logout(){
+        FirebaseAuth.getInstance().signOut();
+
+    }
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

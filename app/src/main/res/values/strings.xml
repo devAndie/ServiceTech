@@ -7,7 +7,6 @@
     <string name="continua">Continue As a;</string>
 
 
-
     <string-array name="technicians">
         <item>Lucius Fox</item>
         <item>Tonny Kross</item>
@@ -70,5 +69,7 @@
     <string name="dialog_permission_title">Grant Permissions</string>
     <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
     <string name="go_to_settings">GOTO SETTINGS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

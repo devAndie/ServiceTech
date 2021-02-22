@@ -15,20 +15,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BookingFragment extends Fragment {
+    private TAG;
     TextInputEditText item, service, location, notes, recommendations, date, startTime;
     String docId ,imagePath, picked;
     ImageView itemPhoto;
@@ -38,6 +45,7 @@ public class BookingFragment extends Fragment {
     DocumentReference ref;
     FirebaseAuth auth;
 
+    private FirebaseFirestore firestoreDB;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
@@ -61,6 +69,35 @@ public class BookingFragment extends Fragment {
         startTime = view.findViewById(R.id.stime);
 
         submit=view.findViewById(R.id.schedule);
+
+        firestoreDB = FirebaseFirestore.getInstance();
+
+        //get document from firebase
+        firestoreDB.collection("Service Requests")
+                .whereEqualTo("picked", "Not picked")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<EventModel> listingList = new ArrayList<>();
+
+                            for(DocumentSnapshot doc : task.getResult()){
+                                EventModel listing = doc.toObject(EventModel.class);
+
+                                listing.setId(doc.getId());
+                                listingList.add(listing);
+
+                                Log.d(TAG, doc.getId() + " => " + doc.getData());
+                            }
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
 
         Appointment aptevent = null;
         if(aptevent != null){
@@ -95,8 +132,25 @@ public class BookingFragment extends Fragment {
 
 
     }
+    private EventModel createEventObj(){
+        final EventModel event = new EventModel();
+        event.setId(docID);
+        event.setItemName(((TextView)getActivity()
+                .findViewById(R.id.item_name)).getText().toString());
+        event.setService(((TextView)getActivity()
+                .findViewById(R.id.item_type_la)).getText().toString());
+        event.setLocation(((TextView)getActivity()
+                .findViewById(R.id.loc_el)).getText().toString());
+        event.setNotes(((TextView)getActivity()
+                .findViewById(R.id.notewrap)).getText().toString());
+        event.setImageURL(imageURL);
+        event.setPicked("Not picked");
 
+        return event;
+    }
     public void submit(){
+
+
             ref.get().addOnSuccessListener(documentSnapshot -> {
                 Map<String, Object> reg_entry = new HashMap<>();
                 //String myId = ref.getId();

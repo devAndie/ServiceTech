@@ -28,8 +28,7 @@ import static android.content.ContentValues.TAG;
 public class ScheduleRecyclerViewAdapter extends
         RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
 
-    String docID;
-
+    private String docID;
     private List<Appointment> appointmentList;
     private Context context;
     private FirebaseFirestore firestoreDB;
@@ -92,7 +91,14 @@ public class ScheduleRecyclerViewAdapter extends
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editEventFragment(appointment);
+                FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+                Bundle bundle=new Bundle();
+                bundle.putParcelable("event", (Parcelable) appointment);
+
+                AppointmentFragment appointmentFragment = new AppointmentFragment();
+                appointmentFragment.setArguments(bundle);
+
+                fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
             }
         });
 
@@ -100,7 +106,7 @@ public class ScheduleRecyclerViewAdapter extends
             @Override
             public void onClick(View view) {
                 docID = appointment.getId();
-                FragmentManager fragMan = ((TechnicianActivity)context).getSupportFragmentManager();
+                FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
                 Bundle apptID = new Bundle();
                 apptID.putString("appointmentId", docID);
                 //Intent attend = new Intent()
@@ -108,8 +114,7 @@ public class ScheduleRecyclerViewAdapter extends
                 AppointmentFragment appointmentFragment = new AppointmentFragment();
                 appointmentFragment.setArguments(apptID);
 
-
-                attendEvent(appointment.getId(), itemPos);
+                fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
             }
         });
 
@@ -117,52 +122,26 @@ public class ScheduleRecyclerViewAdapter extends
 
     }
 
-    private void editEventFragment(Appointment appointment){
-        //db.collection('books').where('id', '==', 'fK3ddutEpD2qQqRMXNW5').get();
-        //db.collection('books').where(firebase.firestore.FieldPath.documentId(),
-        // '==', 'fK3ddutEpD2qQqRMXNW5').get();
-
+    private void updateEventFragment(Appointment appointment){
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         Bundle bundle=new Bundle();
         bundle.putParcelable("event", (Parcelable) appointment);
 
-        ScheduleFragment scheduleFragment = new ScheduleFragment();
-        scheduleFragment.setArguments(bundle);
+        AppointmentFragment appointmentFragment = new AppointmentFragment();
+        appointmentFragment.setArguments(bundle);
 
-        fm.beginTransaction().replace(R.id.tech_container, scheduleFragment).commit();
+        fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
     }
 
-    private void attendEvent(String docId, final int position){
+    private void attendEvent(String docId){
+        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+        Bundle bundle=new Bundle();
+        bundle.putString("event", docId);
 
+        BillingFragment billingFragment = new BillingFragment();
+        billingFragment.setArguments(bundle);
 
-
-
+        fm.beginTransaction().replace(R.id.tech_container, billingFragment).commit();
     }
-    /*private void addDocumentToCollection(EventModel event){
-        firestoreDB.collection("events")
-                .add(event)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "Event document added - id: "
-                                + documentReference.getId());
-                        restUi();
-                        Toast.makeText(getActivity(),
-                                "Event document has been added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding event document", e);
-                        Toast.makeText(getActivity(),
-                                "Event document could not be added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-     */
-
 
 }
