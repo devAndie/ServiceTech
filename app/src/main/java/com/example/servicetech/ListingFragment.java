@@ -33,11 +33,8 @@ public class ListingFragment extends Fragment {
     private FirebaseFirestore firestoreDB;
     private RecyclerView eventsRecyclerView;
 
-
     FragmentActivity listener;
     ListingRecyclerViewAdapter listingRecyclerViewAdapter;
-
-
 
     Context thisContext;
 

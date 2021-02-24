@@ -1,15 +1,28 @@
 package com.example.servicetech;
 
 public class Appointment extends EventModel{
-    private String recommendation, startTime, date;
+    private String techId, recommendation, startTime, date;
 
    // public Appointment(){}
 
-    public Appointment(String id, String itemName, String Service, String location, String notes, String imageURL, String picked, String recommendation, String startTime, String date) {
+    public Appointment(String id, String itemName, String Service, String location, String notes,
+                       String imageURL, String picked, String techId, String recommendation, String startTime,
+                       String date) {
         super(id, itemName, Service, location, notes, imageURL, picked);
+        this.techId = techId;
         this.recommendation = recommendation;
         this.startTime = startTime;
         this.date = date;
+    }
+
+    public Appointment() {}
+
+    public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
     }
 
     public String getRecommendation() {

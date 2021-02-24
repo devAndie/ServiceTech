@@ -25,7 +25,8 @@ public class ListingRecyclerViewAdapter extends
     private FirebaseFirestore firestoreDB;
     private String docId;
 
-    public ListingRecyclerViewAdapter(List<EventModel> listingList, Context context, FirebaseFirestore firestoreDB) {
+    public ListingRecyclerViewAdapter(List<EventModel> listingList, Context context,
+                                      FirebaseFirestore firestoreDB) {
         this.listingList = listingList;
         this.context = context;
         this.firestoreDB = firestoreDB;
@@ -75,9 +76,7 @@ public class ListingRecyclerViewAdapter extends
         holder.book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 bookEvent(event);
-
             }
         });
 
@@ -87,8 +86,7 @@ public class ListingRecyclerViewAdapter extends
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
 
         Bundle bundle=new Bundle();
-        bundle.putString("eventID", docId);
-
+        bundle.putParcelable("event", (Parcelable) event);
         BookingFragment createSchedule = new BookingFragment();
         createSchedule.setArguments(bundle);
 

@@ -29,25 +29,16 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-
     public static final int MY_PASSWORD_DIALOG_ID = 4;
-    public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
-            "(?=.*[0-9])" +         //at least 1 digit
-            "(?=.*[a-z])" +         //at least 1 lower case letter
-            "(?=.*[A-Z])" +         //at least 1 upper case letter
-            "(?=.*[a-zA-Z])" +      //any letter
-            "(?=.*[@#$%^&+=])" +    //at least 1 special character
-            "(?=\\S+$)" +           //no white spaces
-            ".{4,}" +               //at least 4 characters
-            "$");
     private static final String TAG = RegisterActivity.class.getSimpleName();
+
     private EditText Name, mail, address, phone, pwd, conf_Pwd;
-    Button signUp, logIn;
+    private String Names, Mail, Address, Password, Conf;
+    int Phone;
+    private Button signUp, logIn;
     FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,31 +51,35 @@ public class RegisterActivity extends AppCompatActivity {
         logIn = findViewById(R.id.log_in);
         signUp = findViewById(R.id.sign_in);
 
-        String password = pwd.getText().toString();
-        String passConf = conf_Pwd.getText().toString();
 
         firebaseFirestore=FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("customers").document();
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        Names = Name.getText().toString();
+        Mail = mail.getText().toString();
+        Address = address.getText().toString();
+        Phone = Integer.parseInt(phone.getText().toString());
+        Password = pwd.getText().toString();
+        Conf = conf_Pwd.getText().toString();
+
 
         signUp.setOnClickListener(v -> {
-            if(Name.getText().toString().equals("")) {
+            if(Names.equals("")) {
                 Toast.makeText(RegisterActivity.this, "Please type a username",
                         Toast.LENGTH_SHORT).show();
-            }else if(mail.getText().toString().equals("")) {
+            }else if(Mail.equals("")) {
                 Toast.makeText(RegisterActivity.this, "Please type an email id",
                         Toast.LENGTH_SHORT).show();
-            }else if(password.equals("")){
+            }else if(Password.equals("")){
                 Toast.makeText(RegisterActivity.this, "Please type a password",
                         Toast.LENGTH_SHORT).show();
-            }else if(!passConf.equals(password)){
+            }else if(!Conf.equals(Password)){
                 Toast.makeText(RegisterActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
             }else
-                confirmInput(v);
-                //createAccount();
+                createCustomer();
         });
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -95,29 +90,22 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void createAccount(){
-        String Names = Name.getText().toString();
-        String password = pwd.getText().toString();
-        String Phone = phone.getText().toString();
-        String email = mail.getText().toString();
-        String Address = address.getText().toString();
-        String passConf = conf_Pwd.getText().toString();
+    public void createCustomer(){
+        final CustomerModel customer = new CustomerModel();
+        customer.setNames(Names);
+        customer.setMail(Mail);
+        customer.setAddress(Address);
+        customer.setPhone(Phone);
+        customer.setPassword(Password);
 
         ref.get().addOnSuccessListener(documentSnapshot -> {
-
             if (documentSnapshot.exists()){
+                Intent LogIn = new Intent(this, LogInActivity.class);
                 Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
                     Toast.LENGTH_SHORT).show();
+                startActivity(LogIn);
             } else {
-                Map<String, Object> customer = new HashMap<>();
-                customer.put("Names", Names);
-                customer.put("Phone No", Phone);
-                customer.put("Email", email);
-                customer.put("Address", Address);
-                customer.put("Password", password);
-
-                auth.createUserWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(Mail, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -126,17 +114,14 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
 
-                            //String myId = ref.getId();
+                            String myId = ref.getId();
                             firebaseFirestore.collection("customers")
                             .add(customer)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(RegisterActivity.this, "Registration successful",
-                                        Toast.LENGTH_SHORT).show();
+                            .addOnSuccessListener(documentReference -> {
+                                Toast.makeText(RegisterActivity.this, "Registration successful",
+                                    Toast.LENGTH_SHORT).show();
 
-                                    updateUI(user);
-                                }
+                                updateUI(user);
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -165,13 +150,5 @@ public class RegisterActivity extends AppCompatActivity {
             Intent reload = new Intent(RegisterActivity.this, RegisterActivity.class);
             startActivity(reload);
         }
-    }
-    public void confirmInput(View v) {
-        String input = "Email: " + mail.getText().toString();   input += "\n";
-        input += "Username: " + Name.getText().toString();  input += "\n";
-        input += "phoneNumber: " + phone.getText().toString();
-
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
-        createAccount();
     }
 }

@@ -2,25 +2,34 @@ package com.example.servicetech;
 
 public class CustomerModel {
 
-    private static String Names;
+    private static String custId, Names;
     private static String mail;
     private static String address;
     private static String password;
-    private static int id, phone;
+    private static int phone;
 
     //Constructors
     public CustomerModel() {
     }
 
-    public CustomerModel(int id, String Names, String mail,
+    public CustomerModel(String custId, String Names, String mail,
                          String address,  int phone, String password) {
-        this.id = id;
+        this.custId = custId;
         this.Names = Names;
         this.mail = mail;
         this.address = address;
         this.phone = phone;
         this.password = password;
     }
+
+    public static String getCustId() {
+        return custId;
+    }
+
+    public static void setCustId(String custId) {
+        CustomerModel.custId = custId;
+    }
+
     public static String getNames() {
         return Names;
     }
@@ -52,13 +61,6 @@ public class CustomerModel {
         CustomerModel.password = password;
     }
 
-    public static int getId() {
-        return id;
-    }
-
-    public static void setId(int id) {
-        CustomerModel.id = id;
-    }
 
     public static int getPhone() {
         return phone;
@@ -68,15 +70,4 @@ public class CustomerModel {
         CustomerModel.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerModel{" +
-                ", id=" + id +
-                ", Names='" + Names + '\'' +
-                ", mail='" + mail + '\'' +
-                ", address='" + address + '\'' +
-                ", password='" + password + '\'' +
-                ", phone=" + phone +
-                '}';
-    }
 }

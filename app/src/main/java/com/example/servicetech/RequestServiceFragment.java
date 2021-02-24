@@ -52,7 +52,6 @@ public class RequestServiceFragment extends Fragment {
     Button submit, cancel;
     ImageButton  itemImg;
     FirebaseStorage storage;
-    StorageReference storageReference, fireRef;
     DocumentReference ref;
     StorageReference ImgRef;
     FirebaseUser currentUser;
@@ -61,7 +60,7 @@ public class RequestServiceFragment extends Fragment {
     private FirebaseFirestore firestoreDB;
     private FirebaseAuth mAuth;
     private String docID, docId, picked;
-    private StorageReference mStorageRef;
+    private StorageReference storageReference, fireRef, mStorageRef;
     private boolean isEdit;
     private Uri itemimg;
     private final int PICK_IMAGE_REQUEST = 71;
@@ -116,7 +115,8 @@ public class RequestServiceFragment extends Fragment {
                 Reload();
             }
         });
-        EventModel event = null;
+
+ /*       EventModel event = null;
         if(getArguments() != null){
             event = getArguments().getParcelable("event");
             ((TextView)view.findViewById(id.rqsv_tv)).setText("Edit Details");
@@ -132,6 +132,7 @@ public class RequestServiceFragment extends Fragment {
 
             isEdit = true;
         }
+  */
         submit.setOnClickListener(v -> {
             UploadImages();
         });
@@ -160,26 +161,6 @@ public class RequestServiceFragment extends Fragment {
             }
         }
     }
-    public void addEvent(){
-        EventModel event = createEventObj();
-        addDocumentToCollection(event);
-    }
-    private EventModel createEventObj(){
-        final EventModel event = new EventModel();
-        event.setId(docID);
-        event.setItemName(((TextView)getActivity().findViewById(id.item_name)).getText().toString());
-        event.setService(((TextView)getActivity()
-                .findViewById(id.item_type_la)).getText().toString());
-        event.setLocation(((TextView)getActivity()
-                .findViewById(id.loc_el)).getText().toString());
-        event.setNotes(((TextView)getActivity()
-                .findViewById(id.notewrap)).getText().toString());
-        event.setImageURL(imageURL);
-        event.setPicked("Not picked");
-
-        return event;
-    }
-
     public void UploadImages() {
         try {
             String strFileName = GetDate() + "img.jpg";
@@ -211,7 +192,7 @@ public class RequestServiceFragment extends Fragment {
                                 , Toast.LENGTH_LONG).show();
                     }
 
-                    docID = currentUser.getUid()+ GetDate();
+                    docId = currentUser.getUid();
                     addEvent();
                 }
             });
@@ -219,29 +200,46 @@ public class RequestServiceFragment extends Fragment {
             Toast.makeText(getContext(), ex.getMessage().toString(), Toast.LENGTH_LONG).show();
         }
     }
+    public void addEvent(){
+        EventModel event = createEventObj();
+        addDocumentToCollection(event);
+    }
+    private EventModel createEventObj(){
+        final EventModel event = new EventModel();
+        event.setId(docId);
+        event.setItemName(item.getText().toString());
+        event.setService(service.getText().toString());
+        event.setLocation(location.getText().toString());
+        event.setNotes(notes.getText().toString());
+        event.setImageURL(imageURL);
+        event.setPicked("Not picked");
+
+        return event;
+    }
+
     private void addDocumentToCollection(EventModel event){
         firestoreDB.collection("events")
-                .add(event)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "Event document added - id: "
-                                + documentReference.getId());
-                        restUi();
-                        Toast.makeText(getActivity(),
-                                "Event document has been added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding event document", e);
-                        Toast.makeText(getActivity(),
-                                "Event document could not be added",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        .add(event)
+        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d(TAG, "Event document added - id: "
+                        + documentReference.getId());
+                restUi();
+                Toast.makeText(getActivity(),
+                        "Event document has been added",
+                        Toast.LENGTH_SHORT).show();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding event document", e);
+                Toast.makeText(getActivity(),
+                        "Event document could not be added",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
     private void restUi() {
