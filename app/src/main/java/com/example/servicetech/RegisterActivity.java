@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private EditText Name, mail, address, phone, pwd, conf_Pwd;
-    private String Names, Mail, Address, Password, Conf;
+    private String Id, Names, Mail, Address, Password, Conf;
     int Phone;
     private Button signUp, logIn;
     FirebaseAuth auth;
@@ -51,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
         logIn = findViewById(R.id.log_in);
         signUp = findViewById(R.id.sign_in);
 
-
         firebaseFirestore=FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("customers").document();
         //Get Firebase auth instance
@@ -63,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
         Phone = Integer.parseInt(phone.getText().toString());
         Password = pwd.getText().toString();
         Conf = conf_Pwd.getText().toString();
-
 
         signUp.setOnClickListener(v -> {
             if(Names.equals("")) {
@@ -78,8 +76,18 @@ public class RegisterActivity extends AppCompatActivity {
             }else if(!Conf.equals(Password)){
                 Toast.makeText(RegisterActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
-            }else
-                createCustomer();
+            }else {
+                ref.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()){
+                        Intent LogIn = new Intent(this, LogInActivity.class);
+                        Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(LogIn);
+                    } else {
+                        authenticate();
+                    }
+                });
+            }
         });
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -90,22 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    public void createCustomer(){
-        final CustomerModel customer = new CustomerModel();
-        customer.setNames(Names);
-        customer.setMail(Mail);
-        customer.setAddress(Address);
-        customer.setPhone(Phone);
-        customer.setPassword(Password);
-
-        ref.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()){
-                Intent LogIn = new Intent(this, LogInActivity.class);
-                Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
-                    Toast.LENGTH_SHORT).show();
-                startActivity(LogIn);
-            } else {
-                auth.createUserWithEmailAndPassword(Mail, Password)
+    public void authenticate(){
+        auth.createUserWithEmailAndPassword(Mail, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,32 +107,51 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
+                            Id = user.getUid();
 
-                            String myId = ref.getId();
-                            firebaseFirestore.collection("customers")
-                            .add(customer)
-                            .addOnSuccessListener(documentReference -> {
-                                Toast.makeText(RegisterActivity.this, "Registration successful",
-                                    Toast.LENGTH_SHORT).show();
-
-                                updateUI(user);
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Error", e.getMessage());
-                                    updateUI(null);
-                                }
-                            });
+                            //add doc
+                            addCustomer();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
+
+                        // ...
                     }
                 });
+    }
+    public void addCustomer(){
+        CustomerModel customer = createCustomer();
+        addDocumentToCollection(customer);
+    }
+    public CustomerModel createCustomer() {
+        final CustomerModel customer = new CustomerModel();
+        customer.setCustId(Id);
+        customer.setNames(Names);
+        customer.setMail(Mail);
+        customer.setAddress(Address);
+        customer.setPhone(Phone);
+        customer.setPassword(Password);
+
+        return customer;
+    }
+
+    public void addDocumentToCollection(CustomerModel customer){
+        firebaseFirestore.collection("customers")
+        .add(customer)
+        .addOnSuccessListener(documentReference -> {
+            Toast.makeText(RegisterActivity.this, "Registration successful",
+                Toast.LENGTH_SHORT).show();
+            FirebaseUser user = auth.getCurrentUser();
+            updateUI(user);
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Error", e.getMessage());
             }
         });
     }

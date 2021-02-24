@@ -17,6 +17,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class TechnicianActivity extends AppCompatActivity {
 
@@ -25,17 +27,30 @@ public class TechnicianActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
+    private FirebaseAuth mAuth;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Intent Login = new Intent(getApplicationContext(), TechLogInActivity.class);
+            startActivity(Login);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.technician_home);
 
-
         navigationView = findViewById(R.id.t_nav_view);
         toolbar = findViewById(R.id.toolbar_main);
         nDrawer = findViewById(R.id.t_draw_lay);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
@@ -73,17 +88,20 @@ public class TechnicianActivity extends AppCompatActivity {
         );
     }
     public void selectDrawerItem(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
         Class fragmentClass = null;
         switch (menuItem.getItemId()) {
-            case R.id.new_d:
-                fragmentClass = RequestServiceFragment.class;
+            case R.id.td_listing:
+                fragmentClass = ListingFragment.class;
                 break;
-            case R.id.settings:
+            case R.id.td_schedule:
+                fragmentClass = ScheduleFragment.class;
+                break;
+            case R.id.td_setting:
                 fragmentClass = SettingsActivity.class;
-                break;
-            case R.id.prog_dr:
-                fragmentClass = ProgressFragment.class;
                 break;
             case R.id.cd_wallet:
                 fragmentClass = PaymentFragment.class;
@@ -92,21 +110,24 @@ public class TechnicianActivity extends AppCompatActivity {
                 Intent main = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(main);
                 break;
-            case R.id.logout:
-                Intent logIn = new Intent(getApplicationContext(), LogInActivity.class);
-                startActivity(logIn);
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (id == R.id.td_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent loginActivity = new Intent(getApplicationContext(),TechLogInActivity.class);
+            startActivity(loginActivity);
+            finish();
+        }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.tech_container, fragment).commit();
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
+
 
         nDrawer.closeDrawer(GravityCompat.START);
     }

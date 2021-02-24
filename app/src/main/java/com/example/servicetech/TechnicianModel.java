@@ -63,7 +63,7 @@ public class TechnicianModel {
         return id;
     }
 
-    public static void setId(int id) {
+    public static void setId(String id) {
         TechnicianModel.id = id;
     }
 
@@ -71,7 +71,7 @@ public class TechnicianModel {
         return phoneNo;
     }
 
-    public static void setPhoneNo(int phoneNo) {
+    public static void setPhoneNo(String phoneNo) {
         TechnicianModel.phoneNo = phoneNo;
     }
 

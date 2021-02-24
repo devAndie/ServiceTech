@@ -59,7 +59,7 @@ public class RequestServiceFragment extends Fragment {
     private DatabaseReference databaseReference, childReference;
     private FirebaseFirestore firestoreDB;
     private FirebaseAuth mAuth;
-    private String docID, docId, picked;
+    private String docId, Item, Service, Location, Notes;
     private StorageReference storageReference, fireRef, mStorageRef;
     private boolean isEdit;
     private Uri itemimg;
@@ -101,6 +101,11 @@ public class RequestServiceFragment extends Fragment {
         storageReference = storage.getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        Item = item.getText().toString();
+        Service = service.getText().toString();
+        Location = location.getText().toString();
+        Notes = notes.getText().toString();
 
         itemImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,10 +212,10 @@ public class RequestServiceFragment extends Fragment {
     private EventModel createEventObj(){
         final EventModel event = new EventModel();
         event.setId(docId);
-        event.setItemName(item.getText().toString());
-        event.setService(service.getText().toString());
-        event.setLocation(location.getText().toString());
-        event.setNotes(notes.getText().toString());
+        event.setItemName(Item);
+        event.setService(Service);
+        event.setLocation(Location);
+        event.setNotes(Notes);
         event.setImageURL(imageURL);
         event.setPicked("Not picked");
 
