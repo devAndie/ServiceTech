@@ -69,42 +69,40 @@ public class ScheduleFragment extends Fragment {
         button.setOnClickListener(v -> viewEvents());
 
         firestoreDB.collection("events")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<Appointment> appointmentList = new ArrayList<>();
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        List<Appointment> appointmentList = new ArrayList<>();
 
-                            for(DocumentSnapshot doc : task.getResult()){
-                                Appointment apt = doc.toObject(Appointment.class);
+                        for(DocumentSnapshot doc : task.getResult()){
+                            Appointment apt = doc.toObject(Appointment.class);
 
-                                apt.setId(doc.getId());
-                                appointmentList.add(apt);
+                            apt.setId(doc.getId());
+                            appointmentList.add(apt);
 
-                                Log.d(TAG, doc.getId() + " => " + doc.getData());
-                            }
-                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(appointmentList,
-                                    getActivity(), firestoreDB);
-                            scheduleRecyclerView.setAdapter(recyclerViewAdapter);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, doc.getId() + " => " + doc.getData());
                         }
+                        ScheduleRecyclerViewAdapter recyclerViewAdapter = new
+                                ScheduleRecyclerViewAdapter(appointmentList,
+                                getActivity(), firestoreDB);
+                        scheduleRecyclerView.setAdapter(recyclerViewAdapter);
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
-        firestoreDB.collection("Appointments")
-                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-                            doc.getDocument().toObject(EventModel.class);
-                            //do something...
-                        }
+                }
+            });
+        firestoreDB.collection("events")
+            .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                    for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                        doc.getDocument().toObject(Appointment.class);
+                        //do something...
                     }
-                });
-
-
+                }
+            });
     }
 
     public void viewEvents() {
@@ -114,42 +112,42 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void getDocumentsFromCollection(String eventType) {
-        firestoreDB.collection("Appointments")
-                .whereEqualTo("Service type", eventType)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<Appointment> appointmentList = new ArrayList<>();
+        firestoreDB.collection("events")
+            .whereEqualTo("Service type", eventType)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        List<Appointment> appointmentList = new ArrayList<>();
 
-                            for(DocumentSnapshot doc : task.getResult()){
-                                Appointment apt = doc.toObject(Appointment.class);
+                        for(DocumentSnapshot doc : task.getResult()){
+                            Appointment apt = doc.toObject(Appointment.class);
 
-                                //apt.setId(doc.getId());
-                                appointmentList.add(apt);
-                            }
-                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(appointmentList,
-                                    getActivity(), firestoreDB);
-                            scheduleRecyclerView.setAdapter(recyclerViewAdapter);
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            apt.setId(doc.getId());
+                            appointmentList.add(apt);
                         }
-                    }
-                });
+                        ScheduleRecyclerViewAdapter recyclerViewAdapter = new
+                                ScheduleRecyclerViewAdapter(appointmentList,
+                                getActivity(), firestoreDB);
+                        scheduleRecyclerView.setAdapter(recyclerViewAdapter);
 
-        firestoreDB.collection("Appointments")
-                .whereEqualTo("Service type", eventType)
-                .addSnapshotListener(requireActivity(), new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-                            doc.getDocument().toObject(EventModel.class);
-                            //do something...
-                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
+                }
+            });
+
+        firestoreDB.collection("events")
+            .whereEqualTo("Service type", eventType)
+            .addSnapshotListener(requireActivity(), new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                    for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                        doc.getDocument().toObject(Appointment.class);
+                        //do something...
+                    }
+                }
+            });
     }
 }

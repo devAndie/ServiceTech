@@ -27,7 +27,9 @@ public class TechRegActivity extends AppCompatActivity {
     private static final String TAG = TechRegActivity.class.getSimpleName();
 
     EditText name, mail, phone, specialty, tether, pwd, conf_pwd;
-    private String TechId, Name, Phone, Mail, Specialty, Tether, Password, ConPass;
+    private String TechId, Name, Phone, Mail, Specialty, Tether,
+            Password, ConPass;
+
     private FirebaseAuth mAuth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
@@ -59,19 +61,19 @@ public class TechRegActivity extends AppCompatActivity {
 
         Button tchRg = findViewById(R.id.tech_rgt);
         tchRg.setOnClickListener(v -> {
-            if(Name.equals("")) {
+            if(name.getText().toString().equals("")) {
                 Toast.makeText(TechRegActivity.this, "Please type a username",
                         Toast.LENGTH_SHORT).show();
 
-            }else if(Mail.equals("")) {
+            }else if(mail.getText().toString().equals("")) {
                 Toast.makeText(TechRegActivity.this, "Please type an email id",
                         Toast.LENGTH_SHORT).show();
 
-            }else if(Password.equals("")){
+            }else if(pwd.getText().toString().equals("")){
                 Toast.makeText(TechRegActivity.this, "Please type a password",
                         Toast.LENGTH_SHORT).show();
 
-            }else if(!ConPass.equals(Password)){
+            }else if(!conf_pwd.getText().toString().equals(pwd.getText().toString())){
                 Toast.makeText(TechRegActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
             }else {

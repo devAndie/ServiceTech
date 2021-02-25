@@ -59,7 +59,7 @@ public class RequestServiceFragment extends Fragment {
     private DatabaseReference databaseReference, childReference;
     private FirebaseFirestore firestoreDB;
     private FirebaseAuth mAuth;
-    private String docId, Item, Service, Location, Notes;
+    private String docId, custId, Item, Service, Location, Notes;
     private StorageReference storageReference, fireRef, mStorageRef;
     private boolean isEdit;
     private Uri itemimg;
@@ -85,6 +85,7 @@ public class RequestServiceFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        custId = currentUser.getUid();
 
         item = view.findViewById(id.item_name);
         service = view.findViewById(id.item_type_la);
@@ -196,8 +197,7 @@ public class RequestServiceFragment extends Fragment {
                         Toast.makeText(getContext(), "Image upload unsuccessful. Please try again."
                                 , Toast.LENGTH_LONG).show();
                     }
-
-                    docId = currentUser.getUid();
+                    docId = currentUser.getUid() + GetDate();
                     addEvent();
                 }
             });
@@ -212,6 +212,7 @@ public class RequestServiceFragment extends Fragment {
     private EventModel createEventObj(){
         final EventModel event = new EventModel();
         event.setId(docId);
+        event.setCustomerId(custId);
         event.setItemName(Item);
         event.setService(Service);
         event.setLocation(Location);

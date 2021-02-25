@@ -2,18 +2,14 @@ package com.example.servicetech;
 
 public class CustomerModel {
 
-    private static String custId, Names;
-    private static String mail;
-    private static String address;
-    private static String password;
-    private static int phone;
+    private static String custId, Names, mail, phone, address, password;
 
     //Constructors
     public CustomerModel() {
     }
 
     public CustomerModel(String custId, String Names, String mail,
-                         String address,  int phone, String password) {
+                         String address,  String phone, String password) {
         this.custId = custId;
         this.Names = Names;
         this.mail = mail;
@@ -62,11 +58,11 @@ public class CustomerModel {
     }
 
 
-    public static int getPhone() {
+    public static String getPhone() {
         return phone;
     }
 
-    public static void setPhone(int phone) {
+    public static void setPhone(String phone) {
         CustomerModel.phone = phone;
     }
 

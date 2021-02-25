@@ -32,9 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     public static final int MY_PASSWORD_DIALOG_ID = 4;
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
-    private EditText Name, mail, address, phone, pwd, conf_Pwd;
-    private String Id, Names, Mail, Address, Password, Conf;
-    int Phone;
+    private EditText name, mail, address, phone, pwd, conf_Pwd;
+    private String Id, Names, Mail, Phone, Address, Password, Conf;
     private Button signUp, logIn;
     FirebaseAuth auth;
     FirebaseFirestore firebaseFirestore;
@@ -45,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        Name = findViewById(R.id.c_name); mail = findViewById(R.id.mail);
+        name = findViewById(R.id.c_name); mail = findViewById(R.id.mail);
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
         pwd = findViewById(R.id.pass); conf_Pwd = findViewById(R.id.conPass);
         logIn = findViewById(R.id.log_in);
@@ -56,24 +55,24 @@ public class RegisterActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        Names = Name.getText().toString();
+        Names = name.getText().toString();
         Mail = mail.getText().toString();
         Address = address.getText().toString();
-        Phone = Integer.parseInt(phone.getText().toString());
+        Phone = phone.getText().toString();
         Password = pwd.getText().toString();
         Conf = conf_Pwd.getText().toString();
 
         signUp.setOnClickListener(v -> {
-            if(Names.equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type a username",
+            if(name.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "Please type your name",
                         Toast.LENGTH_SHORT).show();
-            }else if(Mail.equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type an email id",
+            }else if(mail.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "Please type an email",
                         Toast.LENGTH_SHORT).show();
-            }else if(Password.equals("")){
+            }else if(pwd.getText().toString().equals("")){
                 Toast.makeText(RegisterActivity.this, "Please type a password",
                         Toast.LENGTH_SHORT).show();
-            }else if(!Conf.equals(Password)){
+            }else if(!conf_Pwd.getText().toString().equals(pwd.getText().toString())){
                 Toast.makeText(RegisterActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
             }else {

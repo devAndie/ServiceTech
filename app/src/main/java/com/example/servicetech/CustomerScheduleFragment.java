@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.servicetech.dummy.DummyContent;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +35,7 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  */
-public class CompleteFragment extends Fragment {
+public class CustomerScheduleFragment extends Fragment {
     private static final String TAG = "CustomerSchedule";
     private FirebaseFirestore firestoreDB;
     private RecyclerView customerScheduleRv;
@@ -42,17 +43,24 @@ public class CompleteFragment extends Fragment {
     FirebaseUser user;
     String docId;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.complete_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer_schedule_list, container, false);
 
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         cAuth = FirebaseAuth.getInstance();
         user = cAuth.getCurrentUser();
         docId = user.getUid();

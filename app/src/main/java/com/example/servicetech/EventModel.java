@@ -4,21 +4,31 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class EventModel {
-    private String id, itemName, Service, location, notes, imageURL, picked;
+    private String id, customerId, itemName, Service, location, notes, imageURL, picked;
 
     //constructors
     public EventModel() {
     }
 
-    public EventModel(String id, String itemName, String Service, String location,
-                      String notes, String imageURL, String picked) {
+
+    public EventModel(String id, String customerId, String itemName, String service,
+                      String location, String notes, String imageURL, String picked) {
         this.id = id;
+        this.customerId = customerId;
         this.itemName = itemName;
-        this.Service = Service;
+        Service = service;
         this.location = location;
         this.notes = notes;
         this.imageURL = imageURL;
         this.picked = picked;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public void setId(String id) {

@@ -105,6 +105,7 @@ public class BookingFragment extends Fragment {
             notes.setText(desc);
             imagePath = event.getImageURL();
 
+            submit.setText("Update");
             isEdit = true;
         }
 
@@ -141,6 +142,7 @@ public class BookingFragment extends Fragment {
         .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+
                 viewSchedule();
             }
         })

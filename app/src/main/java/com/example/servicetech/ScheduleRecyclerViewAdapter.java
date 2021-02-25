@@ -91,30 +91,14 @@ public class ScheduleRecyclerViewAdapter extends
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-                Bundle bundle=new Bundle();
-                bundle.putParcelable("event", (Parcelable) appointment);
-
-                AppointmentFragment appointmentFragment = new AppointmentFragment();
-                appointmentFragment.setArguments(bundle);
-
-                fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
+                updateAppointmentFragment(appointment);
             }
         });
 
         holder.attend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                docID = appointment.getId();
-                FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-                Bundle apptID = new Bundle();
-                apptID.putString("appointmentId", docID);
-                //Intent attend = new Intent()
-
-                AppointmentFragment appointmentFragment = new AppointmentFragment();
-                appointmentFragment.setArguments(apptID);
-
-                fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
+                attendEvent(appointment);
             }
         });
 
@@ -122,26 +106,29 @@ public class ScheduleRecyclerViewAdapter extends
 
     }
 
-    private void updateEventFragment(Appointment appointment){
+    private void updateAppointmentFragment(Appointment appointment){
+        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("event", (Parcelable) appointment);
+
+        BookingFragment bookingFragment = new BookingFragment();
+        bookingFragment.setArguments(bundle);
+
+        fm.beginTransaction().replace(R.id.tech_container, bookingFragment).commit();
+    }
+
+    private void attendEvent(Appointment appointment){
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         Bundle bundle=new Bundle();
         bundle.putParcelable("event", (Parcelable) appointment);
 
+        AttendAppointmentFragment attendAppointmentFragment = new AttendAppointmentFragment();
+        attendAppointmentFragment.setArguments(bundle);
+
         AppointmentFragment appointmentFragment = new AppointmentFragment();
-        appointmentFragment.setArguments(bundle);
+        //appointmentFragment.setArguments(bundle);
 
         fm.beginTransaction().replace(R.id.tech_container, appointmentFragment).commit();
-    }
-
-    private void attendEvent(String docId){
-        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-        Bundle bundle=new Bundle();
-        bundle.putString("event", docId);
-
-        BillingFragment billingFragment = new BillingFragment();
-        billingFragment.setArguments(bundle);
-
-        fm.beginTransaction().replace(R.id.tech_container, billingFragment).commit();
     }
 
 }

@@ -3,18 +3,13 @@ package com.example.servicetech;
 public class Appointment extends EventModel{
     private String techId, recommendation, startTime, date;
 
-   // public Appointment(){}
-
-    public Appointment(String id, String itemName, String Service, String location, String notes,
-                       String imageURL, String picked, String techId, String recommendation, String startTime,
-                       String date) {
-        super(id, itemName, Service, location, notes, imageURL, picked);
+    public Appointment(String id, String customerId, String itemName, String service, String location, String notes, String imageURL, String picked, String techId, String recommendation, String startTime, String date) {
+        super(id, customerId, itemName, service, location, notes, imageURL, picked);
         this.techId = techId;
         this.recommendation = recommendation;
         this.startTime = startTime;
         this.date = date;
     }
-
     public Appointment() {}
 
     public String getTechId() {
