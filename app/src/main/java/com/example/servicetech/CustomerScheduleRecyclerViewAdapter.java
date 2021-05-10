@@ -2,12 +2,14 @@ package com.example.servicetech;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.servicetech.dummy.DummyContent.DummyItem;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -16,11 +18,17 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<CustomerScheduleRecyclerViewAdapter.ViewHolder> {
+    private String docID;
+    private final List<Appointment> appointmentList;
+    private Context context;
+    private FirebaseFirestore firestoreDB;
 
-    private final List<DummyItem> mValues;
 
-    public CustomerScheduleRecyclerViewAdapter(List<DummyItem> items) {
-        mValues = items;
+    public CustomerScheduleRecyclerViewAdapter(List<Appointment> items, Context ctx, FirebaseFirestore firestore){
+        appointmentList = items;
+	context = ctx;
+        firestoreDB = firestore;
+
     }
 
     @Override
@@ -32,14 +40,16 @@ public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Cu
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        /*holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
+
+         */
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

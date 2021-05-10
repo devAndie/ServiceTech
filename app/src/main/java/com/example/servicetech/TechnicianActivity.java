@@ -100,15 +100,12 @@ public class TechnicianActivity extends AppCompatActivity {
             case R.id.td_schedule:
                 fragmentClass = ScheduleFragment.class;
                 break;
-            case R.id.td_setting:
-                fragmentClass = SettingsActivity.class;
-                break;
-            case R.id.cd_wallet:
-                fragmentClass = PaymentFragment.class;
-                break;
             case R.id.swapt:
                 Intent main = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(main);
+                break;
+            case R.id.td_logout:
+                fragmentClass = LogOutFragment.class;
                 break;
         }
         try {

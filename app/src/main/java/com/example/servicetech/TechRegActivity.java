@@ -27,10 +27,11 @@ public class TechRegActivity extends AppCompatActivity {
     private static final String TAG = TechRegActivity.class.getSimpleName();
 
     EditText name, mail, phone, specialty, tether, pwd, conf_pwd;
-    private String TechId, Name, Phone, Mail, Specialty, Tether,
+    private String Id, Name, Phone, Mail, Specialty, Tether,
             Password, ConPass;
 
     private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
 
@@ -62,11 +63,11 @@ public class TechRegActivity extends AppCompatActivity {
         Button tchRg = findViewById(R.id.tech_rgt);
         tchRg.setOnClickListener(v -> {
             if(name.getText().toString().equals("")) {
-                Toast.makeText(TechRegActivity.this, "Please type a username",
+                Toast.makeText(TechRegActivity.this, "Please type Your Official Names",
                         Toast.LENGTH_SHORT).show();
 
             }else if(mail.getText().toString().equals("")) {
-                Toast.makeText(TechRegActivity.this, "Please type an email id",
+                Toast.makeText(TechRegActivity.this, "Please type a valid email",
                         Toast.LENGTH_SHORT).show();
 
             }else if(pwd.getText().toString().equals("")){
@@ -99,8 +100,8 @@ public class TechRegActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            TechId = user.getUid();
+                            currentUser = mAuth.getCurrentUser();
+                            Id = currentUser.getUid();
 
                             //add doc
                             addTechnician();
@@ -122,7 +123,7 @@ public class TechRegActivity extends AppCompatActivity {
     }
     public TechnicianModel createTechnicianObject(){
         final TechnicianModel technician = new TechnicianModel();
-        technician.setId(TechId);
+        technician.setId(Id);
         technician.setNames(Name);
         technician.setMail(Mail);
         technician.setPhoneNo(Phone);

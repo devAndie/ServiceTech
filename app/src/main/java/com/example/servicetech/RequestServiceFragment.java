@@ -85,7 +85,6 @@ public class RequestServiceFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        custId = currentUser.getUid();
 
         item = view.findViewById(id.item_name);
         service = view.findViewById(id.item_type_la);
@@ -197,7 +196,9 @@ public class RequestServiceFragment extends Fragment {
                         Toast.makeText(getContext(), "Image upload unsuccessful. Please try again."
                                 , Toast.LENGTH_LONG).show();
                     }
+                    custId = currentUser.getUid();
                     docId = currentUser.getUid() + GetDate();
+
                     addEvent();
                 }
             });

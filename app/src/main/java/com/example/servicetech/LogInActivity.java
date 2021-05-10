@@ -46,6 +46,13 @@ public class LogInActivity extends AppCompatActivity {
             // User logged in
         }
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +93,8 @@ public class LogInActivity extends AppCompatActivity {
                 }else if(pwd.getText().toString().equals("")){
                     Toast.makeText(LogInActivity.this, "Please enter valid password",
                             Toast.LENGTH_SHORT).show();
-                //} else {
-                //    logIn();
-                }
+                } //else
+                    //logIn();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +109,11 @@ public class LogInActivity extends AppCompatActivity {
 
     public void logIn(){
 
-        String password = pwd.getText().toString();
-        String email = mail.getText().toString();
+        String Password = pwd.getText().toString();
+        String Mail = mail.getText().toString();
 
-        auth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(Mail, Password)
+        .addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -116,7 +122,26 @@ public class LogInActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
 
                     updateUI(user);
-
+                }else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                    Toast.makeText(LogInActivity.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+            }
+        });
+    }
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeActivity);
+        } else {
+            Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
+            startActivity(reload);
+        }
+    }
+}
 /*                  firebaseFirestore.collection("customers").get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -148,23 +173,4 @@ public class LogInActivity extends AppCompatActivity {
                           }
                  });
  */
-                }else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                    Toast.makeText(LogInActivity.this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
-            }
-        });
-    }
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeActivity);
-        } else {
-            Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
-            startActivity(reload);
-        }
-    }
-}
+

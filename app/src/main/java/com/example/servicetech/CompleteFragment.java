@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.servicetech.dummy.DummyContent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,9 +29,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- */
 public class CompleteFragment extends Fragment {
     private static final String TAG = "CustomerSchedule";
     private FirebaseFirestore firestoreDB;
@@ -70,7 +65,7 @@ public class CompleteFragment extends Fragment {
         customerScheduleRv.addItemDecoration(dividerItemDecoration);
 
         firestoreDB.collection("events")
-                .whereEqualTo("id", docId)
+                .whereEqualTo("TechId", docId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

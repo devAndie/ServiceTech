@@ -90,16 +90,9 @@ import com.google.firebase.auth.FirebaseAuth;
             case R.id.cd_completed:
                 fragmentClass = CompleteFragment.class;
                 break;
-            case R.id.cd_wallet:
-                fragmentClass = WalletFragment.class;
-                break;
-            case R.id.cd_settings:
-                fragmentClass = SettingsActivity.class;
-//                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
-//                startActivity(settings);
-                break;
             case R.id.cd_logout:
-                logout();
+                fragmentClass = LogOutFragment.class;
+                break;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -115,10 +108,6 @@ import com.google.firebase.auth.FirebaseAuth;
         mDrawer.closeDrawer(GravityCompat.START);
     }
 
-    private void logout(){
-        FirebaseAuth.getInstance().signOut();
-
-    }
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

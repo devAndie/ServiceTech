@@ -24,6 +24,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -32,10 +35,11 @@ public class RegisterActivity extends AppCompatActivity {
     public static final int MY_PASSWORD_DIALOG_ID = 4;
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
-    private EditText name, mail, address, phone, pwd, conf_Pwd;
+    EditText name, mail, address, phone, pwd, conf_Pwd;
     private String Id, Names, Mail, Phone, Address, Password, Conf;
     private Button signUp, logIn;
-    FirebaseAuth auth;
+    private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
 
@@ -53,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseFirestore=FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("customers").document();
         //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         Names = name.getText().toString();
         Mail = mail.getText().toString();
@@ -64,10 +68,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(v -> {
             if(name.getText().toString().equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type your name",
+                Toast.makeText(RegisterActivity.this, "Please type your official names",
                         Toast.LENGTH_SHORT).show();
             }else if(mail.getText().toString().equals("")) {
-                Toast.makeText(RegisterActivity.this, "Please type an email",
+                Toast.makeText(RegisterActivity.this, "Please type a valid email",
                         Toast.LENGTH_SHORT).show();
             }else if(pwd.getText().toString().equals("")){
                 Toast.makeText(RegisterActivity.this, "Please type a password",
@@ -98,16 +102,17 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     public void authenticate(){
-        auth.createUserWithEmailAndPassword(Mail, Password)
+        mAuth.createUserWithEmailAndPassword(Mail, Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            Id = user.getUid();
+                            FirebaseUser user = mAuth.getCurrentUser();
 
+                            currentUser = mAuth.getCurrentUser();
+                            Id = currentUser.getUid();
                             //add doc
                             addCustomer();
                         } else {
@@ -127,8 +132,9 @@ public class RegisterActivity extends AppCompatActivity {
         addDocumentToCollection(customer);
     }
     public CustomerModel createCustomer() {
+
         final CustomerModel customer = new CustomerModel();
-        customer.setCustId(Id);
+        customer.setId(Id);
         customer.setNames(Names);
         customer.setMail(Mail);
         customer.setAddress(Address);
@@ -144,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         .addOnSuccessListener(documentReference -> {
             Toast.makeText(RegisterActivity.this, "Registration successful",
                 Toast.LENGTH_SHORT).show();
-            FirebaseUser user = auth.getCurrentUser();
+            FirebaseUser user = mAuth.getCurrentUser();
             updateUI(user);
         })
         .addOnFailureListener(new OnFailureListener() {
@@ -162,5 +168,10 @@ public class RegisterActivity extends AppCompatActivity {
             Intent reload = new Intent(RegisterActivity.this, RegisterActivity.class);
             startActivity(reload);
         }
+    }
+    public String GetDate() {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String currentdate = df.format(Calendar.getInstance().getTime());
+        return currentdate;
     }
 }

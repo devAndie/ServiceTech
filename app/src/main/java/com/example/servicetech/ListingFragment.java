@@ -30,12 +30,12 @@ import java.util.List;
 
 public class ListingFragment extends Fragment {
     private static final String TAG = "ListingFragment";
+
+    ListingRecyclerViewAdapter listingRecyclerViewAdapter;
     private FirebaseFirestore firestoreDB;
-    private RecyclerView eventsRecyclerView;
+    private RecyclerView ActiveListing;
 
     FragmentActivity listener;
-    ListingRecyclerViewAdapter listingRecyclerViewAdapter;
-
     Context thisContext;
 
     @Nullable
@@ -55,18 +55,19 @@ public class ListingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        eventsRecyclerView = (RecyclerView) getView().findViewById(R.id.events_lst);
+        ActiveListing = getView().findViewById(R.id.events_lst);
 
         firestoreDB = FirebaseFirestore.getInstance();
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
-        eventsRecyclerView.setLayoutManager(recyclerLayoutManager);
+
+        ActiveListing.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(eventsRecyclerView.getContext(),
+                new DividerItemDecoration(ActiveListing.getContext(),
                         recyclerLayoutManager.getOrientation());
-        eventsRecyclerView.addItemDecoration(dividerItemDecoration);
+        ActiveListing.addItemDecoration(dividerItemDecoration);
 
 
         getListings();
@@ -91,10 +92,10 @@ public class ListingFragment extends Fragment {
 
                                 Log.d(TAG, doc.getId() + " => " + doc.getData());
                             }
-                            ListingRecyclerViewAdapter listingRecyclerViewAdapter = new
+                            listingRecyclerViewAdapter = new
                                     ListingRecyclerViewAdapter(listingList,
                                     getActivity(), firestoreDB);
-                            eventsRecyclerView.setAdapter(listingRecyclerViewAdapter);
+                            ActiveListing.setAdapter(listingRecyclerViewAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

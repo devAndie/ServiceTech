@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent(MainActivity.this, LogInActivity.class);
-                startActivity(loginIntent);
+                Intent Customer = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(Customer);
             }
         });
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         tech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Tech = new Intent(MainActivity.this, TechLogInActivity.class);
+                Intent Tech = new Intent(getApplicationContext(), TechLogInActivity.class);
                 startActivity(Tech);
             }
         });

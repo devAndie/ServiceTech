@@ -86,17 +86,19 @@ public class TechLogInActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent homeActivity = new Intent(getApplicationContext(), TechnicianActivity.class);
-                startActivity(homeActivity);
-
+                Intent techHome = new Intent(getApplicationContext(), TechnicianActivity.class);
+                startActivity(techHome);
+/*
                 if(mail.getText().toString().equals("")){
                     Toast.makeText(TechLogInActivity.this, "Please enter valid email",
                             Toast.LENGTH_SHORT).show();
                 }else if(pwd.getText().toString().equals("")){
                     Toast.makeText(TechLogInActivity.this, "Please enter valid password",
                             Toast.LENGTH_SHORT).show();
-                } //else
-                    //logIn();
+                } else
+                    logIn();
+
+ */
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -104,29 +106,6 @@ public class TechLogInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent Register = new Intent(TechLogInActivity.this, TechRegActivity.class);
                 startActivity(Register);
-            }
-        });
-
-    }
-    private void signIn(String email, String password){
-        Log.d(TAG, "signIn:" + email);
-
-        auth.signInWithEmailAndPassword(email, password).
-        addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, " Verification : signIn With Email:onComplete:" + task.isSuccessful());
-                //  If sign in succeeds i.e if task.isSuccessful(); returns true then the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
-
-
-                // If sign in fails, display a message to the user.
-                if (!task.isSuccessful()) {
-                    Log.w(TAG, "signInWithEmail:failed", task.getException());
-                    Toast.makeText(TechLogInActivity.this, "Please enter valid password",
-                            Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
             }
         });
     }

@@ -1,5 +1,9 @@
 package com.example.servicetech;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class TechnicianModel {
     public static String id, names, mail, phoneNo, specialty, tether, password;
 
@@ -18,13 +22,19 @@ public class TechnicianModel {
         this.password = Password;
 
     }
+    public static String GetDate() {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String currentdate = df.format(Calendar.getInstance().getTime());
+
+        return currentdate;
+    }
+    public static void setId(String Id) {
+        Id = GetDate();
+        TechnicianModel.id = Id;
+    }
 
     public static String getId() {
         return id;
-    }
-
-    public static void setId(String id) {
-        TechnicianModel.id = id;
     }
 
     public static String getNames() {

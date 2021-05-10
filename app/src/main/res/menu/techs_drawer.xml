@@ -8,19 +8,19 @@
     <item
         android:id="@+id/td_schedule"
         android:icon="@drawable/ic_baseline_payment_24"
-        android:title="Schedule" />
+        android:title="Appointments" />
     <item
-        android:id="@+id/td_wallet"
-        android:icon="@drawable/ic_baseline_payment_24"
-        android:title="Wallet" />
+        android:id="@+id/td_progress"
+        android:icon="@drawable/ic_baseline_timelapse_24"
+        android:title="Attending" />
     <item
-        android:id="@+id/td_setting"
-        android:icon="@drawable/ic_baseline_support_24"
-        android:title="Settings" />
+        android:id="@+id/td_completed"
+        android:icon="@drawable/ic_baseline_check_24"
+        android:title="Completed" />
     <item
         android:id="@+id/swapt"
         android:icon="@drawable/ic_baseline_supervisor_account_24"
-        android:title="Swap Account" />
+        android:title="Switc Account" />
     <item
         android:id="@+id/td_logout"
         android:icon="@drawable/ic_baseline_exit_to_app_24"

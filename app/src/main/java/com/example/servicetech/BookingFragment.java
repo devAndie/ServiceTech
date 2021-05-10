@@ -2,15 +2,11 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,30 +14,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
     TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    String docId, name, type, place, desc, imagePath, picked, techUid, techRec, time, Date;
+    String docId, name, type, place, desc, imagePath, techId, techRec, time, Date;
     ImageView itemPhoto;
     Context context;
     boolean isEdit;
@@ -75,7 +62,7 @@ public class BookingFragment extends Fragment {
         submit = view.findViewById(R.id.schedule);
 
         firestoreDB = FirebaseFirestore.getInstance();
-        techUid = user.getUid();
+        techId = user.getUid();
         techRec = recommendations.getText().toString();
         time = startTime.getText().toString();
         Date = date.getText().toString();
@@ -130,7 +117,7 @@ public class BookingFragment extends Fragment {
         event.setNotes(desc);
         event.setImageURL(imagePath);
         event.setPicked("picked");
-        event.setTechId(techUid);
+        event.setTechId(techId);
         event.setRecommendation(techRec);
         event.setStartTime(time);
         event.setDate(Date);
