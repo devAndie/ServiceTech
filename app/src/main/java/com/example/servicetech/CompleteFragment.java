@@ -32,7 +32,7 @@ import java.util.List;
 public class CompleteFragment extends Fragment {
     private static final String TAG = "CustomerSchedule";
     private FirebaseFirestore firestoreDB;
-    private RecyclerView customerScheduleRv;
+    private RecyclerView completeRecyclerView;
     FirebaseAuth cAuth;
     FirebaseUser user;
     String docId;
@@ -41,9 +41,13 @@ public class CompleteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.complete_item_list, container, false);
 
-        return view;
+        return inflater.inflate(R.layout.complete_item_list, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -53,19 +57,19 @@ public class CompleteFragment extends Fragment {
         docId = user.getUid();
         firestoreDB = FirebaseFirestore.getInstance();
 
-        customerScheduleRv = view.findViewById(R.id.custAptList);
+        completeRecyclerView = view.findViewById(R.id.custAptList);
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
-        customerScheduleRv.setLayoutManager(recyclerLayoutManager);
+        completeRecyclerView.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(customerScheduleRv.getContext(),
+                new DividerItemDecoration(completeRecyclerView.getContext(),
                         recyclerLayoutManager.getOrientation());
-        customerScheduleRv.addItemDecoration(dividerItemDecoration);
+        completeRecyclerView.addItemDecoration(dividerItemDecoration);
 
         firestoreDB.collection("events")
-                .whereEqualTo("TechId", docId)
+                .whereEqualTo("custId", docId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -81,10 +85,10 @@ public class CompleteFragment extends Fragment {
 
                                 Log.d(TAG, doc.getId() + " => " + doc.getData());
                             }
-                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(appointmentList,
+                            ViewAppointmentItemRecyclerViewAdapter recyclerViewAdapter = new
+                                    ViewAppointmentItemRecyclerViewAdapter(appointmentList,
                                     getActivity(), firestoreDB);
-                            customerScheduleRv.setAdapter(recyclerViewAdapter);
+                            completeRecyclerView.setAdapter(recyclerViewAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

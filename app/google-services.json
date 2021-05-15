@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "751904213644",
-    "project_id": "servicetech-174ad",
-    "storage_bucket": "servicetech-174ad.appspot.com"
+    "project_number": "828953559189",
+    "project_id": "servicetech-301410",
+    "storage_bucket": "servicetech-301410.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:751904213644:android:27cb5732e4afdc622309a9",
+        "mobilesdk_app_id": "1:828953559189:android:a4b69152b9834ff4171b9c",
         "android_client_info": {
           "package_name": "com.example.servicetech"
         }
       },
       "oauth_client": [
         {
-          "client_id": "751904213644-a4nddcomu4prurvrp3lro16tff40tr21.apps.googleusercontent.com",
+          "client_id": "828953559189-t3q0m1tsv7f15tn2u4j1kmejqnqk3g4b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANhXhwbEnrfLq6GGStTrafEb_6unQAOWA"
+          "current_key": "AIzaSyDDusdoiC0f9O0x2NseTjeIlMSP7ZbqZr4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "751904213644-a4nddcomu4prurvrp3lro16tff40tr21.apps.googleusercontent.com",
+              "client_id": "828953559189-t3q0m1tsv7f15tn2u4j1kmejqnqk3g4b.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

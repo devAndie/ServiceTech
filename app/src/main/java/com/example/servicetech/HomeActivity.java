@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
  public class HomeActivity extends AppCompatActivity {
 
@@ -79,13 +78,13 @@ import com.google.firebase.auth.FirebaseAuth;
                 fragmentClass = RequestServiceFragment.class;
                 break;
             case R.id.pending:
-                fragmentClass = StatusFragment.class;
+                fragmentClass = PendingFragment.class;
                 break;
             case R.id.cd_scheduled:
-                fragmentClass = ScheduleFragment.class;
+                fragmentClass = AppointmentsFragment.class;
                 break;
             case R.id.cd_progress:
-                fragmentClass = ProgressFragment.class;
+                fragmentClass = InProgressFragment.class;
                 break;
             case R.id.cd_completed:
                 fragmentClass = CompleteFragment.class;

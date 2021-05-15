@@ -2,11 +2,13 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -27,12 +30,14 @@ import com.google.firebase.storage.StorageReference;
 
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
-    TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    String docId, name, type, place, desc, imagePath, techId, techRec, time, Date;
-    ImageView itemPhoto;
-    Context context;
+    private TextInputEditText item, service, location, notes, recommendations, date, startTime;
+    private String docId, name, type, place, desc, imagePath, techId, techRec, time, Date;
+    private ImageView itemPhoto;
+    private Context context;
     boolean isEdit;
     Button submit;
+
+    private DatabaseReference apptntDatabase;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
     FirebaseAuth auth;
@@ -92,8 +97,8 @@ public class BookingFragment extends Fragment {
             notes.setText(desc);
             imagePath = event.getImageURL();
 
-            submit.setText("Update");
-            isEdit = true;
+            submit.setText("Book");
+
         }
 
         // Load the image using Glide
@@ -104,7 +109,20 @@ public class BookingFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAppointment();
+                if(recommendations.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please type Your Official Names",
+                            Toast.LENGTH_SHORT).show();
+
+                }else if(date.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please type a valid email",
+                            Toast.LENGTH_SHORT).show();
+
+                }else if(startTime.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "Please type a password",
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    createAppointment();
+                }
             }
         });
     }
@@ -121,6 +139,29 @@ public class BookingFragment extends Fragment {
         event.setRecommendation(techRec);
         event.setStartTime(time);
         event.setDate(Date);
+
+        //merge doc
+        apptntDatabase.setValue(event);
+        apptntDatabase.child(docId).setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getContext(),
+                        "event request sent successfully",
+                        Toast.LENGTH_SHORT).show();
+
+                //view pending
+                viewSchedule();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding event record", e);
+                Toast.makeText(getContext(),
+                        "event record could not be added",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ref.get().addOnSuccessListener(documentSnapshot -> {
         firestoreDB.collection("events")

@@ -17,20 +17,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class ListingRecyclerViewAdapter extends
-        RecyclerView.Adapter<ListingRecyclerViewAdapter.ViewHolder> {
+public class ListingRvAdapter extends
+        RecyclerView.Adapter<ListingRvAdapter.ViewHolder> {
 
     private List<EventModel> listingList;
-    Context context;
-    private FirebaseFirestore firestoreDB;
-    private String docId;
+    private Context context;
 
-    public ListingRecyclerViewAdapter(List<EventModel> listingList, Context context,
-                                      FirebaseFirestore firestoreDB) {
+    public ListingRvAdapter(List<EventModel> listingList, Context context) {
         this.listingList = listingList;
         this.context = context;
-        this.firestoreDB = firestoreDB;
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemName, serviceType, place;
         Button book;
@@ -58,8 +55,8 @@ public class ListingRecyclerViewAdapter extends
     onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.listing_item, parent, false);
-        ListingRecyclerViewAdapter.ViewHolder viewHolder =
-                 new ListingRecyclerViewAdapter.ViewHolder(view);
+        ListingRvAdapter.ViewHolder viewHolder =
+                 new ListingRvAdapter.ViewHolder(view);
 
         return viewHolder;
     }
@@ -82,7 +79,6 @@ public class ListingRecyclerViewAdapter extends
 
     }
     private void bookEvent(EventModel event){
-        docId = event.getId();
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
 
         Bundle bundle=new Bundle();

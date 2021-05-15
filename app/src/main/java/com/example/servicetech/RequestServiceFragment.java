@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,36 +47,35 @@ import static android.app.Activity.RESULT_OK;
 public class RequestServiceFragment extends Fragment {
     private static final String TAG = "RequestServiceFragment";
 
-    EditText item, service, location, notes;
-    ImageView itemImage;
-    Button submit, cancel;
-    ImageButton  itemImg;
-    FirebaseStorage storage;
-    DocumentReference ref;
-    StorageReference ImgRef;
-    FirebaseUser currentUser;
-
-    private DatabaseReference databaseReference, childReference;
-    private FirebaseFirestore firestoreDB;
+    Context context;
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
+    private EditText item, service, location, notes;
+    private ImageView itemImage;
+    private Button submit, cancel;
+    private ImageButton  itemImg;
+    private FirebaseStorage storage;
+    private DocumentReference ref;
+
+    private DatabaseReference eventDatabase;
+    private FirebaseFirestore firestoreDB;
+
     private String docId, custId, Item, Service, Location, Notes;
     private StorageReference storageReference, fireRef, mStorageRef;
-    private boolean isEdit;
-    private Uri itemimg;
+
+    private Uri itemUri;
     private final int PICK_IMAGE_REQUEST = 71;
     private static final int CAMERA_REQUEST = 1888;
-    private View View;
+
     String imageURL = "";
-    String imagePath;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View = inflater.inflate(R.layout.fragment_new, container, false);
-
-        return View;
+        return inflater.inflate(R.layout.fragment_new, container, false);
     }
 
     @Override
@@ -96,11 +95,13 @@ public class RequestServiceFragment extends Fragment {
         cancel = getView().findViewById(id.cncl);
 
         firestoreDB = FirebaseFirestore.getInstance();
+        eventDatabase = FirebaseDatabase.getInstance().getReference("events");
+
         ref = firestoreDB.collection("events").document();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         Item = item.getText().toString();
         Service = service.getText().toString();
@@ -121,23 +122,6 @@ public class RequestServiceFragment extends Fragment {
             }
         });
 
- /*       EventModel event = null;
-        if(getArguments() != null){
-            event = getArguments().getParcelable("event");
-            ((TextView)view.findViewById(id.rqsv_tv)).setText("Edit Details");
-        }
-        if(event != null){
-            docId = event.getId();
-            item.setText(event.getItemName());
-            service.setText(event.getService());
-            location.setText(event.getLocation());
-            notes.setText(event.getNotes());
-            imagePath = event.getImageURL();
-            picked = event.getPicked();
-
-            isEdit = true;
-        }
-  */
         submit.setOnClickListener(v -> {
             UploadImages();
         });
@@ -155,9 +139,9 @@ public class RequestServiceFragment extends Fragment {
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
-            itemimg = data.getData();
+            itemUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), itemimg);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), itemUri);
                 itemImage.setImageBitmap(bitmap);
             }
             catch (IOException e)
@@ -169,7 +153,7 @@ public class RequestServiceFragment extends Fragment {
     public void UploadImages() {
         try {
             String strFileName = GetDate() + "img.jpg";
-            Uri file = itemimg;
+            Uri file = itemUri;
             fireRef = mStorageRef.child("images/" + currentUser.getUid().toString() + "/" + strFileName);
 
             UploadTask uploadTask = fireRef.putFile(file);
@@ -189,7 +173,7 @@ public class RequestServiceFragment extends Fragment {
                         Uri downloadUri = task.getResult();
                         Log.e("Image URL", downloadUri.toString());
 
-                        itemimg = null;
+                        itemUri = null;
                         imageURL = downloadUri.toString();
 
                     } else {
@@ -197,7 +181,6 @@ public class RequestServiceFragment extends Fragment {
                                 , Toast.LENGTH_LONG).show();
                     }
                     custId = currentUser.getUid();
-                    docId = currentUser.getUid() + GetDate();
 
                     addEvent();
                 }
@@ -207,6 +190,9 @@ public class RequestServiceFragment extends Fragment {
         }
     }
     public void addEvent(){
+        //generate id
+        docId = eventDatabase.push().getKey();
+
         EventModel event = createEventObj();
         addDocumentToCollection(event);
     }
@@ -225,38 +211,36 @@ public class RequestServiceFragment extends Fragment {
     }
 
     private void addDocumentToCollection(EventModel event){
-        firestoreDB.collection("events")
-        .add(event)
-        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        eventDatabase.child(docId).setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "Event document added - id: "
-                        + documentReference.getId());
-                restUi();
-                Toast.makeText(getActivity(),
-                        "Event document has been added",
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getContext(),
+                        "event request sent successfully",
                         Toast.LENGTH_SHORT).show();
+
+                //view pending
+                restUi();
+
             }
-        })
-        .addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding event document", e);
-                Toast.makeText(getActivity(),
-                        "Event document could not be added",
+                Log.w(TAG, "Error adding event record", e);
+                Toast.makeText(getContext(),
+                        "event record could not be added",
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
     private void restUi() {
-        Intent i = new Intent();
-        i.setClass(getActivity(), AppointmentFragment.class);
-        startActivity(i);
+        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+        PendingFragment pendingFragment = new PendingFragment();
+        fm.beginTransaction().replace(R.id.tech_container, pendingFragment).commit();
     }
     public void Reload(){
-        Intent reload = new Intent(getContext(), RequestServiceFragment.class);
-        startActivity(reload);
+        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+        RequestServiceFragment requestService = new RequestServiceFragment();
+        fm.beginTransaction().replace(R.id.tech_container, requestService).commit();
     }
     public String GetDate() {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");

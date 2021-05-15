@@ -17,10 +17,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TechRegActivity extends AppCompatActivity {
@@ -31,9 +34,9 @@ public class TechRegActivity extends AppCompatActivity {
             Password, ConPass;
 
     private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-    FirebaseFirestore firebaseFirestore;
-    DocumentReference ref;
+    private FirebaseUser currentUser;
+    private FirebaseFirestore firebaseFirestore;
+    private DatabaseReference techDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +44,10 @@ public class TechRegActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tech_reg);
 
         mAuth = FirebaseAuth.getInstance();
+        techDatabase = FirebaseDatabase.getInstance().getReference("Technicians");
         firebaseFirestore= FirebaseFirestore.getInstance();
-        ref = firebaseFirestore.collection("Technicians").document();
+
+//        ref = firebaseFirestore.collection("Technicians").document();
 
         name = findViewById(R.id.names);
         mail = findViewById(R.id.tmail);
@@ -78,7 +83,9 @@ public class TechRegActivity extends AppCompatActivity {
                 Toast.makeText(TechRegActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
             }else {
-                ref.get().addOnSuccessListener(documentSnapshot -> {
+
+
+                techDatabase.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()){
                         Toast.makeText(TechRegActivity.this, "Sorry,this user exists",
                                 Toast.LENGTH_SHORT).show();
@@ -100,8 +107,6 @@ public class TechRegActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            currentUser = mAuth.getCurrentUser();
-                            Id = currentUser.getUid();
 
                             //add doc
                             addTechnician();
@@ -112,13 +117,16 @@ public class TechRegActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
-
-                        // ...
                     }
                 });
     }
     public void addTechnician(){
+        //generate techid
+        Id = techDatabase.push().getKey();
+
+        //create technician
         TechnicianModel technician = createTechnicianObject();
+
         addDocumentToCollection(technician);
     }
     public TechnicianModel createTechnicianObject(){
@@ -134,28 +142,27 @@ public class TechRegActivity extends AppCompatActivity {
         return technician;
     }
     public void addDocumentToCollection(TechnicianModel technician){
-        firebaseFirestore.collection("technicians")
-        .add(technician)
-        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        //write to rtdb
+        techDatabase.child(Id).setValue(technician).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "Event document added - id: "
-                        + documentReference.getId());
+            public void onSuccess(Void aVoid) {
                 Toast.makeText(TechRegActivity.this,
-                        "Event document has been added",
+                        "Registration successful",
                         Toast.LENGTH_SHORT).show();
+
+                //start Home
                 Intent Home = new Intent(TechRegActivity.this, TechnicianActivity.class);
                 startActivity(Home);
             }
-        })
-        .addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding event document", e);
+                Log.w(TAG, "Error adding technician record", e);
                 Toast.makeText(TechRegActivity.this,
-                        "Event document could not be added",
+                        "Technician Record could not be added",
                         Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

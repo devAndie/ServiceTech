@@ -93,8 +93,8 @@ public class LogInActivity extends AppCompatActivity {
                 }else if(pwd.getText().toString().equals("")){
                     Toast.makeText(LogInActivity.this, "Please enter valid password",
                             Toast.LENGTH_SHORT).show();
-                } //else
-                    //logIn();
+                } else
+                    logIn();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -142,35 +142,4 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 }
-/*                  firebaseFirestore.collection("customers").get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    String a = doc.getString("Username");
-                                    String b = doc.getString("Password");
-                                    String a1 = mail.getText().toString().trim();
-                                    String b1 = pwd.getText().toString().trim();
-                                    if (a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
-                                        Toast.makeText(LogInActivity.this, "Logged In",
-                                            Toast.LENGTH_SHORT).show();
-                                        updateUI(user);
-                                        break;
-                                    } else {
-                                        Toast.makeText(LogInActivity.this, "Cannot login,incorrect Email and Password",
-                                            Toast.LENGTH_SHORT).show();
-                                         updateUI(null);
-                                    }
-                              }
-                              } else {
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LogInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-
-                              }
-                          }
-                 });
- */
 

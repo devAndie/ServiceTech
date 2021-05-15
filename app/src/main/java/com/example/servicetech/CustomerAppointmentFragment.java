@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.servicetech.dummy.DummyContent;
-
 /**
  * A fragment representing a list of Items.
  */
@@ -64,7 +62,7 @@ public class CustomerAppointmentFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyCustomerAppointmentRecyclerViewAdapter(DummyContent.ITEMS));
+            //recyclerView.setAdapter(new MyCustomerAppointmentRecyclerViewAdapter(Appointment));
         }
         return view;
     }

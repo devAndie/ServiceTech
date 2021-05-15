@@ -20,14 +20,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -39,14 +43,25 @@ public class RegisterActivity extends AppCompatActivity {
     private String Id, Names, Mail, Phone, Address, Password, Conf;
     private Button signUp, logIn;
     private FirebaseAuth mAuth;
+
+    private DatabaseReference customerDatabase;
+
+    private FirebaseDatabase db;
     FirebaseUser currentUser;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        //Get Firebase auth instance
+        mAuth = FirebaseAuth.getInstance();
+
+        db = FirebaseDatabase.getInstance();
+        customerDatabase = db.getReference("Customers");
 
         name = findViewById(R.id.c_name); mail = findViewById(R.id.mail);
         address = findViewById(R.id.address);   phone = findViewById(R.id.phone);
@@ -54,10 +69,12 @@ public class RegisterActivity extends AppCompatActivity {
         logIn = findViewById(R.id.log_in);
         signUp = findViewById(R.id.sign_in);
 
+
+//        dbRef = db.getReference().child("Customers");
+
         firebaseFirestore=FirebaseFirestore.getInstance();
-        ref = firebaseFirestore.collection("customers").document();
-        //Get Firebase auth instance
-        mAuth = FirebaseAuth.getInstance();
+
+//        ref = firebaseFirestore.collection("customers").document();
 
         Names = name.getText().toString();
         Mail = mail.getText().toString();
@@ -80,16 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Password mismatch",
                         Toast.LENGTH_SHORT).show();
             }else {
-                ref.get().addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()){
-                        Intent LogIn = new Intent(this, LogInActivity.class);
-                        Toast.makeText(RegisterActivity.this, "Sorry,this user exists",
-                                Toast.LENGTH_SHORT).show();
-                        startActivity(LogIn);
-                    } else {
-                        authenticate();
-                    }
-                });
+                authenticate();
             }
         });
 
@@ -102,17 +110,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     public void authenticate(){
-        mAuth.createUserWithEmailAndPassword(Mail, Password)
+        String  email = mail.getText().toString();
+        String password = pwd.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
 
                             currentUser = mAuth.getCurrentUser();
-                            Id = currentUser.getUid();
                             //add doc
                             addCustomer();
                         } else {
@@ -128,38 +137,27 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
     public void addCustomer(){
-        CustomerModel customer = createCustomer();
-        addDocumentToCollection(customer);
-    }
-    public CustomerModel createCustomer() {
+        //generate id
+        Id = customerDatabase.push().getKey();
 
-        final CustomerModel customer = new CustomerModel();
-        customer.setId(Id);
-        customer.setNames(Names);
-        customer.setMail(Mail);
-        customer.setAddress(Address);
-        customer.setPhone(Phone);
-        customer.setPassword(Password);
+        final CustomerModel customer = new
+                CustomerModel(Id, Names, Mail, Address, Phone, Password);
 
-        return customer;
-    }
-
-    public void addDocumentToCollection(CustomerModel customer){
-        firebaseFirestore.collection("customers")
-        .add(customer)
-        .addOnSuccessListener(documentReference -> {
+        customerDatabase.child(Id).setValue(customer).addOnSuccessListener(aVoid -> {
             Toast.makeText(RegisterActivity.this, "Registration successful",
-                Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
             FirebaseUser user = mAuth.getCurrentUser();
             updateUI(user);
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("Error", e.getMessage());
-            }
-        });
+        }).addOnFailureListener(e -> Log.d("Error", e.getMessage()));
+
+ //       CustomerModel customer = createCustomer();
+//        addDocumentToCollection(customer);
     }
+    public void home() {
+
+    }
+
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);

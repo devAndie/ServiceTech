@@ -2,24 +2,20 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,53 +27,42 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- */
-public class CustomerScheduleFragment extends Fragment {
-    private static final String TAG = "CustomerSchedule";
+public class AppointmentsFragment extends Fragment {
+
+    private static final String TAG = "AppointmentsFragment";
     private FirebaseFirestore firestoreDB;
-    private RecyclerView customerScheduleRv;
-    FirebaseAuth cAuth;
-    FirebaseUser user;
-    String docId;
+    private FirebaseUser currentUser;
+    private RecyclerView appointmentRecyclerView;
 
+    private String custId;
+
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_customer_schedule_list, container, false);
-
-        return view;
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        cAuth = FirebaseAuth.getInstance();
-        user = cAuth.getCurrentUser();
-        docId = user.getUid();
         firestoreDB = FirebaseFirestore.getInstance();
-
-        customerScheduleRv = view.findViewById(R.id.custAptList);
+        custId = currentUser.getUid();
+        appointmentRecyclerView = view.findViewById(R.id.events_lst);
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
-        customerScheduleRv.setLayoutManager(recyclerLayoutManager);
+        appointmentRecyclerView.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(customerScheduleRv.getContext(),
+                new DividerItemDecoration(appointmentRecyclerView.getContext(),
                         recyclerLayoutManager.getOrientation());
-        customerScheduleRv.addItemDecoration(dividerItemDecoration);
+        appointmentRecyclerView.addItemDecoration(dividerItemDecoration);
 
         firestoreDB.collection("events")
-                .whereEqualTo("id", docId)
+                .whereEqualTo("custId", custId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -93,10 +78,10 @@ public class CustomerScheduleFragment extends Fragment {
 
                                 Log.d(TAG, doc.getId() + " => " + doc.getData());
                             }
-                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(appointmentList,
+                            ViewAppointmentItemRecyclerViewAdapter recyclerViewAdapter = new
+                                    ViewAppointmentItemRecyclerViewAdapter(appointmentList,
                                     getActivity(), firestoreDB);
-                            customerScheduleRv.setAdapter(recyclerViewAdapter);
+                            appointmentRecyclerView.setAdapter(recyclerViewAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -112,5 +97,7 @@ public class CustomerScheduleFragment extends Fragment {
                         }
                     }
                 });
+
+
     }
 }

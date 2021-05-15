@@ -108,6 +108,7 @@
                 android:layout_marginTop="0dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/ic_baseline_image_24"
+                android:contentDescription="TODO"
                 android:cropToPadding="true" />
 
             <ImageButton
@@ -115,9 +116,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/itm_img"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginBottom="2dp"
-                android:background="@drawable/ic_baseline_add_circle_outline_24" />
+                android:background="@drawable/ic_baseline_add_circle_outline_24"
+                android:contentDescription="TODO" />
         </RelativeLayout>
 
 

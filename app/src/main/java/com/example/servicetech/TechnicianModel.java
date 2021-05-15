@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TechnicianModel {
-    public static String id, names, mail, phoneNo, specialty, tether, password;
+    public static String techId, names, mail, phoneNo, specialty, tether, password;
 
     public TechnicianModel() {
     }
@@ -13,7 +13,7 @@ public class TechnicianModel {
     public TechnicianModel(String Id, String Names, String PhoneNo,
                            String Mail, String Specialty, String Tether,
                             String Password) {
-        this.id = Id;
+        this.techId = Id;
         this.names = Names;
         this.mail = Mail;
         this.specialty = Specialty;
@@ -29,12 +29,11 @@ public class TechnicianModel {
         return currentdate;
     }
     public static void setId(String Id) {
-        Id = GetDate();
-        TechnicianModel.id = Id;
+        TechnicianModel.techId = Id;
     }
 
     public static String getId() {
-        return id;
+        return techId;
     }
 
     public static String getNames() {

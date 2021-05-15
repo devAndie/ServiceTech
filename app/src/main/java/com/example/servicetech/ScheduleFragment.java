@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.core.view.Event;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,6 +38,11 @@ public class ScheduleFragment extends Fragment {
     private FirebaseFirestore firestoreDB;
     private RecyclerView scheduleRecyclerView;
 
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
+
+    private String techId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,8 +59,10 @@ public class ScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        techId = currentUser.getUid();
         firestoreDB = FirebaseFirestore.getInstance();
-
         scheduleRecyclerView = view.findViewById(R.id.events_lst);
 
         LinearLayoutManager recyclerLayoutManager =
@@ -69,6 +78,7 @@ public class ScheduleFragment extends Fragment {
         button.setOnClickListener(v -> viewEvents());
 
         firestoreDB.collection("events")
+                .whereEqualTo("techId", techId).whereEqualTo("status", "picked")
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override

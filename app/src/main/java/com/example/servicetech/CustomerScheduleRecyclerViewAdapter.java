@@ -8,15 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.servicetech.dummy.DummyContent.DummyItem;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<CustomerScheduleRecyclerViewAdapter.ViewHolder> {
     private String docID;
     private final List<Appointment> appointmentList;
@@ -56,7 +51,7 @@ public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Cu
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Appointment mItem;
 
         public ViewHolder(View view) {
             super(view);

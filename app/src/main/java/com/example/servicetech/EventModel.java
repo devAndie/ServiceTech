@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class EventModel {
-    private String id, customerId, itemName, Service, location, notes, imageURL, picked;
+    public String id, customerId, itemName, Service, location, notes, imageURL, picked;
 
     //constructors
     public EventModel() {
@@ -16,7 +16,7 @@ public class EventModel {
         this.id = id;
         this.customerId = customerId;
         this.itemName = itemName;
-        Service = service;
+        this.Service = service;
         this.location = location;
         this.notes = notes;
         this.imageURL = imageURL;
