@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +69,6 @@ public class ListingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         listingRv = getView().findViewById(R.id.events_lst);
 
-        firestoreDB = FirebaseFirestore.getInstance();
-        listingDb = FirebaseDatabase.getInstance().getReference("events");
-
         listingList = new ArrayList<>();
 
         LinearLayoutManager recyclerLayoutManager =
@@ -78,62 +80,40 @@ public class ListingFragment extends Fragment {
                 new DividerItemDecoration(listingRv.getContext(),
                         recyclerLayoutManager.getOrientation());
         listingRv.addItemDecoration(dividerItemDecoration);
+		
+		ListingRvAdapter listingRvAdapter = new ListingRvAdapter(listingList, getActivity());
+		
+		listingRv.setAdapter(listingRvAdapter);
+		
+		//  Get the events class as a reference.
+        /*
+		ParseQuery<ParseObject> query = new ParseQuery("events");
+		
+		query.whereEqualTo("Status", "Pending");
+		
+		query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> itemList, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    String firstItemId = itemList.get(0).getObjectId();
 
 
-        getListings();
+                    Toast.makeText(getContext(), firstItemId, Toast.LENGTH_SHORT).show();
 
-    }
-    public void initializeRV(){
-        final ListingRvAdapter listingRvAdapter = new ListingRvAdapter(listingList, getActivity());
 
-        Query query = listingDb.child("status").equalTo("pending").limitToFirst(100);
-
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                listingList.add(snapshot.getValue(EventModel.class));
-
-                listingRvAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                listingRvAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                listingList.remove(snapshot.getValue(EventModel.class));
-                listingRvAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                listingRvAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listingList.add(snapshot.getValue(EventModel.class));
-
-                listingRvAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                } else {
+                    Log.d("item", "Error: " + e.getMessage());
+                }
             }
         });
 
-        listingRv.setAdapter(listingRvAdapter);
+         */
+
+
     }
-    public void getListings() {
-        firestoreDB.collection("Service Requests")
-                .whereEqualTo("picked", "Not picked")
+/*    public void getListings() {
+        firestoreDB.collection("events")
+                .whereEqualTo("Status", "Not picked")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -158,7 +138,7 @@ public class ListingFragment extends Fragment {
                         }
                     }
                 });
-    }
+    }*/
 
 
 }

@@ -8,21 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.parse.ParseObject;
 
 import java.util.List;
 
 public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<CustomerScheduleRecyclerViewAdapter.ViewHolder> {
-    private String docID;
-    private final List<Appointment> appointmentList;
+    private final List<ParseObject> appointmentList;
     private Context context;
-    private FirebaseFirestore firestoreDB;
 
 
-    public CustomerScheduleRecyclerViewAdapter(List<Appointment> items, Context ctx, FirebaseFirestore firestore){
+    public CustomerScheduleRecyclerViewAdapter(List<ParseObject> items, Context ctx){
         appointmentList = items;
-	context = ctx;
-        firestoreDB = firestore;
+        context = ctx;
 
     }
 
@@ -51,7 +48,6 @@ public class CustomerScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Cu
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Appointment mItem;
 
         public ViewHolder(View view) {
             super(view);

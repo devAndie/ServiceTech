@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
  public class HomeActivity extends AppCompatActivity {
 
@@ -25,15 +27,26 @@ import com.google.android.material.navigation.NavigationView;
     private ActionBarDrawerToggle drawerToggle;
     private FragmentActivity listener;
 
+    ParseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
 
+        //initialize parse server
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url))
+                .build());
+
+
         mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar_main);
 
+        user = ParseUser.getCurrentUser();
 
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);

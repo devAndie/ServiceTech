@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +28,11 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +42,12 @@ import java.util.List;
  */
 public class CustomerScheduleFragment extends Fragment {
     private static final String TAG = "CustomerSchedule";
-    private FirebaseFirestore firestoreDB;
+
     private RecyclerView customerScheduleRv;
-    FirebaseAuth cAuth;
-    FirebaseUser user;
+    private CustomerScheduleRecyclerViewAdapter customerScheduleAdapter;
+    ParseUser user;
     String docId;
+    List<ParseObject> customerSchedule;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,13 +66,13 @@ public class CustomerScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        cAuth = FirebaseAuth.getInstance();
-        user = cAuth.getCurrentUser();
-        docId = user.getUid();
-        firestoreDB = FirebaseFirestore.getInstance();
+        user = ParseUser.getCurrentUser();
 
         customerScheduleRv = view.findViewById(R.id.custAptList);
+
+        customerSchedule = new ArrayList<>();
+
+        customerScheduleAdapter = new CustomerScheduleRecyclerViewAdapter(customerSchedule, getContext());
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
@@ -76,41 +83,34 @@ public class CustomerScheduleFragment extends Fragment {
                         recyclerLayoutManager.getOrientation());
         customerScheduleRv.addItemDecoration(dividerItemDecoration);
 
-        firestoreDB.collection("events")
-                .whereEqualTo("id", docId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<Appointment> appointmentList = new ArrayList<>();
 
-                            for(DocumentSnapshot doc : task.getResult()){
-                                Appointment apt = doc.toObject(Appointment.class);
+        //  Get the events class as a reference.
+        ParseQuery<ParseObject> query = new ParseQuery<>("events");
+        query.whereEqualTo("Status", "picked");
+        query.whereEqualTo("RequestedBy", user);
+        //query.orderByDescending()
 
-                                apt.setId(doc.getId());
-                                appointmentList.add(apt);
+        // Execute the find asynchronously
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    for (ParseObject object : objects){
+                        //ParseObject doc = object.toObject;
 
-                                Log.d(TAG, doc.getId() + " => " + doc.getData());
-                            }
-                            ScheduleRecyclerViewAdapter recyclerViewAdapter = new
-                                    ScheduleRecyclerViewAdapter(appointmentList,
-                                    getActivity(), firestoreDB);
-                            customerScheduleRv.setAdapter(recyclerViewAdapter);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+                        object.getObjectId();
+
+                        customerSchedule.add(object);
                     }
-                });
-        firestoreDB.collection("events")
-                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-                            doc.getDocument().toObject(Appointment.class);
-                            //do something...
-                        }
-                    }
-                });
+                    customerScheduleRv.setAdapter(customerScheduleAdapter);
+
+                    String firstItemId = objects.get(0).getObjectId();
+                    Toast.makeText(getContext(), firstItemId, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("item", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 }

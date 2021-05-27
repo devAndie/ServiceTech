@@ -48,7 +48,7 @@ public class ViewEventFragment extends Fragment {
             service.setText(type);
             place = event.getLocation();
             location.setText(place);
-            desc = event.getNotes();
+            desc = event.getNote();
             notes.setText(desc);
             imagePath = event.getImageURL();
 

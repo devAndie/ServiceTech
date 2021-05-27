@@ -58,7 +58,7 @@ public class ViewAppointmentItemRecyclerViewAdapter extends
     public ViewAppointmentItemRecyclerViewAdapter.ViewHolder onCreateViewHolder
             (@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_appointment_item, parent, false);
+                .inflate(R.layout.view_listing_item, parent, false);
 
         ViewAppointmentItemRecyclerViewAdapter.ViewHolder viewHolder =
                 new ViewAppointmentItemRecyclerViewAdapter.ViewHolder(view);

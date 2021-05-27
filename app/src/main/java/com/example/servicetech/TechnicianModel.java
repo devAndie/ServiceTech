@@ -1,11 +1,7 @@
 package com.example.servicetech;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class TechnicianModel {
-    public static String techId, names, mail, phoneNo, specialty, tether, password;
+    public static String techId, Names, Mail, Phone, Specialty, Tether, Password;
 
     public TechnicianModel() {
     }
@@ -14,19 +10,13 @@ public class TechnicianModel {
                            String Mail, String Specialty, String Tether,
                             String Password) {
         this.techId = Id;
-        this.names = Names;
-        this.mail = Mail;
-        this.specialty = Specialty;
-        this.phoneNo = PhoneNo;
-        this.tether = Tether;
-        this.password = Password;
+        this.Names = Names;
+        this.Mail = Mail;
+        this.Specialty = Specialty;
+        this.Phone = PhoneNo;
+        this.Tether = Tether;
+        this.Password = Password;
 
-    }
-    public static String GetDate() {
-        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        String currentdate = df.format(Calendar.getInstance().getTime());
-
-        return currentdate;
     }
     public static void setId(String Id) {
         TechnicianModel.techId = Id;
@@ -37,51 +27,51 @@ public class TechnicianModel {
     }
 
     public static String getNames() {
-        return names;
+        return Names;
     }
 
     public static void setNames(String names) {
-        TechnicianModel.names = names;
+        TechnicianModel.Names = names;
     }
 
     public static String getMail() {
-        return mail;
+        return Mail;
     }
 
     public static void setMail(String mail) {
-        TechnicianModel.mail = mail;
+        TechnicianModel.Mail = mail;
     }
 
     public static String getSpecialty() {
-        return specialty;
+        return Specialty;
     }
 
     public static void setSpecialty(String specialty) {
-        TechnicianModel.specialty = specialty;
+        TechnicianModel.Specialty = specialty;
     }
 
     public static String getTether() {
-        return tether;
+        return Tether;
     }
 
     public static void setTether(String tether) {
-        TechnicianModel.tether = tether;
+        TechnicianModel.Tether = tether;
     }
 
     public static String getPassword() {
-        return password;
+        return Password;
     }
 
     public static void setPassword(String password) {
-        TechnicianModel.password = password;
+        TechnicianModel.Password = password;
     }
 
-    public static String getPhoneNo() {
-        return phoneNo;
+    public static String getPhone() {
+        return Phone;
     }
 
-    public static void setPhoneNo(String phoneNo) {
-        TechnicianModel.phoneNo = phoneNo;
+    public static void setPhone(String phone) {
+        TechnicianModel.Phone = phone;
     }
 
     @Override

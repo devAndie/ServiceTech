@@ -1,10 +1,7 @@
 package com.example.servicetech;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-
 public class EventModel {
-    public String id, customerId, itemName, Service, location, notes, imageURL, picked;
+    public String id, custId, Item, Service, Location, Note, imageURL, Status;
 
     //constructors
     public EventModel() {
@@ -12,23 +9,23 @@ public class EventModel {
 
 
     public EventModel(String id, String customerId, String itemName, String service,
-                      String location, String notes, String imageURL, String picked) {
+                      String location, String Note, String imageURL, String Status) {
         this.id = id;
-        this.customerId = customerId;
-        this.itemName = itemName;
+        this.custId = customerId;
+        this.Item = itemName;
         this.Service = service;
-        this.location = location;
-        this.notes = notes;
+        this.Location = location;
+        this.Note = Note;
         this.imageURL = imageURL;
-        this.picked = picked;
+        this.Status = Status;
     }
 
     public String getCustomerId() {
-        return customerId;
+        return custId;
     }
 
     public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+        this.custId = customerId;
     }
 
     public void setId(String id) {
@@ -40,7 +37,7 @@ public class EventModel {
     }
 
     public void setItemName(String itemName) {
-        this.itemName = itemName;
+        this.Item = itemName;
     }
 
     public void setService(String service) {
@@ -48,15 +45,15 @@ public class EventModel {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.Location = location;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.Note = note;
     }
 
     public String getItemName() {
-        return itemName;
+        return Item;
     }
 
     public String getService() {
@@ -64,11 +61,11 @@ public class EventModel {
     }
 
     public String getLocation() {
-        return location;
+        return Location;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return Note;
     }
 
     public String getImageURL() {
@@ -80,11 +77,11 @@ public class EventModel {
     }
 
     public String getPicked() {
-        return picked;
+        return Status;
     }
 
-    public void setPicked(String picked) {
-        this.picked = picked;
+    public void setPicked(String status) {
+        this.Status = status;
     }
 }
 

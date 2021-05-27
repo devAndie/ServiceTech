@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class LogOutFragment extends Fragment {
 
@@ -39,11 +45,16 @@ public class LogOutFragment extends Fragment {
     }
 
     public void LogOut(){
-        FirebaseAuth.getInstance().signOut();
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                //progressDialog.dismiss();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 
-        Intent LogIn = new Intent(getContext(), MainActivity.class);
-        startActivity(LogIn);
-
+                Intent LogIn = new Intent(getContext(), MainActivity.class);
+                startActivity(LogIn);
+            }
+        });
     }
 
 }

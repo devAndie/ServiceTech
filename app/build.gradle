@@ -39,6 +39,8 @@ dependencies {
 //    implementation 'com.androidx.support:recyclerview-v7:28.0.0'
 
 
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:1.26.0"
+
 //    implement 'com.google.api-client:google-api-client:1.23.0'
 
     // Import the Firebase BoM
@@ -48,10 +50,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.google.firebase:firebase-database:20.0.0'
-    implementation 'com.google.firebase:firebase-storage:19.2.1'
-    implementation 'com.google.firebase:firebase-auth:20.0.2'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-core'
-    implementation 'com.google.firebase:firebase-firestore:22.0.1'
+    implementation 'com.google.firebase:firebase-firestore:23.0.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'

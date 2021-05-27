@@ -1,4 +1,4 @@
-package com.example.servicetech;
+ package com.example.servicetech;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +17,9 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class TechnicianActivity extends AppCompatActivity {
 
@@ -27,14 +28,15 @@ public class TechnicianActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
-    private FirebaseAuth mAuth;
+
+    ParseUser user;
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null){
+        ParseUser user = ParseUser.getCurrentUser();
+        if(user == null){
             Intent Login = new Intent(getApplicationContext(), TechLogInActivity.class);
             startActivity(Login);
         }
@@ -45,12 +47,21 @@ public class TechnicianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.technician_home);
 
+        //initialize parse server
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url))
+                .build());
+
+        user = ParseUser.getCurrentUser();
+
         navigationView = findViewById(R.id.t_nav_view);
         toolbar = findViewById(R.id.toolbar_main);
         nDrawer = findViewById(R.id.t_draw_lay);
 
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
@@ -112,12 +123,6 @@ public class TechnicianActivity extends AppCompatActivity {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        if (id == R.id.td_logout) {
-            FirebaseAuth.getInstance().signOut();
-            Intent loginActivity = new Intent(getApplicationContext(),TechLogInActivity.class);
-            startActivity(loginActivity);
-            finish();
         }
 
         fragmentManager.beginTransaction().replace(R.id.tech_container, fragment).commit();

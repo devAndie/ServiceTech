@@ -1,12 +1,8 @@
 package com.example.servicetech;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class CustomerModel {
 
-    private static String custId, Names, mail, phone, address, password;
+    private static String custId, Names, Mail, Phone, Address, Password;
 
     //Constructors
     public CustomerModel() {
@@ -16,19 +12,12 @@ public class CustomerModel {
                          String address,  String phone, String password) {
         this.custId = custId;
         this.Names = Names;
-        this.mail = mail;
-        this.address = address;
-        this.phone = phone;
-        this.password = password;
-    }
-    public static String GetDate() {
-        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        String currentdate = df.format(Calendar.getInstance().getTime());
-
-        return currentdate;
+        this.Mail = mail;
+        this.Address = address;
+        this.Phone = phone;
+        this.Password = password;
     }
     public static void setId(String Id) {
-        Id = GetDate();
         CustomerModel.custId = Id;
     }
 
@@ -40,40 +29,40 @@ public class CustomerModel {
         return Names;
     }
 
-    public static void setNames(String userName) {
+    public static void setNames(String Names) {
         CustomerModel.Names = Names;
     }
 
     public static String getMail() {
-        return mail;
+        return Mail;
     }
 
     public static void setMail(String mail) {
-        CustomerModel.mail = mail;
+        CustomerModel.Mail = mail;
     }
 
     public static String getAddress() {
-        return address;
+        return Address;
     }
     public static void setAddress(String address) {
-        CustomerModel.address = address;
+        CustomerModel.Address = address;
     }
 
     public static String getPassword() {
-        return password;
+        return Password;
     }
 
     public static void setPassword(String password) {
-        CustomerModel.password = password;
+        CustomerModel.Password = password;
     }
 
 
     public static String getPhone() {
-        return phone;
+        return Phone;
     }
 
     public static void setPhone(String phone) {
-        CustomerModel.phone = phone;
+        CustomerModel.Phone = phone;
     }
 
 }

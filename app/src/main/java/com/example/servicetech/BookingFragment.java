@@ -2,7 +2,6 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,34 +15,33 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
     private TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    private String docId, name, type, place, desc, imagePath, techId, techRec, time, Date;
+    private String docId;
+    private String name;
+    private String type;
+    private String place;
+    private String desc;
+    private ParseFile image;
+    private String techId;
+    private String techRec;
+    private String time;
+    private String Date;
     private ImageView itemPhoto;
     private Context context;
     boolean isEdit;
     Button submit;
-
-    private DatabaseReference apptntDatabase;
-    FirebaseFirestore firebaseFirestore;
-    DocumentReference ref;
-    FirebaseAuth auth;
-
-    private FirebaseFirestore firestoreDB;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
     @Override
@@ -53,8 +51,6 @@ public class BookingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Reference to an image file in Cloud Storage
-        StorageReference storageReference =  FirebaseStorage.getInstance().getReference().child("myimage");
 
         item = view.findViewById(R.id.item_tv);
         service = view.findViewById(R.id.item_type_tv);
@@ -66,36 +62,25 @@ public class BookingFragment extends Fragment {
         startTime = view.findViewById(R.id.stime);
         submit = view.findViewById(R.id.schedule);
 
-        firestoreDB = FirebaseFirestore.getInstance();
-        techId = user.getUid();
         techRec = recommendations.getText().toString();
         time = startTime.getText().toString();
         Date = date.getText().toString();
 
-/*
-        //get document from firebase
-        DocumentReference docRef = firestoreDB.collection("event").document(docId);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                EventModel event = documentSnapshot.toObject(EventModel.class);
-            }
-        });
- */
-        EventModel event = null;
+        ParseObject event = null;
         if (getArguments() != null) {
             event = getArguments().getParcelable("event");
         }
         if(event != null){
-            name = event.getItemName();
+            docId = event.getObjectId();
+            name = event.getString("Item");
             item.setText(name);
-            type = event.getService();
+            type = event.getString("Service");
             service.setText(type);
-            place = event.getLocation();
+            place = event.getString("Location");
             location.setText(place);
-            desc = event.getNotes();
+            desc = event.getString("Note");
             notes.setText(desc);
-            imagePath = event.getImageURL();
+            image = event.getParseFile("Image");
 
             submit.setText("Book");
 
@@ -103,8 +88,12 @@ public class BookingFragment extends Fragment {
 
         // Load the image using Glide
         Glide.with(this)
-                .load(imagePath)
+                .load(image)
                 .into(itemPhoto);
+
+//      sync data
+
+//set button invincible
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,68 +110,43 @@ public class BookingFragment extends Fragment {
                     Toast.makeText(getContext(), "Please type a password",
                             Toast.LENGTH_SHORT).show();
                 }else {
-                    createAppointment();
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
+
+                    query.getInBackground(docId, new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject object, ParseException e) {
+                            if (e == null ) {
+                                String status = object.getString("Status");
+                                if (status == "Pending"){
+                                    object.put("Status", "Picked");
+                                    object.put("Reccommendation", techRec);
+                                    object.put("Date", Date);
+                                    object.put("Time", time);
+
+                                    object.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            Toast.makeText(getContext(), "Appointment booked successfully",
+                                                    Toast.LENGTH_SHORT).show();
+
+                                            viewSchedule();
+                                        }
+                                    });
+                                }else {
+                                    Toast.makeText(getContext(), "Event arleady picked!" +
+                                                    "Return to Listing",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getContext(), e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
     }
-    private void createAppointment() {
-        final Appointment event = new Appointment();
-        event.setId(docId);
-        event.setItemName(name);
-        event.setService(type);
-        event.setLocation(place);
-        event.setNotes(desc);
-        event.setImageURL(imagePath);
-        event.setPicked("picked");
-        event.setTechId(techId);
-        event.setRecommendation(techRec);
-        event.setStartTime(time);
-        event.setDate(Date);
-
-        //merge doc
-        apptntDatabase.setValue(event);
-        apptntDatabase.child(docId).setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getContext(),
-                        "event request sent successfully",
-                        Toast.LENGTH_SHORT).show();
-
-                //view pending
-                viewSchedule();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding event record", e);
-                Toast.makeText(getContext(),
-                        "event record could not be added",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        ref.get().addOnSuccessListener(documentSnapshot -> {
-        firestoreDB.collection("events")
-        .document(docId)
-        .set(event, SetOptions.merge())
-        .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-
-                viewSchedule();
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }});
-
-        });
-    }
-
     private void viewSchedule() {
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         ScheduleFragment scheduleFragment = new ScheduleFragment();

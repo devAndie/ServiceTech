@@ -1,11 +1,15 @@
 package com.example.servicetech;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +26,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.servicetech.R.id;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,30 +43,25 @@ import java.util.Calendar;
 import static android.app.Activity.RESULT_OK;
 
 public class RequestServiceFragment extends Fragment {
+
     private static final String TAG = "RequestServiceFragment";
 
     Context context;
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
-
     private EditText item, service, location, notes;
     private ImageView itemImage;
     private Button submit, cancel;
     private ImageButton  itemImg;
-    private FirebaseStorage storage;
-    private DocumentReference ref;
-
-    private DatabaseReference eventDatabase;
-    private FirebaseFirestore firestoreDB;
-
-    private String docId, custId, Item, Service, Location, Notes;
-    private StorageReference storageReference, fireRef, mStorageRef;
-
+    private String owner, Item, Service, Location, Notes;
     private Uri itemUri;
+
     private final int PICK_IMAGE_REQUEST = 71;
     private static final int CAMERA_REQUEST = 1888;
-
     String imageURL = "";
+
+    File photoFile;
+
+    Bitmap bmp;
+    ParseUser user;
 
     @Nullable
     @Override
@@ -82,8 +75,7 @@ public class RequestServiceFragment extends Fragment {
     public void onViewCreated(@NonNull android.view.View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        user = ParseUser.getCurrentUser();
 
         item = view.findViewById(id.item_name);
         service = view.findViewById(id.item_type_la);
@@ -93,20 +85,6 @@ public class RequestServiceFragment extends Fragment {
         itemImg = getView().findViewById(id.img_plus);
         submit = getView().findViewById(id.submit);
         cancel = getView().findViewById(id.cncl);
-
-        firestoreDB = FirebaseFirestore.getInstance();
-        eventDatabase = FirebaseDatabase.getInstance().getReference("events");
-
-        ref = firestoreDB.collection("events").document();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-
-
-        Item = item.getText().toString();
-        Service = service.getText().toString();
-        Location = location.getText().toString();
-        Notes = notes.getText().toString();
 
         itemImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,31 +96,51 @@ public class RequestServiceFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reload();
+                cancel();
             }
         });
 
         submit.setOnClickListener(v -> {
-            UploadImages();
+            Item = item.getText().toString();
+            Service = service.getText().toString();
+            Location = location.getText().toString();
+            Notes = notes.getText().toString();
+
+
+            if(TextUtils.isEmpty(Item)){
+                item.setError("Enter item name");
+                return;
+            }else if(TextUtils.isEmpty(Service)){
+                service.setError("This field can't be empty");
+                return;
+            }else if(TextUtils.isEmpty(Location)){
+                location.setError("This field can't be empty");
+                return;
+            }else if(itemUri == null){
+                Toast.makeText(getContext(), "Please upload Image."
+                        , Toast.LENGTH_LONG).show();
+            }else
+                UploadImages();
+
         });
     }
-
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+    
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+          if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
             itemUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), itemUri);
-                itemImage.setImageBitmap(bitmap);
+                bmp = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), itemUri);
+                itemImage.setImageBitmap(bmp);
             }
             catch (IOException e)
             {
@@ -150,101 +148,73 @@ public class RequestServiceFragment extends Fragment {
             }
         }
     }
-    public void UploadImages() {
-        try {
-            String strFileName = GetDate() + "img.jpg";
-            Uri file = itemUri;
-            fireRef = mStorageRef.child("images/" + currentUser.getUid().toString() + "/" + strFileName);
 
-            UploadTask uploadTask = fireRef.putFile(file);
-            Log.e("Fire Path", fireRef.toString());
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fireRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        Log.e("Image URL", downloadUri.toString());
+    public void UploadImages () {
+        // Convert it to byte
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        // Compress image to lower quality scale 1 - 100
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] imageByte = stream.toByteArray();
 
-                        itemUri = null;
-                        imageURL = downloadUri.toString();
+        ParseFile imageFile = new ParseFile(Item + Service+".jpg", imageByte);
+		
+		ParseObject event = new ParseObject("events");
 
-                    } else {
-                        Toast.makeText(getContext(), "Image upload unsuccessful. Please try again."
-                                , Toast.LENGTH_LONG).show();
-                    }
-                    custId = currentUser.getUid();
-
-                    addEvent();
-                }
-            });
-        } catch (Exception ex) {
-            Toast.makeText(getContext(), ex.getMessage().toString(), Toast.LENGTH_LONG).show();
-        }
-    }
-    public void addEvent(){
-        //generate id
-        docId = eventDatabase.push().getKey();
-
-        EventModel event = createEventObj();
-        addDocumentToCollection(event);
-    }
-    private EventModel createEventObj(){
-        final EventModel event = new EventModel();
-        event.setId(docId);
-        event.setCustomerId(custId);
-        event.setItemName(Item);
-        event.setService(Service);
-        event.setLocation(Location);
-        event.setNotes(Notes);
-        event.setImageURL(imageURL);
-        event.setPicked("Not picked");
-
-        return event;
-    }
-
-    private void addDocumentToCollection(EventModel event){
-        eventDatabase.child(docId).setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+        imageFile.saveInBackground(new SaveCallback() {
             @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getContext(),
-                        "event request sent successfully",
-                        Toast.LENGTH_SHORT).show();
+            public void done(ParseException e) {
+                if (e == null){
 
-                //view pending
-                restUi();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding event record", e);
-                Toast.makeText(getContext(),
-                        "event record could not be added",
-                        Toast.LENGTH_SHORT).show();
+                    event.put("Item", Item);
+                    event.put("Service", Service);
+                    event.put("Image", imageFile);
+                    event.put("Location", Location);
+                    event.put("Note", Notes);
+                    event.put("Status", "pending");
+                    event.put("RequestedBy", user);
+                    event.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                Toast.makeText(getContext(), "request sent successfully",
+                                        Toast.LENGTH_LONG).show();
+                                restUi();
+                            } else
+                                Toast.makeText(getContext(), e.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }else
+                    Toast.makeText(getContext(), e.getMessage()
+                            , Toast.LENGTH_LONG).show();
             }
         });
     }
-    private void restUi() {
-        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+
+
+    private void restUi () {
+        FragmentManager fm = ((TechnicianActivity) context).getSupportFragmentManager();
         PendingFragment pendingFragment = new PendingFragment();
         fm.beginTransaction().replace(R.id.tech_container, pendingFragment).commit();
     }
-    public void Reload(){
-        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-        RequestServiceFragment requestService = new RequestServiceFragment();
-        fm.beginTransaction().replace(R.id.tech_container, requestService).commit();
+
+
+    public void cancel () {
+        int w = 44, h = 44;
+
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+        Bitmap bmp = Bitmap.createBitmap(w, h, conf); // this creates a MUTABLE bitmap
+
+        item.setText("");
+        service.setText("");
+        itemImage.setImageBitmap(bmp);
+        location.setText("");
+        notes.setText("");
     }
-    public String GetDate() {
+    public String GetDate () {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String currentdate = df.format(Calendar.getInstance().getTime());
         return currentdate;
     }
+
 }

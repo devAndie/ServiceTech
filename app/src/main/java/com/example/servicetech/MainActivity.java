@@ -6,21 +6,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     Button login, tech;
-    TextView head, intro;
-    FirebaseAuth auth;
-    FirebaseAuth.AuthStateListener mAuthListener;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user == null) {
+            // No user is signed in
+        } else {
+            // User logged in
+
+            String level = ParseUser.getCurrentUser().getString("Level");
+
+            if (level == "Customer"){
+                Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(homeActivity);
+//            finish();
+            } else if(user.getString("Level") == "Technician"){
+                Intent homeActivity = new Intent(MainActivity.this, TechnicianActivity.class);
+                startActivity(homeActivity);
+//            finish();
+            }
+        }
 
         login = findViewById(R.id.customer);
         login.setOnClickListener(new View.OnClickListener() {

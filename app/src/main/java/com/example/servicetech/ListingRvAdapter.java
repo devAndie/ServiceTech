@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.parse.ParseObject;
 
 import java.util.List;
 
@@ -28,21 +30,6 @@ public class ListingRvAdapter extends
         this.context = context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName, serviceType, place;
-        Button book;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            itemName = view.findViewById(R.id.iTname_tv);
-            serviceType = view.findViewById(R.id.service_tv);
-            place = view.findViewById(R.id.loc_tv);
-
-            book = view.findViewById(R.id.book);
-
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -54,7 +41,7 @@ public class ListingRvAdapter extends
     public ViewHolder
     onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listing_item, parent, false);
+                .inflate(R.layout.event_card_rv, parent, false);
         ListingRvAdapter.ViewHolder viewHolder =
                  new ListingRvAdapter.ViewHolder(view);
 
@@ -70,22 +57,40 @@ public class ListingRvAdapter extends
         holder.serviceType.setText(event.getService());
         holder.place.setText(event.getLocation());
 
-        holder.book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bookEvent(event);
-            }
-        });
-
     }
-    private void bookEvent(EventModel event){
-        FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
 
-        Bundle bundle=new Bundle();
-        bundle.putParcelable("event", (Parcelable) event);
-        BookingFragment createSchedule = new BookingFragment();
-        createSchedule.setArguments(bundle);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView itemName, serviceType, place, note;
+        public ImageView itemPhoto;
 
-        fm.beginTransaction().replace(R.id.tech_container, createSchedule).commit();
+
+        public ViewHolder(View view) {
+            super(view);
+
+            itemPhoto = view.findViewById(R.id.photoView);
+            itemName = view.findViewById(R.id.itemView);
+            serviceType = view.findViewById(R.id.serviceView);
+            place = view.findViewById(R.id.locationView);
+            note = view.findViewById(R.id.noteView);
+
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    ParseObject event = new ParseObject("events");
+                    FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("event", event);
+                    BookingFragment createSchedule = new BookingFragment();
+                    createSchedule.setArguments(bundle);
+
+                    fm.beginTransaction().replace(R.id.tech_container, createSchedule).commit();
+
+                }
+            });
+
+        }
     }
+
+
 }
