@@ -43,6 +43,7 @@ public class TechRegActivity extends AppCompatActivity {
 
         Button tchRg = findViewById(R.id.tech_rgt);
         tchRg.setOnClickListener(v -> {
+
             if(name.getText().toString().equals("")) {
                 Toast.makeText(TechRegActivity.this, "Please type Your Official Names",
                         Toast.LENGTH_SHORT).show();
@@ -107,42 +108,6 @@ public class TechRegActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-    }
-    public void addTechnician(){
-        //generate techid
-
-        ParseObject technicians = new ParseObject("Technicians");
-
-        //technicians.put("techId", techId);
-        technicians.put("Names", Name);
-        technicians.put("email", Mail);
-        technicians.put("Specialty", Specialty);
-        technicians.put("Phone", Phone);
-        technicians.put("Tether", Tether);
-        technicians.put("Password", Password);
-
-        technicians.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null){
-                    ParseUser user = ParseUser.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    Toast.makeText(TechRegActivity.this,
-                            "Authentication failed. "
-                                    + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-
-
-                }
-            }
-        });
-
-        //create technician
-//        TechnicianModel technician = createTechnicianObject();
-
     }
     private void updateUI(ParseUser user) {
         if (user != null) {
