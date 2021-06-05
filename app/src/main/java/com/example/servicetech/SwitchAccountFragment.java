@@ -27,11 +27,8 @@ public class SwitchAccountFragment extends Fragment {
         Switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Intent LogIn = new Intent(getContext(), MainActivity.class);
+                Intent LogIn = new Intent(getContext(), LogInActivity.class);
                 startActivity(LogIn);
-
             }
         });
     }

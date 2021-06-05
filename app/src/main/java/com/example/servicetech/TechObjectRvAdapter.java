@@ -50,7 +50,6 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         holder.serviceType.setText(object.getString("Service"));
         holder.place.setText(object.getString("Location"));
         holder.status.setText(object.getString("Status"));
-        holder.tecRec.setText(object.getString("Recommendation"));
         holder.date.setText(object.getString("Date"));
         holder.time.setText(object.getString("startTime"));
 
@@ -84,7 +83,6 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
             status = view.findViewById(R.id.statusObj);
             serviceType = view.findViewById(R.id.serviceObj);
             place = view.findViewById(R.id.locationObj);
-            tecRec  = view.findViewById(R.id.recObj);
             date =view.findViewById(R.id.dateObj);
             time = view.findViewById(R.id.timeObj);
 

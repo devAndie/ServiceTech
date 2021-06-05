@@ -30,7 +30,7 @@ import com.parse.SaveCallback;
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
     private TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    private String docId, name, type, place, desc, techRec, time, Date;
+    private String docId, techRec, time, Date;
 
     private ParseFile image;
 
@@ -49,7 +49,7 @@ public class BookingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        context = getContext();
         user = ParseUser.getCurrentUser();
 
         item = view.findViewById(R.id.item_tv);
@@ -74,25 +74,20 @@ public class BookingFragment extends Fragment {
         if(event != null){
             docId = event.getObjectId();
             item.setText(event.getString("Item"));
-            //type = event.getString("Service");
             service.setText(event.getString("Service"));
-            place = event.getString("Location");
             location.setText(event.getString("Location"));
-            desc = event.getString("Note");
             notes.setText(event.getString("Note"));
-
             // Load the image using Glide
             Glide.with(this.context).load(event.getParseFile("Image").getUrl()).into(itemPhoto);
 
-
             submit.setText("Book");
-
         }
 
-
-//      sync data
-
-//set button invincible
+        if (techRec.isEmpty() && Date.isEmpty() && time.isEmpty()){
+            submit.setVisibility(View.INVISIBLE);
+        } else {
+            submit.setVisibility(View.VISIBLE);
+        }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
 
@@ -101,7 +96,6 @@ public class BookingFragment extends Fragment {
             public void onClick(View v) {
                 if(TextUtils.isEmpty(techRec)) {
                     recommendations.setError("Please provide action needed");
-
                 }else if(TextUtils.isEmpty(Date)) {
                     date.setError("Provide appointment Date");
 
@@ -116,10 +110,10 @@ public class BookingFragment extends Fragment {
                             if (e == null ) {
                                 String status = object.getString("Status");
                                 if (status == "pending"){
-                                    object.put("Status", "Scheduled");
+                                    object.put("Status", "scheduled");
                                     object.put("Recommendation", techRec);
                                     object.put("Date", Date);
-                                    object.put("startTime", time);
+                                    object.put("Time", time);
                                     object.put("PickedBy", user);
 
                                     object.saveInBackground(new SaveCallback() {
@@ -132,7 +126,7 @@ public class BookingFragment extends Fragment {
                                         }
                                     });
                                 }else if (status != "pending"){
-                                    Toast.makeText(getContext(), "Event arleady picked!" +
+                                    Toast.makeText(getContext(), "Event already picked!" +
                                                     "Return to Listing",
                                             Toast.LENGTH_LONG).show();
                                 }
@@ -152,5 +146,4 @@ public class BookingFragment extends Fragment {
 
         fm.beginTransaction().replace(R.id.tech_container, techScheduleFragment).commit();
     }
-
 }

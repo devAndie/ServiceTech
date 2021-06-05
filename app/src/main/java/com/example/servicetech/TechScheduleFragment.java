@@ -73,9 +73,9 @@ public class TechScheduleFragment extends Fragment {
         Button button = getView().findViewById(R.id.view_event);
         button.setOnClickListener(v -> viewEvents());
 
-        query.whereEqualTo("Status", "picked");
+        query.whereEqualTo("Status", "scheduled");
         query.whereEqualTo("PickedBy", user);
-        //query.orderByDescending()
+        //query.orderByDescending("Date");
 
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -110,7 +110,7 @@ public class TechScheduleFragment extends Fragment {
     }
 
     private void getDocumentsFromCollection(String eventType) {
-        query.whereEqualTo("Status", "picked");
+        query.whereEqualTo("Status", "scheduled");
         query.whereEqualTo("PickedBy", user);
         query.whereEqualTo("Service", eventType);
 

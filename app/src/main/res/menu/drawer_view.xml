@@ -14,15 +14,14 @@
             android:id="@+id/cd_scheduled"
             android:icon="@drawable/ic_baseline_schedule_24"
             android:title="Appointments" />
-
-        <item
-            android:id="@+id/cd_progress"
-            android:icon="@drawable/ic_baseline_timelapse_24"
-            android:title="In progress" />
         <item
             android:id="@+id/cd_completed"
             android:icon="@drawable/ic_baseline_check_24"
             android:title="Completed" />
+        <item
+            android:id="@+id/custAll"
+            android:icon="@drawable/ic_baseline_work_24"
+            android:title="All" />
         <item
             android:id="@+id/cd_logout"
             android:icon="@drawable/ic_baseline_exit_to_app_24"

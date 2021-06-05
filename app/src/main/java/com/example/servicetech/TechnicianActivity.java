@@ -32,17 +32,6 @@ public class TechnicianActivity extends AppCompatActivity {
     ParseUser user;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        ParseUser user = ParseUser.getCurrentUser();
-        if(user == null){
-            Intent Login = new Intent(getApplicationContext(), TechLogInActivity.class);
-            startActivity(Login);
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.technician_home);
@@ -64,7 +53,7 @@ public class TechnicianActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.tech_container,
-                new TechScheduleFragment()).commit();
+                new ListingFragment()).commit();
 
     }
 
@@ -104,13 +93,17 @@ public class TechnicianActivity extends AppCompatActivity {
                 break;
 
             case R.id.td_completed:
-                fragmentClass = CompleteFragment.class;
+                fragmentClass = TechCompletedJobs.class;
+                break;
+
+            case R.id.techAll:
+                fragmentClass = TechsAllServicesFragment.class;
                 break;
 
             case R.id.swapt:
-                Intent main = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(main);
+                fragmentClass = SwitchAccountFragment.class;
                 break;
+
             case R.id.td_logout:
                 fragmentClass = LogOutFragment.class;
                 break;

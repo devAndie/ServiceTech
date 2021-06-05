@@ -1,6 +1,5 @@
 package com.example.servicetech;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,48 +23,39 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TechCompletedJobs extends Fragment {
+public class CustAllServicesFragment extends Fragment {
+    CustObjectsRvAdapter adapter;
+    RecyclerView listRv;
+    List<ParseObject> objectList;
+    ParseUser cust;
 
-    private RecyclerView completeRecyclerView;
-    private TechObjectRvAdapter completeAdapter;
-    List<ParseObject> completedList;
-    ParseUser user;
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_item_list, container, false);
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        user = ParseUser.getCurrentUser();
-        completeRecyclerView = view.findViewById(R.id.custAptList);
+        cust = ParseUser.getCurrentUser();
+        listRv = view.findViewById(R.id.custAptList);
 
-        completedList = new ArrayList<>();
-        completeAdapter = new TechObjectRvAdapter(completedList, getContext());
+        objectList = new ArrayList<>();
+        adapter = new CustObjectsRvAdapter(objectList, getContext());
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
-
-        completeRecyclerView.setLayoutManager(recyclerLayoutManager);
+        listRv.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(completeRecyclerView.getContext(),
+                new DividerItemDecoration(listRv.getContext(),
                         recyclerLayoutManager.getOrientation());
-
-        completeRecyclerView.addItemDecoration(dividerItemDecoration);
+        listRv.addItemDecoration(dividerItemDecoration);
 
         //  Get the events class as a reference.
         ParseQuery<ParseObject> query = new ParseQuery<>("events");
-        query.whereEqualTo("Status", "completed");
-        query.whereEqualTo("PickedBy", user);
+        query.whereEqualTo("PickedBy", cust);
         //query.orderByDescending()
 
         // Execute the find asynchronously
@@ -78,9 +68,9 @@ public class TechCompletedJobs extends Fragment {
                         //ParseObject doc = object.toObject;
 
                         object.getObjectId();
-                        completedList.add(object);
+                        objectList.add(object);
                     }
-                    completeRecyclerView.setAdapter(completeAdapter);
+                    listRv.setAdapter(adapter);
 
 //                    String firstItemId = objects.get(0).getObjectId();
                     Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
@@ -92,6 +82,8 @@ public class TechCompletedJobs extends Fragment {
             }
         });
     }
+
+
 
 
 }

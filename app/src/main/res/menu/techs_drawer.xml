@@ -14,6 +14,11 @@
         android:icon="@drawable/ic_baseline_check_24"
         android:title="Completed" />
     <item
+        android:id="@+id/techAll"
+        android:icon="@drawable/ic_baseline_work_24"
+        android:title="All" />
+
+    <item
         android:id="@+id/swapt"
         android:icon="@drawable/ic_baseline_supervisor_account_24"
         android:title="Switch Account" />

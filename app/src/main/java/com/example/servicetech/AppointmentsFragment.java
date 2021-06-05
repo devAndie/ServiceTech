@@ -66,7 +66,7 @@ public class AppointmentsFragment extends Fragment {
 
         //  Get the events class as a reference.
         ParseQuery<ParseObject> query = new ParseQuery<>("events");
-        query.whereEqualTo("Status", "Scheduled");
+        query.whereEqualTo("Status", "scheduled");
         query.whereEqualTo("RequestedBy", user);
         //query.orderByDescending()
 

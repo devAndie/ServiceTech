@@ -21,12 +21,34 @@ import java.util.List;
 
 public class CustObjectsRvAdapter extends RecyclerView.Adapter<CustObjectsRvAdapter.ViewHolder>{
 
+
     private List<ParseObject> objectsList;
     private Context context;
 
     public CustObjectsRvAdapter(List<ParseObject> objectsList, Context context) {
         this.objectsList = objectsList;
         this.context = context;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView itemName, status, serviceType, place, tecRec, date, time;
+        public ImageView imageView;
+        Button deets;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            itemName = view.findViewById(R.id.itemObj);
+            status = view.findViewById(R.id.statusObj);
+            serviceType = view.findViewById(R.id.serviceObj);
+            place = view.findViewById(R.id.locationObj);
+            date =view.findViewById(R.id.dateObj);
+            time = view.findViewById(R.id.timeObj);
+
+            imageView = view.findViewById(R.id.photoObj);
+
+            deets = view.findViewById(R.id.deets);
+        }
     }
 
     @NonNull
@@ -52,7 +74,6 @@ public class CustObjectsRvAdapter extends RecyclerView.Adapter<CustObjectsRvAdap
         holder.place.setText(object.getString("Location"));
 
         holder.status.setText(object.getString("Status"));
-        holder.tecRec.setText(object.getString("Recommendation"));
         holder.date.setText(object.getString("Date"));
         holder.time.setText(object.getString("startTime"));
 
@@ -86,26 +107,4 @@ public class CustObjectsRvAdapter extends RecyclerView.Adapter<CustObjectsRvAdap
         return objectsList.size();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName, status, serviceType, place, tecRec, date, time;
-        public ImageView imageView;
-        Button deets;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            itemName = view.findViewById(R.id.itemObj);
-            status = view.findViewById(R.id.statusObj);
-            serviceType = view.findViewById(R.id.serviceObj);
-            place = view.findViewById(R.id.locationObj);
-            tecRec  = view.findViewById(R.id.recObj);
-            date =view.findViewById(R.id.dateObj);
-            time = view.findViewById(R.id.timeObj);
-
-            imageView = view.findViewById(R.id.photoObj);
-
-            deets = view.findViewById(R.id.deets);
-        }
-    }
 }

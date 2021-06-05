@@ -50,7 +50,7 @@ import com.parse.ParseUser;
         setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new AppointmentsFragment()).commit();
+                new RequestServiceFragment()).commit();
 
     }
 
@@ -87,12 +87,14 @@ import com.parse.ParseUser;
             case R.id.cd_scheduled:
                 fragmentClass = AppointmentsFragment.class;
                 break;
-            case R.id.cd_progress:
-                fragmentClass = DetailsFragment.class;
-                break;
             case R.id.cd_completed:
                 fragmentClass = CompleteFragment.class;
                 break;
+
+            case R.id.custAll:
+                fragmentClass = CustAllServicesFragment.class;
+                break;
+
             case R.id.cd_logout:
                 fragmentClass = LogOutFragment.class;
                 break;
@@ -129,6 +131,7 @@ import com.parse.ParseUser;
             mDrawer.closeDrawer(GravityCompat.START);
         }
         else {
+
             super.onBackPressed();
         }
     }

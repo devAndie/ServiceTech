@@ -93,7 +93,7 @@ public class TechScheduleRvAdapter extends
         Bundle bundle = new Bundle();
         bundle.putParcelable("event", (Parcelable) appointment);
 
-        AttendAppointmentFragment attendApt = new AttendAppointmentFragment();
+        TechAppointmentFragment attendApt = new TechAppointmentFragment();
         attendApt.setArguments(bundle);
 
         fm.beginTransaction().replace(R.id.tech_container, attendApt).commit();
