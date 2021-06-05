@@ -3,7 +3,9 @@ package com.example.servicetech;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,7 +38,9 @@ public class LogInActivity extends AppCompatActivity {
         if (user == null) {
             // No user is signed in
         } else {
-            updateUI(user);
+            String level = user.getString("Level");
+            Log.d(TAG, "signInWithEmail:success");
+
             // User logged in
         }
     }
@@ -87,7 +91,21 @@ public class LogInActivity extends AppCompatActivity {
                     // Hooray! The user is logged in.
                     Log.d(TAG, "signInWithEmail:success");
 
+                    String userLevel = user.getString("Level");
+
+                    SharedPreferences Level = getSharedPreferences("Level",
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = Level.edit();
+                    editor.putString("userLevel", userLevel);
+                    editor.commit();
+
+
+                    Toast.makeText(LogInActivity.this,
+                            "Welcome back Customer",
+                            Toast.LENGTH_LONG).show();
+
                     updateUI(user);
+
                 } else {
                     // Signup failed. Look at the ParseException to see what happened.
                     Log.w(TAG, "signInWithEmail:failure");

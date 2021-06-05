@@ -1,16 +1,12 @@
 package com.example.servicetech;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +30,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,14 +46,10 @@ public class RequestServiceFragment extends Fragment {
     private ImageView itemImage;
     private Button submit, cancel;
     private ImageButton  itemImg;
-    private String owner, Item, Service, Location, Notes;
+    private String Item, Service, Location, Notes;
     private Uri itemUri;
 
     private final int PICK_IMAGE_REQUEST = 71;
-    private static final int CAMERA_REQUEST = 1888;
-    String imageURL = "";
-
-    File photoFile;
 
     Bitmap bmp;
     ParseUser user;
@@ -74,6 +65,8 @@ public class RequestServiceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull android.view.View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        context = getContext();
 
         user = ParseUser.getCurrentUser();
 
@@ -176,7 +169,7 @@ public class RequestServiceFragment extends Fragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null){
-                                Toast.makeText(getContext(), "request sent successfully",
+                                Toast.makeText(getContext(), "Service request sent successfully",
                                         Toast.LENGTH_LONG).show();
                                 restUi();
                             } else
@@ -193,9 +186,9 @@ public class RequestServiceFragment extends Fragment {
 
 
     private void restUi () {
-        FragmentManager fm = ((TechnicianActivity) context).getSupportFragmentManager();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         PendingFragment pendingFragment = new PendingFragment();
-        fm.beginTransaction().replace(R.id.tech_container, pendingFragment).commit();
+        fm.beginTransaction().replace(id.fragment_container, pendingFragment).commit();
     }
 
 
@@ -213,8 +206,8 @@ public class RequestServiceFragment extends Fragment {
     }
     public String GetDate () {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        String currentdate = df.format(Calendar.getInstance().getTime());
-        return currentdate;
+
+        return df.format(Calendar.getInstance().getTime());
     }
 
 }

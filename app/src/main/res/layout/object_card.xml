@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rvitem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/photoObj"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="4dp" />
+        <TextView
+            android:id="@+id/itemObj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@id/statusObj"
+            android:layout_toRightOf="@id/photoObj"
+            android:text="Apple MacBook Air Core 5th Gen"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="#000000" />
+        <TextView
+            android:id="@+id/statusObj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#A6E17B"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Status"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/serviceObj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemObj"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/locationObj"
+            android:layout_toRightOf="@id/photoObj"
+            android:text="Service"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/locationObj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemObj"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recObj"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_below="@id/serviceObj"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/photoObj"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Technician Recommendations"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dateObj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recObj"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/photoObj"
+            android:text="Date"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/timeObj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recObj"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/dateObj"
+            android:text="Time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/deets"
+            style="@android:style/Widget.Material.Light.Button.Inset"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/recObj"
+            android:layout_alignParentRight="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Details"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Inverse"
+            android:textSize="16sp"
+            app:iconPadding="0dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

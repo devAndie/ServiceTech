@@ -1,6 +1,5 @@
 package com.example.servicetech;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,37 +16,23 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListingFragment extends Fragment {
     private static final String TAG = "ListingFragment";
-
-    ListingRvAdapter listingRvAdapter;
-    private FirebaseFirestore firestoreDB;
+    private ListingRvAdapter listingRvAdapter;
     private RecyclerView listingRv;
-    private DatabaseReference listingDb;
-
-    private List<EventModel> listingList;
+    private List<ParseObject> listingList;
     FragmentActivity listener;
-    Context thisContext;
+    Context context;
+    ParseUser user = ParseUser.getCurrentUser();
 
     @Nullable
     @Override
@@ -58,21 +43,12 @@ public class ListingFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof Activity){
-            this.listener = (FragmentActivity) context;
-        }
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         listingRv = getView().findViewById(R.id.events_lst);
-
         listingList = new ArrayList<>();
+        context = getContext();
 
-        LinearLayoutManager recyclerLayoutManager =
-                new LinearLayoutManager(getActivity().getApplicationContext());
+        LinearLayoutManager recyclerLayoutManager = new LinearLayoutManager(context);
 
         listingRv.setLayoutManager(recyclerLayoutManager);
 
@@ -80,65 +56,47 @@ public class ListingFragment extends Fragment {
                 new DividerItemDecoration(listingRv.getContext(),
                         recyclerLayoutManager.getOrientation());
         listingRv.addItemDecoration(dividerItemDecoration);
-		
-		ListingRvAdapter listingRvAdapter = new ListingRvAdapter(listingList, getActivity());
-		
-		listingRv.setAdapter(listingRvAdapter);
-		
+
+        listingRvAdapter = new ListingRvAdapter(context, listingList);
+
 		//  Get the events class as a reference.
-        /*
 		ParseQuery<ParseObject> query = new ParseQuery("events");
 		
 		query.whereEqualTo("Status", "Pending");
+		query.whereNotEqualTo("CreatedBy", user);
 		
 		query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> itemList, ParseException e) {
+            public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     // Access the array of results here
-                    String firstItemId = itemList.get(0).getObjectId();
+                    for (ParseObject object : objects){
 
+                        //ParseObject doc = object.toObject;
 
-                    Toast.makeText(getContext(), firstItemId, Toast.LENGTH_SHORT).show();
+                        object.getObjectId();
+
+                        listingList.add(object);
+                    }
+
+                    listingRv.setAdapter(listingRvAdapter);
+
+                    //String firstItemId = objects.get(0).getObjectId();
+
+                    Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
+
+                } else if (objects == null){
+                    Toast.makeText(getContext(), "No new jobs check later"
+                            , Toast.LENGTH_LONG).show();
 
 
                 } else {
-                    Log.d("item", "Error: " + e.getMessage());
+                    Log.d(TAG, "Error: " + e.getMessage());
+
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-         */
-
-
     }
-/*    public void getListings() {
-        firestoreDB.collection("events")
-                .whereEqualTo("Status", "Not picked")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<EventModel> listingList = new ArrayList<>();
-
-                            for(DocumentSnapshot doc : task.getResult()){
-                                EventModel listing = doc.toObject(EventModel.class);
-
-                                listing.setId(doc.getId());
-                                listingList.add(listing);
-
-                                Log.d(TAG, doc.getId() + " => " + doc.getData());
-                            }
-                            listingRvAdapter = new
-                                    ListingRvAdapter(listingList, getActivity());
-
-                            listingRv.setAdapter(listingRvAdapter);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }*/
-
 
 }

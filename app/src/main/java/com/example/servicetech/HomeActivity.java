@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
  public class HomeActivity extends AppCompatActivity {
@@ -33,14 +32,6 @@ import com.parse.ParseUser;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_home);
-
-        //initialize parse server
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(getString(R.string.back4app_app_id))
-                .clientKey(getString(R.string.back4app_client_key))
-                .server(getString(R.string.back4app_server_url))
-                .build());
-
 
         mDrawer = findViewById(R.id.draw_lay);
         navigationView = findViewById(R.id.nav_view);
@@ -59,7 +50,7 @@ import com.parse.ParseUser;
         setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new RequestServiceFragment()).commit();
+                new AppointmentsFragment()).commit();
 
     }
 
@@ -97,7 +88,7 @@ import com.parse.ParseUser;
                 fragmentClass = AppointmentsFragment.class;
                 break;
             case R.id.cd_progress:
-                fragmentClass = InProgressFragment.class;
+                fragmentClass = DetailsFragment.class;
                 break;
             case R.id.cd_completed:
                 fragmentClass = CompleteFragment.class;

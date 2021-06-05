@@ -1,14 +1,11 @@
 package com.example.servicetech;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -29,54 +24,51 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PendingFragment extends Fragment{
+public class TechCompletedJobs extends Fragment {
 
-    private static final String TAG = "PendingFragment";
-
-    private RecyclerView pendingRecyclerView;
-    private List<ParseObject> pendingList;
+    private RecyclerView completeRecyclerView;
+    private PendingRVAdapter completeAdapter;
+    List<ParseObject> completedList;
     ParseUser user;
 
-    PendingRVAdapter pendingAdapter;
-    private String customer;
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_item_list, container, false);
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         user = ParseUser.getCurrentUser();
+        completeRecyclerView = view.findViewById(R.id.custAptList);
 
-        pendingRecyclerView = view.findViewById(R.id.custAptList);
-        pendingList = new ArrayList<>();
-        pendingAdapter = new PendingRVAdapter(pendingList, getContext());
-
+        completedList = new ArrayList<>();
+        completeAdapter = new PendingRVAdapter(completedList, getContext());
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
 
-        pendingRecyclerView.setLayoutManager(recyclerLayoutManager);
+        completeRecyclerView.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(pendingRecyclerView.getContext(),
+                new DividerItemDecoration(completeRecyclerView.getContext(),
                         recyclerLayoutManager.getOrientation());
 
-        pendingRecyclerView.addItemDecoration(dividerItemDecoration);
+        completeRecyclerView.addItemDecoration(dividerItemDecoration);
 
-		//  Get the events class as a reference.
+        //  Get the events class as a reference.
         ParseQuery<ParseObject> query = new ParseQuery<>("events");
-		query.whereEqualTo("Status", "pending");
-		query.whereEqualTo("RequestedBy", user);
-		//query.orderByDescending()
+        query.whereEqualTo("Status", "completed");
+        query.whereEqualTo("envoy", user);
+        //query.orderByDescending()
 
-		// Execute the find asynchronously
+        // Execute the find asynchronously
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -86,25 +78,20 @@ public class PendingFragment extends Fragment{
                         //ParseObject doc = object.toObject;
 
                         object.getObjectId();
-
-                        pendingList.add(object);
+                        completedList.add(object);
                     }
-                    pendingRecyclerView.setAdapter(pendingAdapter);
+                    completeRecyclerView.setAdapter(completeAdapter);
 
 //                    String firstItemId = objects.get(0).getObjectId();
                     Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
-                } else if (objects == null) {
-                    Toast.makeText(getContext(), "No new services requested"
-                            , Toast.LENGTH_LONG).show();
                 } else {
                     Log.d("item", "Error: " + e.getMessage());
-
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                } if (objects == null){
+                    Toast.makeText(getContext(), "No Completed Jobs yet", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-    
-
     }
+
+
 }

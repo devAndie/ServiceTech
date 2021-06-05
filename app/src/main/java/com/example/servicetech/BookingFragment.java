@@ -2,6 +2,7 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,25 +24,22 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
     private TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    private String docId;
-    private String name;
-    private String type;
-    private String place;
-    private String desc;
+    private String docId, name, type, place, desc, techRec, time, Date;
+
     private ParseFile image;
-    private String techId;
-    private String techRec;
-    private String time;
-    private String Date;
+
     private ImageView itemPhoto;
     private Context context;
     boolean isEdit;
     Button submit;
+
+    ParseUser user;
 
     @Nullable
     @Override
@@ -52,6 +50,8 @@ public class BookingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        user = ParseUser.getCurrentUser();
+
         item = view.findViewById(R.id.item_tv);
         service = view.findViewById(R.id.item_type_tv);
         itemPhoto = view.findViewById(R.id.itemImg);
@@ -60,6 +60,7 @@ public class BookingFragment extends Fragment {
         recommendations = view.findViewById(R.id.recommend);
         date = view.findViewById(R.id.date);
         startTime = view.findViewById(R.id.stime);
+
         submit = view.findViewById(R.id.schedule);
 
         techRec = recommendations.getText().toString();
@@ -72,70 +73,68 @@ public class BookingFragment extends Fragment {
         }
         if(event != null){
             docId = event.getObjectId();
-            name = event.getString("Item");
-            item.setText(name);
-            type = event.getString("Service");
-            service.setText(type);
+            item.setText(event.getString("Item"));
+            //type = event.getString("Service");
+            service.setText(event.getString("Service"));
             place = event.getString("Location");
-            location.setText(place);
+            location.setText(event.getString("Location"));
             desc = event.getString("Note");
-            notes.setText(desc);
-            image = event.getParseFile("Image");
+            notes.setText(event.getString("Note"));
+
+            // Load the image using Glide
+            Glide.with(this.context).load(event.getParseFile("Image").getUrl()).into(itemPhoto);
+
 
             submit.setText("Book");
 
         }
 
-        // Load the image using Glide
-        Glide.with(this)
-                .load(image)
-                .into(itemPhoto);
 
 //      sync data
 
 //set button invincible
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recommendations.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Please type Your Official Names",
-                            Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(techRec)) {
+                    recommendations.setError("Please provide action needed");
 
-                }else if(date.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Please type a valid email",
-                            Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(Date)) {
+                    date.setError("Provide appointment Date");
 
-                }else if(startTime.getText().toString().equals("")){
-                    Toast.makeText(getContext(), "Please type a password",
-                            Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(time)){
+                    startTime.setError("Please provide a time");
+
                 }else {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
 
                     query.getInBackground(docId, new GetCallback<ParseObject>() {
                         @Override
                         public void done(ParseObject object, ParseException e) {
                             if (e == null ) {
                                 String status = object.getString("Status");
-                                if (status == "Pending"){
-                                    object.put("Status", "Picked");
-                                    object.put("Reccommendation", techRec);
+                                if (status == "pending"){
+                                    object.put("Status", "Scheduled");
+                                    object.put("Recommendation", techRec);
                                     object.put("Date", Date);
-                                    object.put("Time", time);
+                                    object.put("startTime", time);
+                                    object.put("PickedBy", user);
 
                                     object.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
                                             Toast.makeText(getContext(), "Appointment booked successfully",
-                                                    Toast.LENGTH_SHORT).show();
+                                                    Toast.LENGTH_LONG).show();
 
                                             viewSchedule();
                                         }
                                     });
-                                }else {
+                                }else if (status != "pending"){
                                     Toast.makeText(getContext(), "Event arleady picked!" +
                                                     "Return to Listing",
-                                            Toast.LENGTH_SHORT).show();
+                                            Toast.LENGTH_LONG).show();
                                 }
                             } else {
                                 Toast.makeText(getContext(), e.getMessage(),
@@ -149,9 +148,9 @@ public class BookingFragment extends Fragment {
     }
     private void viewSchedule() {
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        TechScheduleFragment techScheduleFragment = new TechScheduleFragment();
 
-        fm.beginTransaction().replace(R.id.tech_container, scheduleFragment).commit();
+        fm.beginTransaction().replace(R.id.tech_container, techScheduleFragment).commit();
     }
 
 }

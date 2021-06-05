@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,28 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
- 
+
         <RelativeLayout
+            android:id="@+id/cardParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
- 
+
             <ImageView
                 android:id="@+id/photoView"
                 android:layout_width="120dp"
                 android:layout_height="90dp"
                 android:padding="4dp" />
- 
+
             <TextView
                 android:id="@+id/itemView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/photoView"
-                android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
+                android:text="Apple MacBook Air Core i5 5th Gen"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#000000" />
- 
+
             <TextView
                 android:id="@+id/serviceView"
                 android:layout_width="wrap_content"
@@ -38,9 +40,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/photoView"
-                android:text="13.3 Inch, 256 GB"
+                android:text="Service"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
- 
+
             <TextView
                 android:id="@+id/locationView"
                 android:layout_width="wrap_content"
@@ -52,20 +54,20 @@
                 android:background="@color/colorPrimary"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="4.7"
+                android:text="Location"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/noteView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20dp"
                 android:layout_below="@id/locationView"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/photoView"
-                android:text="INR 56990"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:text="Note"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="bold" />
 
         </RelativeLayout>

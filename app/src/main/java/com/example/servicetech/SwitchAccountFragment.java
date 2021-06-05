@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SwitchAccountFragment extends Fragment {
 
@@ -28,7 +27,7 @@ public class SwitchAccountFragment extends Fragment {
         Switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+
 
                 Intent LogIn = new Intent(getContext(), MainActivity.class);
                 startActivity(LogIn);

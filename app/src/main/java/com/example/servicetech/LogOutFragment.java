@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -38,23 +37,16 @@ public class LogOutFragment extends Fragment {
         Out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogOut();
+                ParseUser.logOut();
+                Intent LogIn = new Intent(getContext(), MainActivity.class);
+                startActivity(LogIn);
             }
         });
 
     }
 
     public void LogOut(){
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                //progressDialog.dismiss();
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 
-                Intent LogIn = new Intent(getContext(), MainActivity.class);
-                startActivity(LogIn);
-            }
-        });
     }
 
 }

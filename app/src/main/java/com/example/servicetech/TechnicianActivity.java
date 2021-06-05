@@ -47,20 +47,11 @@ public class TechnicianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.technician_home);
 
-        //initialize parse server
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(getString(R.string.back4app_app_id))
-                .clientKey(getString(R.string.back4app_client_key))
-                .server(getString(R.string.back4app_server_url))
-                .build());
-
         user = ParseUser.getCurrentUser();
 
         navigationView = findViewById(R.id.t_nav_view);
         toolbar = findViewById(R.id.toolbar_main);
         nDrawer = findViewById(R.id.t_draw_lay);
-
-        // Initialize Firebase Auth
 
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -73,7 +64,7 @@ public class TechnicianActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.tech_container,
-                new ListingFragment()).commit();
+                new TechScheduleFragment()).commit();
 
     }
 
@@ -109,8 +100,13 @@ public class TechnicianActivity extends AppCompatActivity {
                 fragmentClass = ListingFragment.class;
                 break;
             case R.id.td_schedule:
-                fragmentClass = ScheduleFragment.class;
+                fragmentClass = TechScheduleFragment.class;
                 break;
+
+            case R.id.td_completed:
+                fragmentClass = CompleteFragment.class;
+                break;
+
             case R.id.swapt:
                 Intent main = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(main);

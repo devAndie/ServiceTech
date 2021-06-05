@@ -3,16 +3,12 @@
 
     <item
         android:id="@+id/td_listing"
-        android:icon="@drawable/ic_baseline_request_quote_24"
+        android:icon="@drawable/ic_baseline_book_24"
         android:title="Listings" />
     <item
         android:id="@+id/td_schedule"
-        android:icon="@drawable/ic_baseline_payment_24"
+        android:icon="@drawable/ic_baseline_home_repair_service_24"
         android:title="Appointments" />
-    <item
-        android:id="@+id/td_progress"
-        android:icon="@drawable/ic_baseline_timelapse_24"
-        android:title="Attending" />
     <item
         android:id="@+id/td_completed"
         android:icon="@drawable/ic_baseline_check_24"
@@ -20,7 +16,7 @@
     <item
         android:id="@+id/swapt"
         android:icon="@drawable/ic_baseline_supervisor_account_24"
-        android:title="Switc Account" />
+        android:title="Switch Account" />
     <item
         android:id="@+id/td_logout"
         android:icon="@drawable/ic_baseline_exit_to_app_24"

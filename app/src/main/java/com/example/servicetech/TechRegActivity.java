@@ -3,7 +3,9 @@ package com.example.servicetech;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -22,20 +24,14 @@ public class TechRegActivity extends AppCompatActivity {
     private static final String TAG = TechRegActivity.class.getSimpleName();
 
     EditText name, mail, phone, specialty, tether, pwd, conf_pwd;
-    private String techId, Name, Phone, Mail, Specialty, Tether,
-            Password, ConPass;
+    private String Name, Phone, Mail, Specialty, Tether,
+            Password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tech_reg);
-
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(getString(R.string.back4app_app_id))
-                .clientKey(getString(R.string.back4app_client_key))
-                .server(getString(R.string.back4app_server_url))
-                .build());
 
         name = findViewById(R.id.names);
         mail = findViewById(R.id.tmail);
@@ -44,8 +40,6 @@ public class TechRegActivity extends AppCompatActivity {
         tether = findViewById(R.id.tether);
         pwd = findViewById(R.id.tPass);
         conf_pwd = findViewById(R.id.tconPass);
-
-
 
         Button tchRg = findViewById(R.id.tech_rgt);
         tchRg.setOnClickListener(v -> {
@@ -93,14 +87,23 @@ public class TechRegActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     ParseUser user = ParseUser.getCurrentUser();
+
+                    String userLevel = user.getString("Level");
+
+                    SharedPreferences Level = getSharedPreferences("Level",
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = Level.edit();
+                    editor.putString("userLevel", userLevel);
+                    editor.commit();
+
+
+
                     updateUI(user);
                 } else {
                     Toast.makeText(TechRegActivity.this,
                             "Data Write failed. "
                                     + e.getMessage(),
                             Toast.LENGTH_SHORT).show();
-
-
                 }
             }
         });
@@ -112,7 +115,7 @@ public class TechRegActivity extends AppCompatActivity {
 
         ParseObject technicians = new ParseObject("Technicians");
 
-        technicians.put("techId", techId);
+        //technicians.put("techId", techId);
         technicians.put("Names", Name);
         technicians.put("email", Mail);
         technicians.put("Specialty", Specialty);

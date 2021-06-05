@@ -1,6 +1,8 @@
 package com.example.servicetech;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,16 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseNetworkException;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -36,10 +28,6 @@ public class TechLogInActivity extends AppCompatActivity {
     EditText mail, pwd;
     Button login, register;
     ProgressBar progress;
-    FirebaseFirestore firebaseFirestore;
-    private FirebaseAuth auth;
-    DocumentReference ref;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onStart() {
@@ -59,20 +47,12 @@ public class TechLogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        //initialize parse server
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(getString(R.string.back4app_app_id))
-                .clientKey(getString(R.string.back4app_client_key))
-                .server(getString(R.string.back4app_server_url))
-                .build());
-
         mail = findViewById(R.id.logins);
         pwd = findViewById(R.id.login_pwd);
         progress = findViewById(R.id.prg_bar);
         login = findViewById(R.id.btn_login);
         register = findViewById(R.id.btn_register);
 
-        auth = FirebaseAuth.getInstance();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +90,15 @@ public class TechLogInActivity extends AppCompatActivity {
                 if (user != null) {
                     // Hooray! The user is logged in.
                     Log.d(TAG, "signInWithEmail:success");
+
+                    String userLevel = user.getString("Level");
+
+                    SharedPreferences Level = getSharedPreferences("Level",
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = Level.edit();
+                    editor.putString("userLevel", userLevel);
+                    editor.commit();
+
 
                     updateUI(user);
                 } else {

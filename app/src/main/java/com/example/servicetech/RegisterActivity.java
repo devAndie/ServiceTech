@@ -2,7 +2,9 @@
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.widget.Button;
@@ -81,6 +83,16 @@ public class RegisterActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     if (e == null) {
                         ParseUser user = ParseUser.getCurrentUser();
+
+                        String userLevel = user.getString("Level");
+
+                        SharedPreferences Level = getSharedPreferences("Level",
+                                Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = Level.edit();
+                        editor.putString("userLevel", userLevel);
+                        editor.commit();
+
+
                         updateUI(user);
                     } else {
                         Toast.makeText(RegisterActivity.this,

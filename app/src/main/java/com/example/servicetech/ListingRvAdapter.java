@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.bumptech.glide.Glide;
 import com.parse.ParseObject;
 
 import java.util.List;
@@ -22,12 +22,12 @@ import java.util.List;
 public class ListingRvAdapter extends
         RecyclerView.Adapter<ListingRvAdapter.ViewHolder> {
 
-    private List<EventModel> listingList;
+    private List<ParseObject> listingList;
     private Context context;
 
-    public ListingRvAdapter(List<EventModel> listingList, Context context) {
-        this.listingList = listingList;
+    public ListingRvAdapter(Context context, List<ParseObject> listingList) {
         this.context = context;
+        this.listingList = listingList;
     }
 
 
@@ -42,21 +42,22 @@ public class ListingRvAdapter extends
     onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_card_rv, parent, false);
-        ListingRvAdapter.ViewHolder viewHolder =
-                 new ListingRvAdapter.ViewHolder(view);
 
-        return viewHolder;
+        return new ListingRvAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final int itemPos = position;
-        EventModel event = listingList.get(position);
-        holder.itemName.setText(event.getItemName());
-        holder.serviceType.setText(event.getService());
-        holder.place.setText(event.getLocation());
+        ParseObject event = listingList.get(position);
+        holder.itemName.setText(event.getString("Item"));
+        holder.serviceType.setText(event.getString("Service"));
+        holder.place.setText(event.getString("Location"));
 
+        Glide.with(context).load(event.getParseFile("Image").getUrl()).into(holder.itemPhoto);
+
+        String itemId = event.getObjectId();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,18 +80,15 @@ public class ListingRvAdapter extends
                     ParseObject event = new ParseObject("events");
                     FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
 
+
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("event", event);
                     BookingFragment createSchedule = new BookingFragment();
                     createSchedule.setArguments(bundle);
 
                     fm.beginTransaction().replace(R.id.tech_container, createSchedule).commit();
-
                 }
             });
-
         }
     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.example.servicetech;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.util.List;
@@ -20,8 +20,6 @@ public class PendingRVAdapter extends RecyclerView.Adapter<PendingRVAdapter.View
 
     private List<ParseObject> pendingList;
     private Context context;
-
-
 
     public PendingRVAdapter(List<ParseObject> pendingList, Context context) {
         this.pendingList = pendingList;
@@ -35,9 +33,7 @@ public class PendingRVAdapter extends RecyclerView.Adapter<PendingRVAdapter.View
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_card_rv, parent, false);
 
-        PendingRVAdapter.ViewHolder viewHolder = new PendingRVAdapter.ViewHolder(view);
-		
-        return viewHolder;
+        return new PendingRVAdapter.ViewHolder(view);
     }
 
     @Override
@@ -50,8 +46,9 @@ public class PendingRVAdapter extends RecyclerView.Adapter<PendingRVAdapter.View
         holder.serviceType.setText(pendingEvent.getString("Service"));
         holder.place.setText(pendingEvent.getString("Location"));
 		holder.note.setText(pendingEvent.getString("Note"));
-		
-		holder.imageView.setImageDrawable(Drawable.createFromPath(pendingEvent.getParseFile("Image").getUrl()));
+
+		Glide.with(context).load(pendingEvent.getParseFile("Image").getUrl())
+                .into(holder.imageView);
     }
 
     @Override
@@ -61,7 +58,7 @@ public class PendingRVAdapter extends RecyclerView.Adapter<PendingRVAdapter.View
 	
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemName, serviceType, place, note;
-		ImageView imageView;
+		public ImageView imageView;
 
         public ViewHolder(View view) {
             super(view);

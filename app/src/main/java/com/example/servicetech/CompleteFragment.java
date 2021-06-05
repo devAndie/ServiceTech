@@ -29,18 +29,15 @@ public class CompleteFragment extends Fragment {
     private static final String TAG = "CustomerSchedule";
 
     private RecyclerView completeRecyclerView;
-    private PendingRVAdapter completeAdapter;
+    private CustObjectsRvAdapter completeAdapter;
     List<ParseObject> completedList;
-
     ParseUser user;
-    String docId;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.complete_item_list, container, false);
+        return inflater.inflate(R.layout.fragment_item_list, container, false);
     }
 
     @Override
@@ -54,7 +51,7 @@ public class CompleteFragment extends Fragment {
         completeRecyclerView = view.findViewById(R.id.custAptList);
 
         completedList = new ArrayList<>();
-        completeAdapter = new PendingRVAdapter(completedList, getContext());
+        completeAdapter = new CustObjectsRvAdapter(completedList, getContext());
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
@@ -83,15 +80,20 @@ public class CompleteFragment extends Fragment {
                         //ParseObject doc = object.toObject;
 
                         object.getObjectId();
-
                         completedList.add(object);
                     }
                     completeRecyclerView.setAdapter(completeAdapter);
 
                     String firstItemId = objects.get(0).getObjectId();
                     Toast.makeText(getContext(), firstItemId, Toast.LENGTH_SHORT).show();
+                } else if (objects == null){
+                    Toast.makeText(getContext(), "No completed jobs return to schedule and attend appointments"
+                            , Toast.LENGTH_LONG).show();
+
                 } else {
-                    Log.d("item", "Error: " + e.getMessage());
+                    Log.d(TAG, "Error: " + e.getMessage());
+
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
