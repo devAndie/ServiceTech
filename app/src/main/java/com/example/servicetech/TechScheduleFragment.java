@@ -27,14 +27,12 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TechScheduleFragment extends Fragment {
     private static final String TAG = "ScheduleFragment";
-
     private RecyclerView techScheduleRV;
     private TechScheduleRvAdapter techScheduleRvAdapter;
-
     private List<ParseObject> techScheduleList;
+    Context context;
 
     ParseUser user = ParseUser.getCurrentUser();
     //  Get the events class as a reference.
@@ -59,8 +57,9 @@ public class TechScheduleFragment extends Fragment {
         techScheduleRV = view.findViewById(R.id.events_lst);
 
         techScheduleList = new ArrayList<>();
+        context = getContext();
 
-        techScheduleRvAdapter = new TechScheduleRvAdapter(techScheduleList, getContext());
+        techScheduleRvAdapter = new TechScheduleRvAdapter(techScheduleList, context);
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());

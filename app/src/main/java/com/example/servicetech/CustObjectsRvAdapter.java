@@ -81,18 +81,17 @@ public class CustObjectsRvAdapter extends RecyclerView.Adapter<CustObjectsRvAdap
         holder.deets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String docId = object.getObjectId();
-                viewDetails(docId);
+                viewDetails(object);
 
             }
         });
 
     }
 
-    private void viewDetails(String docId) {
+    private void viewDetails(ParseObject object) {
         FragmentManager fm = ((HomeActivity)context).getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putString("docId", docId);
+        bundle.putParcelable("event", (Parcelable) object);
 
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);

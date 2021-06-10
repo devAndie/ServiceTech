@@ -65,7 +65,8 @@ public class TechScheduleRvAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final int itemPos = position;
-        final ParseObject appointment =  techAptList.get(position);
+        
+        final ParseObject appointment =  techAptList.get(itemPos);
         holder.itemName.setText(appointment.getString("Item"));
         holder.serviceType.setText(appointment.getString("Service"));
         holder.place.setText(appointment.getString("Location"));
@@ -81,8 +82,7 @@ public class TechScheduleRvAdapter extends
         holder.deets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String docId = appointment.getObjectId();
-                viewDeets(docId);
+                viewDeets(appointment);
             }
         });
     }
@@ -98,10 +98,10 @@ public class TechScheduleRvAdapter extends
         fm.beginTransaction().replace(R.id.tech_container, attendApt).commit();
     }
 
-    private void viewDeets(String docId){
+    private void viewDeets(ParseObject appointment){
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
-        Bundle bundle=new Bundle();
-        bundle.putString("docId", docId);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("event", (Parcelable) appointment);
 
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);

@@ -2,6 +2,7 @@ package com.example.servicetech;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,8 +79,7 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         holder.deets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String docId = object.getObjectId();
-                viewDetails(docId);
+                viewDetails(object);
             }
         });
 
@@ -90,10 +90,10 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         return objectsList.size();
     }
 
-    private void viewDetails(String docId) {
+    private void viewDetails(ParseObject object) {
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putString("docId", docId);
+        bundle.putParcelable("event", (Parcelable) object);
 
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);

@@ -21,26 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        SharedPreferences Level = getSharedPreferences("Level",
-                Context.MODE_PRIVATE);
-        String userLevel = Level.getString("userLevel", "");
-
-        ParseUser user = ParseUser.getCurrentUser();
-        if (user != null){
-            if (userLevel == "Customer"){
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-
-            } else if (userLevel == "Technician"){
-                startActivity(new Intent(MainActivity.this, TechnicianActivity.class));
-            } else{
-
-            }
-        } else{
-            //null CurrentUser
-
-        }
-
-
         login = findViewById(R.id.customer);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
