@@ -72,7 +72,7 @@ public class TechAppointmentFragment extends Fragment {
             notes.setText(event.getString("Note"));
             recommendations.setText(event.getString("Recommendation"));
             date.setText(event.getString("Date"));
-            startTime.setText(event.getString("StartTime"));
+            startTime.setText(event.getString("Time"));
 
             // Load the image using Glide
             Glide.with(this.context).load(event.getParseFile("Image").getUrl()).into(itemPhoto);
@@ -102,7 +102,7 @@ public class TechAppointmentFragment extends Fragment {
                             object.put("Status", "completed");
                             object.put("StartTime", StartTime);
                             object.put("FollowUp", FollowUp);
-                            object.put("endTime", endTime);
+                            object.put("EndTime", endTime);
 
                             object.saveInBackground(new SaveCallback() {
                                 @Override

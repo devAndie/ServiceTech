@@ -84,14 +84,13 @@ public class RegisterActivity extends AppCompatActivity {
                     if (e == null) {
                         ParseUser user = ParseUser.getCurrentUser();
 
-                        String userLevel = user.getString("Level");
+                        String userLevel = "Customer";
 
                         SharedPreferences Level = getSharedPreferences("Level",
                                 Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = Level.edit();
                         editor.putString("userLevel", userLevel);
                         editor.commit();
-
 
                         updateUI(user);
                     } else {

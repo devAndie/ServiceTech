@@ -89,7 +89,7 @@ public class TechRegActivity extends AppCompatActivity {
                 if (e == null) {
                     ParseUser user = ParseUser.getCurrentUser();
 
-                    String userLevel = user.getString("Level");
+                    String userLevel = "Technician";
 
                     SharedPreferences Level = getSharedPreferences("Level",
                             Context.MODE_PRIVATE);

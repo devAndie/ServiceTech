@@ -8,44 +8,25 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/head"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/welcome_note"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toTopOf="@+id/intro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/head"
-        app:srcCompat="@drawable/dispatch_a_technician_header" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/servtech_logo_400x400" />
 
     <TextView
         android:id="@+id/intro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/catch_phrase"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -53,7 +34,7 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/customer"
+        app:layout_constraintBottom_toTopOf="@id/aluta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

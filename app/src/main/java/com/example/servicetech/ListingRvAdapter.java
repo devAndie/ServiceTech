@@ -1,13 +1,16 @@
 package com.example.servicetech;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +22,7 @@ import com.parse.ParseObject;
 
 import java.util.List;
 
-public class ListingRvAdapter extends
-        RecyclerView.Adapter<ListingRvAdapter.ViewHolder> {
+public class ListingRvAdapter extends RecyclerView.Adapter<ListingRvAdapter.ViewHolder> {
 
     private List<ParseObject> listingList;
     private Context context;
@@ -29,7 +31,6 @@ public class ListingRvAdapter extends
         this.context = context;
         this.listingList = listingList;
     }
-
 
     @Override
     public int getItemCount() {
@@ -56,8 +57,6 @@ public class ListingRvAdapter extends
         holder.place.setText(event.getString("Location"));
 
         Glide.with(context).load(event.getParseFile("Image").getUrl()).into(holder.itemPhoto);
-
-        String itemId = event.getObjectId();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,15 +73,17 @@ public class ListingRvAdapter extends
             place = view.findViewById(R.id.locationView);
             note = view.findViewById(R.id.noteView);
 
-
             view.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    ParseObject event = new ParseObject("events");
-                    FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+                    final int position = getAdapterPosition();
 
+                    ParseObject event = listingList.get(position);
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("event", event);
+
+                    FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
+
                     BookingFragment createSchedule = new BookingFragment();
                     createSchedule.setArguments(bundle);
 

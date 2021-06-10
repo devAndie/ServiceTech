@@ -21,13 +21,12 @@ import java.util.List;
 public class TechScheduleRvAdapter extends
         RecyclerView.Adapter<TechScheduleRvAdapter.ViewHolder>{
 
-    private String docID;
-    private List<ParseObject> techSchedulList;
+    private List<ParseObject> techAptList;
     private Context context;
 
-    public TechScheduleRvAdapter(Context ctx, List<ParseObject> list) {
-        techSchedulList = list;
-        context = ctx;
+    public TechScheduleRvAdapter(List<ParseObject> techAptList, Context context) {
+        this.techAptList = techAptList;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +48,7 @@ public class TechScheduleRvAdapter extends
 
     @Override
     public int getItemCount() {
-        return techSchedulList.size();
+        return techAptList.size();
     }
 
     @NonNull
@@ -66,7 +65,7 @@ public class TechScheduleRvAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final int itemPos = position;
-        final ParseObject appointment =  techSchedulList.get(position);
+        final ParseObject appointment =  techAptList.get(position);
         holder.itemName.setText(appointment.getString("Item"));
         holder.serviceType.setText(appointment.getString("Service"));
         holder.place.setText(appointment.getString("Location"));

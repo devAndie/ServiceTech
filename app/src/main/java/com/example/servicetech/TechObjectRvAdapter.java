@@ -27,6 +27,26 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         this.objectsList = objectsList;
         this.context = context;
     }
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView itemName, status, serviceType, place, tecRec, date, time;
+        public ImageView imageView;
+        Button deets;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            itemName = view.findViewById(R.id.itemObj);
+            status = view.findViewById(R.id.statusObj);
+            serviceType = view.findViewById(R.id.serviceObj);
+            place = view.findViewById(R.id.locationObj);
+            date =view.findViewById(R.id.dateObj);
+            time = view.findViewById(R.id.timeObj);
+
+            imageView = view.findViewById(R.id.photoObj);
+
+            deets = view.findViewById(R.id.deets);
+        }
+    }
 
     @NonNull
     @Override
@@ -51,7 +71,7 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         holder.place.setText(object.getString("Location"));
         holder.status.setText(object.getString("Status"));
         holder.date.setText(object.getString("Date"));
-        holder.time.setText(object.getString("startTime"));
+        holder.time.setText(object.getString("Time"));
 
         Glide.with(context).load(object.getParseFile("Image").getUrl()).into(holder.imageView);
 
@@ -70,28 +90,6 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         return objectsList.size();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName, status, serviceType, place, tecRec, date, time;
-        public ImageView imageView;
-        Button deets;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            itemName = view.findViewById(R.id.itemObj);
-            status = view.findViewById(R.id.statusObj);
-            serviceType = view.findViewById(R.id.serviceObj);
-            place = view.findViewById(R.id.locationObj);
-            date =view.findViewById(R.id.dateObj);
-            time = view.findViewById(R.id.timeObj);
-
-            imageView = view.findViewById(R.id.photoObj);
-
-            deets = view.findViewById(R.id.deets);
-        }
-    }
-
     private void viewDetails(String docId) {
         FragmentManager fm = ((TechnicianActivity)context).getSupportFragmentManager();
         Bundle bundle = new Bundle();
@@ -101,7 +99,6 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         detailsFragment.setArguments(bundle);
 
         fm.beginTransaction().replace(R.id.tech_container, detailsFragment).commit();
-
     }
 
 }

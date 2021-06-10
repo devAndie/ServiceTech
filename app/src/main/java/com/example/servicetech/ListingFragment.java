@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,10 +32,9 @@ public class ListingFragment extends Fragment {
     private static final String TAG = "ListingFragment";
     private ListingRvAdapter listingRvAdapter;
     private RecyclerView listingRv;
-    private List<ParseObject> listingList;
-    FragmentActivity listener;
     Context context;
-    ParseUser user = ParseUser.getCurrentUser();
+    ParseUser tech;
+    List<ParseObject> listingList;
 
     @Nullable
     @Override
@@ -44,12 +46,15 @@ public class ListingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        listingRv = getView().findViewById(R.id.events_lst);
-        listingList = new ArrayList<>();
+        listingRv = view.findViewById(R.id.events_lst);
+
         context = getContext();
+        tech = ParseUser.getCurrentUser();
+        listingList = new ArrayList<>();
+        listingRvAdapter = new ListingRvAdapter(getContext(), listingList);
 
-        LinearLayoutManager recyclerLayoutManager = new LinearLayoutManager(context);
-
+        LinearLayoutManager recyclerLayoutManager =
+                new LinearLayoutManager(getActivity().getApplicationContext());
         listingRv.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
@@ -57,13 +62,12 @@ public class ListingFragment extends Fragment {
                         recyclerLayoutManager.getOrientation());
         listingRv.addItemDecoration(dividerItemDecoration);
 
-        listingRvAdapter = new ListingRvAdapter(context, listingList);
-
 		//  Get the events class as a reference.
-		ParseQuery<ParseObject> query = new ParseQuery("events");
-		
-		query.whereEqualTo("Status", "Pending");
-		query.whereNotEqualTo("CreatedBy", user);
+//		ParseQuery<ParseObject> query = new ParseQuery("events");
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
+
+		query.whereEqualTo("Status", "pending");
+		query.whereNotEqualTo("RequestedBy", tech);
 		
 		query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
@@ -71,15 +75,11 @@ public class ListingFragment extends Fragment {
                     // Access the array of results here
                     for (ParseObject object : objects){
 
-                        //ParseObject doc = object.toObject;
-
                         object.getObjectId();
 
                         listingList.add(object);
                     }
-
                     listingRv.setAdapter(listingRvAdapter);
-
                     //String firstItemId = objects.get(0).getObjectId();
 
                     Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
@@ -99,4 +99,15 @@ public class ListingFragment extends Fragment {
 
     }
 
+    public void onItemClick(ParseObject event) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("event", event);
+
+        BookingFragment createSchedule = new BookingFragment();
+        createSchedule.setArguments(bundle);
+
+        fm.beginTransaction().replace(R.id.tech_container, createSchedule).commit();
+    }
 }

@@ -28,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
         ParseUser user = ParseUser.getCurrentUser();
         if (user != null){
             if (userLevel == "Customer"){
-                Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(homeActivity);
+                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+
             } else if (userLevel == "Technician"){
-                Intent homeActivity = new Intent(MainActivity.this, TechnicianActivity.class);
-                startActivity(homeActivity);
+                startActivity(new Intent(MainActivity.this, TechnicianActivity.class));
             } else{
 
             }

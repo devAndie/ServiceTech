@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustAllServicesFragment extends Fragment {
+    Context context;
     CustObjectsRvAdapter adapter;
     RecyclerView listRv;
     List<ParseObject> objectList;
@@ -40,9 +42,10 @@ public class CustAllServicesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         cust = ParseUser.getCurrentUser();
         listRv = view.findViewById(R.id.custAptList);
+        context = getContext();
 
         objectList = new ArrayList<>();
-        adapter = new CustObjectsRvAdapter(objectList, getContext());
+        adapter = new CustObjectsRvAdapter(objectList, context);
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
@@ -55,7 +58,7 @@ public class CustAllServicesFragment extends Fragment {
 
         //  Get the events class as a reference.
         ParseQuery<ParseObject> query = new ParseQuery<>("events");
-        query.whereEqualTo("PickedBy", cust);
+        query.whereEqualTo("RequestedBy", cust);
         //query.orderByDescending()
 
         // Execute the find asynchronously

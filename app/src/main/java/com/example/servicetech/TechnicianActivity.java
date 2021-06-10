@@ -10,7 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class TechnicianActivity extends AppCompatActivity {
@@ -97,7 +95,7 @@ public class TechnicianActivity extends AppCompatActivity {
                 break;
 
             case R.id.techAll:
-                fragmentClass = TechsAllServicesFragment.class;
+                fragmentClass = TechAllServicesFragment.class;
                 break;
 
             case R.id.swapt:

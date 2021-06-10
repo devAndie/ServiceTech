@@ -84,8 +84,8 @@ public class CompleteFragment extends Fragment {
                     }
                     completeRecyclerView.setAdapter(completeAdapter);
 
-                    String firstItemId = objects.get(0).getObjectId();
-                    Toast.makeText(getContext(), firstItemId, Toast.LENGTH_SHORT).show();
+//                    String firstItemId = objects.get(0).getObjectId();
+                    Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
                 } else if (objects == null){
                     Toast.makeText(getContext(), "No completed jobs return to schedule and attend appointments"
                             , Toast.LENGTH_LONG).show();

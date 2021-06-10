@@ -38,9 +38,7 @@ public class LogInActivity extends AppCompatActivity {
         if (user == null) {
             // No user is signed in
         } else {
-            String level = user.getString("Level");
-            Log.d(TAG, "signInWithEmail:success");
-
+            updateUI(user);
             // User logged in
         }
     }
@@ -91,7 +89,8 @@ public class LogInActivity extends AppCompatActivity {
                     // Hooray! The user is logged in.
                     Log.d(TAG, "signInWithEmail:success");
 
-                    String userLevel = user.getString("Level");
+                    String userLevel = "Customer";
+//                    String userLevel = user.getString("Level");
 
                     SharedPreferences Level = getSharedPreferences("Level",
                             Context.MODE_PRIVATE);

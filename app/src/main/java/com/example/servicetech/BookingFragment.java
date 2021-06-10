@@ -83,13 +83,14 @@ public class BookingFragment extends Fragment {
             submit.setText("Book");
         }
 
-        if (techRec.isEmpty() && Date.isEmpty() && time.isEmpty()){
+        if (TextUtils.isEmpty(techRec) && TextUtils.isEmpty(Date) && TextUtils.isEmpty(time)){
             submit.setVisibility(View.INVISIBLE);
         } else {
             submit.setVisibility(View.VISIBLE);
         }
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
+
+        ParseQuery<ParseObject> query = new ParseQuery<>("events");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

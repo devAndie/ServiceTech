@@ -91,7 +91,8 @@ public class TechLogInActivity extends AppCompatActivity {
                     // Hooray! The user is logged in.
                     Log.d(TAG, "signInWithEmail:success");
 
-                    String userLevel = user.getString("Level");
+                    String userLevel = "Technician";
+//                    String userLevel = user.getString("Level");
 
                     SharedPreferences Level = getSharedPreferences("Level",
                             Context.MODE_PRIVATE);

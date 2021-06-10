@@ -23,7 +23,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TechsAllServicesFragment extends Fragment {
+public class TechAllServicesFragment extends Fragment {
 
     TechObjectRvAdapter adapter;
     RecyclerView listRv;

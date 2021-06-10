@@ -58,8 +58,9 @@ public class TechScheduleFragment extends Fragment {
 
         techScheduleRV = view.findViewById(R.id.events_lst);
 
-        techScheduleRvAdapter = new TechScheduleRvAdapter(getContext(), techScheduleList);
         techScheduleList = new ArrayList<>();
+
+        techScheduleRvAdapter = new TechScheduleRvAdapter(techScheduleList, getContext());
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
