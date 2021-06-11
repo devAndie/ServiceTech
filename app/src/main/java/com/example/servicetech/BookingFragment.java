@@ -37,7 +37,7 @@ public class BookingFragment extends Fragment {
     private ImageView itemPhoto;
     private Context context;
     boolean isEdit;
-    Button submit;
+    Button submit, back;
 
     ParseUser user;
 
@@ -63,6 +63,7 @@ public class BookingFragment extends Fragment {
         startTime = view.findViewById(R.id.stime);
 
         submit = view.findViewById(R.id.schedule);
+        back = view.findViewById(R.id.cncl);
 
         techRec = recommendations.getText().toString();
         time = startTime.getText().toString();
@@ -83,13 +84,6 @@ public class BookingFragment extends Fragment {
 
             submit.setText("Book");
         }
-
-        if (TextUtils.isEmpty(techRec) && TextUtils.isEmpty(Date) && TextUtils.isEmpty(time)){
-            submit.setVisibility(View.INVISIBLE);
-        } else {
-            submit.setVisibility(View.VISIBLE);
-        }
-
 
         ParseQuery<ParseObject> query = new ParseQuery<>("events");
 
@@ -139,6 +133,12 @@ public class BookingFragment extends Fragment {
                         }
                     });
                 }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewSchedule();
             }
         });
     }

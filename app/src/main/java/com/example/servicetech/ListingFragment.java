@@ -1,5 +1,6 @@
 package com.example.servicetech;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,21 +74,22 @@ public class ListingFragment extends Fragment {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     // Access the array of results here
-                    for (ParseObject object : objects){
+                    if (objects.size() >= 0) {
+                        for (ParseObject object : objects) {
 
-                        object.getObjectId();
+                            object.getObjectId();
 
-                        listingList.add(object);
+                            listingList.add(object);
+                        }
+                        listingRv.setAdapter(listingRvAdapter);
+                        //String firstItemId = objects.get(0).getObjectId();
+                    } else if (objects.size() <0){
+
+                        Toast.makeText(getContext(), "No new jobs check later"
+                                , Toast.LENGTH_LONG).show();
                     }
-                    listingRv.setAdapter(listingRvAdapter);
-                    //String firstItemId = objects.get(0).getObjectId();
 
                     Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
-
-                } else if (objects == null){
-                    Toast.makeText(getContext(), "No new jobs check later"
-                            , Toast.LENGTH_LONG).show();
-
 
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());

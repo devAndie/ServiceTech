@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -96,7 +97,9 @@ public class CustObjectsRvAdapter extends RecyclerView.Adapter<CustObjectsRvAdap
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 
-        fm.beginTransaction().replace(R.id.fragment_container, detailsFragment).commit();
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.replace(R.id.fragment_container, detailsFragment).addToBackStack("tag").commit();
 
     }
 

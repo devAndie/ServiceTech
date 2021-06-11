@@ -98,7 +98,7 @@ public class TechObjectRvAdapter extends RecyclerView.Adapter<TechObjectRvAdapte
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 
-        fm.beginTransaction().replace(R.id.tech_container, detailsFragment).commit();
+        fm.beginTransaction().replace(R.id.tech_container, detailsFragment).addToBackStack("tAll").commit();
     }
 
 }

@@ -88,11 +88,11 @@ public class DetailsFragment extends Fragment {
                     }
                 });
             }
-            String techId = object.getString("PickedBy");
-            if (techId != null){
-                ParseQuery<ParseUser> tech = ParseUser.getQuery();
-                tech.whereEqualTo("objectId", techId);
-                tech.findInBackground(new FindCallback<ParseUser>() {
+            ParseUser tech = (ParseUser) object.get("PickedBy");
+            if (tech != null){
+                ParseQuery<ParseUser> Tech = ParseUser.getQuery();
+                Tech.whereEqualTo("objectId", tech);
+                Tech.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> objects, ParseException e) {
                         if (e == null) {
@@ -109,5 +109,9 @@ public class DetailsFragment extends Fragment {
             sTime.setText(object.getString("Time"));
             endTime.setText(object.getString("EndTime"));
         }
+    }
+
+    public void onBackPressed() {
+        //moveTaskToBack(true);
     }
 }
