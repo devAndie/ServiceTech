@@ -14,90 +14,169 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_tv"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/h"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:editable="false"
-
-            android:hint="Item"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toTopOf="@+id/item_type_tv"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Listing"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintBottom_toTopOf="@+id/itmAtt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/itmAtt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/servAtt"
+            app:layout_constraintEnd_toStartOf="@+id/item_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/h"
+            app:srcCompat="@drawable/ic_baseline_work_24" />
 
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_type_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+        <TextView
+            android:id="@+id/item_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:editable="false"
+            android:hint="Item"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/item_type_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itmAtt"
+            app:layout_constraintTop_toBottomOf="@+id/h" />
+
+
+        <ImageView
+            android:id="@+id/servAtt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@id/itemImg"
+            app:layout_constraintEnd_toStartOf="@+id/item_type_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itmAtt"
+            app:srcCompat="@drawable/ic_baseline_home_repair_service_24" />
+
+
+        <TextView
+            android:id="@+id/item_type_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Service Type"
-            android:inputType="text"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/itemImg"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/servAtt"
             app:layout_constraintTop_toBottomOf="@+id/item_tv" />
 
         <ImageView
             android:id="@+id/itemImg"
-            android:layout_width="250dp"
-            android:layout_height="150dp"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:scaleType="center"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/locat_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_type_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/item_type_tv"
+            app:srcCompat="@drawable/auto_service" />
+        <ImageView
+            android:id="@+id/locDr"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/noteDr"
+            app:layout_constraintEnd_toStartOf="@+id/locat_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemImg"
+            app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/locat_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:editable="false"
             android:hint="Location"
-            android:inputType="text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/notes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/locDr"
             app:layout_constraintTop_toBottomOf="@+id/itemImg" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <ImageView
+            android:id="@+id/noteDr"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/recommend"
+            app:layout_constraintEnd_toStartOf="@+id/notes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locDr"
+            app:srcCompat="@drawable/ic_baseline_wysiwyg_24" />
+
+        <TextView
             android:id="@+id/notes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="5dp"
-            android:editable="false"
             android:hint="Notes"
-            android:inputType="textMultiLine"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/recommend"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/noteDr"
             app:layout_constraintTop_toBottomOf="@+id/locat_tv" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,29 +184,41 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Recommended action"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintBottom_toTopOf="@+id/tvdate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/notes" />
+            app:layout_constraintTop_toBottomOf="@+id/notes" >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/date"
+            <EditText
+                android:id="@+id/rec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Solution"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Appointment date"
-            android:inputType="date"
-            app:layout_constraintBottom_toTopOf="@+id/stime"
+             app:layout_constraintBottom_toTopOf="@+id/stime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recommend" />
+            app:layout_constraintTop_toBottomOf="@+id/recommend" >
 
-        <com.google.android.material.textfield.TextInputEditText
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Appointment date"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/stime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,12 +226,18 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Start Time"
-            android:inputType="time"
             app:layout_constraintBottom_toTopOf="@+id/schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
+            app:layout_constraintTop_toBottomOf="@+id/tvdate" >
+
+            <EditText
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Start Time (24hrs clock system)"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/schedule"

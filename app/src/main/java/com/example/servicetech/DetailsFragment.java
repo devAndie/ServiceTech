@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -23,12 +24,12 @@ import java.util.List;
 
 public class DetailsFragment extends Fragment {
 
-    TextView name, service, location, note, recomdact, cName, cTel, techName, techCont,
-            date, sTime, endTime;
+    TextView name, service, location, note, recomAct, cName, cTel, techName, techCont,
+            date, time,  startTime, endTime, status, followUp;
     ImageView imageView;
     Context context;
 
-    String docId;
+    String docId, custId, techId;
 
     @Nullable
     @Override
@@ -43,19 +44,29 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
 
+        status = view.findViewById(R.id.eStatus);
+
         name = view.findViewById(R.id.pItem);
         service = view.findViewById(R.id.pService);
-        imageView = view.findViewById(R.id.pImg);
         location =view.findViewById(R.id.pLocation);
+        imageView = view.findViewById(R.id.pImg);
+
         note = view.findViewById(R.id.cNote);
-        recomdact = view.findViewById(R.id.tRec);
+        recomAct = view.findViewById(R.id.tRec);
+
         cName = view.findViewById(R.id.cName);
         cTel = view.findViewById(R.id.cTelNo);
+
         techName = view.findViewById(R.id.tName);
         techCont = view.findViewById(R.id.tTelNo);
+
         date = view.findViewById(R.id.sDate);
-        sTime = view.findViewById(R.id.sTime);
+        time = view.findViewById(R.id.sTime);
+
+        startTime = view.findViewById(R.id.startTime);
         endTime = view.findViewById(R.id.eTime);
+
+        followUp = view.findViewById(R.id.folUp);
 
         ParseObject object = null;
         if (getArguments() != null) {
@@ -63,55 +74,70 @@ public class DetailsFragment extends Fragment {
         }
         if(object != null){
             docId = object.getObjectId();
+
+            status.setText(object.getString("Status"));
+
             name.setText(object.getString("Item"));
             service.setText(object.getString("Service"));
+            location.setText(object.getString("Location"));
+            note.setText("Problem :" + object.getString("Note"));
+            recomAct.setText("Solution" + object.getString("Recommendation"));
 
             Glide.with(this.context).load(object.getParseFile("Image").getUrl()).into(imageView);
-            location.setText(object.getString("Location"));
-            note.setText(object.getString("Note"));
-            recomdact.setText(object.getString("Recommendation"));
+            custId = object.getString("RequestedBy");
+            techId = object.getString("PickedBy");
 
-            String custId = object.getString("RequestedBy");
-            if (custId != null){
-                ParseQuery creator = ParseUser.getQuery();
-                creator.whereEqualTo("userId", custId);
-                creator.findInBackground(new FindCallback<ParseUser>(){
-                    @Override
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if (e == null) {
-                            // The query was successful.
-                            for (ParseUser user : objects){
-                                cName.setText(user.getUsername());
-                                cTel.setText(user.getString("Phone"));
-                            }
-                        }
-                    }
-                });
-            }
-            ParseUser tech = (ParseUser) object.get("PickedBy");
-            if (tech != null){
-                ParseQuery<ParseUser> Tech = ParseUser.getQuery();
-                Tech.whereEqualTo("objectId", tech);
-                Tech.findInBackground(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if (e == null) {
-                            // The query was successful.
-                            for (ParseUser user : objects){
-                                techName.setText(user.getUsername());
-                                techCont.setText(user.getString("Phone"));
-                            }
-                        }
-                    }
-                });
-            }
             date.setText(object.getString("Date"));
-            sTime.setText(object.getString("Time"));
+            time.setText(object.getString("Time"));
+
+            startTime.setText(object.getString("StartTime"));
             endTime.setText(object.getString("EndTime"));
+
+            followUp.setText(object.getString("FollowUp"));
         }
+
+
+
+        ParseQuery<ParseObject> query = new ParseQuery<>("events");
+
+        query.getInBackground(docId, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                cName.setText(object.getParseUser(custId).getUsername());
+                cTel.setText(object.getParseUser(custId).getString("Phone"));
+            }
+        });
+        if (techId != null){
+            query.getInBackground(docId, new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    techName.setText(object.getParseUser(techId).getUsername());
+                    techCont.setText(object.getParseUser(techId).getString("Phone"));
+                }
+            });
+        }
+
+
+/*        ParseQuery creator = ParseUser.getQuery();
+
+        creator.whereEqualTo("objectId", custId);
+        creator.findInBackground(new FindCallback<ParseUser>(){
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+                if (e == null) {
+                    // The query was successful.
+                    for (ParseUser user : users){
+                        cName.setText(user.getUsername());
+                        cTel.setText(user.getString("Phone"));
+                    }
+                }
+            }
+        });
+
+
+ */
+
+
     }
 
-    public void onBackPressed() {
-        //moveTaskToBack(true);
-    }
 }

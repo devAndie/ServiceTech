@@ -1,12 +1,14 @@
 package com.example.servicetech;
 
 import android.content.Context;
+import android.icu.text.Replaceable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +28,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class TechAppointmentFragment extends Fragment {
-    private TextInputEditText item, service, location, notes, recommendations, date, startTime, followUp;
+public class TechAttendFragment extends Fragment {
+
+    TextView item, service, location, notes, recommendations, date, startTime;
+    private TextInputEditText  followUp;
     private ImageView itemPhoto;
     private String docId, StartTime, FollowUp, endTime;
     Context context;
@@ -39,7 +43,7 @@ public class TechAppointmentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_appointment, container, false);
+        return inflater.inflate(R.layout.fragment_attend, container, false);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -125,7 +129,8 @@ public class TechAppointmentFragment extends Fragment {
     }
 
     public String GetDate () {
-        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         return df.format(Calendar.getInstance().getTime());
     }
 

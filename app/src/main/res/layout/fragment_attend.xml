@@ -26,26 +26,33 @@
 
         <ImageView
             android:id="@+id/itmAtt"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/servAtt"
             app:layout_constraintEnd_toStartOf="@+id/mitem_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/H1"
             app:srcCompat="@drawable/ic_baseline_work_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mitem_tv"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Item"
             android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mitem_type_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/itmAtt"
             app:layout_constraintTop_toBottomOf="@id/H1" />
@@ -58,21 +65,28 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            app:srcCompat="@drawable/ic_baseline_home_repair_service_24"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@id/mitemImg"
             app:layout_constraintEnd_toStartOf="@+id/mitem_type_tv"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itmAtt" />
+            app:layout_constraintTop_toBottomOf="@+id/itmAtt"
+            app:srcCompat="@drawable/ic_baseline_home_repair_service_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mitem_type_tv"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
-            android:editable="false"
+            android:layout_marginBottom="4dp"
             android:hint="Service Type"
             android:inputType="text"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mitemImg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/servAtt"
             app:layout_constraintTop_toBottomOf="@+id/mitem_tv" />
@@ -81,13 +95,17 @@
             android:id="@+id/mitemImg"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:scaleType="center"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="4dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/mlocat_tv"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mitem_type_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/mitem_type_tv"
+            app:srcCompat="@drawable/auto_service" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -96,21 +114,27 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3"
             app:layout_constraintEnd_toStartOf="@+id/mlocat_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mitemImg"
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mlocat_tv"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Location"
             android:inputType="text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mnotes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/mitemImg" />
@@ -122,21 +146,26 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView4"
             app:layout_constraintEnd_toStartOf="@+id/mnotes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:srcCompat="@drawable/ic_baseline_wysiwyg_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mnotes"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Notes"
-            android:inputType="textMultiLine"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mrecommend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toBottomOf="@+id/mlocat_tv" />
@@ -148,22 +177,30 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            app:srcCompat="@drawable/ic_baseline_post_add_24"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView5"
             app:layout_constraintEnd_toStartOf="@+id/mrecommend"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:srcCompat="@drawable/ic_baseline_post_add_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mrecommend"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Recommended action"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mdate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/mnotes" />
+
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="wrap_content"
@@ -171,22 +208,30 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView6"
             app:layout_constraintEnd_toStartOf="@+id/mdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4"
             app:srcCompat="@drawable/ic_baseline_date_range_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mdate"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:hint="Appointment date"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/mstime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/mrecommend" />
+
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
@@ -194,23 +239,28 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/attend"
             app:layout_constraintEnd_toStartOf="@+id/mstime"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5"
             app:srcCompat="@drawable/ic_baseline_access_time_24" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/mstime"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
-            android:hint="Start Time"
+            android:hint="Time"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/attend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/mdate"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/mdate" />
 
         <Button
             android:id="@+id/attend"
@@ -218,7 +268,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:text="Start"
+            app:layout_constraintBottom_toTopOf="@+id/Followup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mstime" />
@@ -230,7 +282,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
-            android:hint="Follow up Activity"
+            android:layout_marginBottom="4dp"
+            android:hint="Follow up activity if any"
+            app:layout_constraintBottom_toTopOf="@+id/mendApt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attend" />
@@ -242,7 +296,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
             android:text="end appointment"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Followup" />

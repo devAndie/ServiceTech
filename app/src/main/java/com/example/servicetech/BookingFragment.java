@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -29,14 +32,13 @@ import com.parse.SaveCallback;
 
 public class BookingFragment extends Fragment {
     private static final String TAG = "BookingFragment";
-    private TextInputEditText item, service, location, notes, recommendations, date, startTime;
-    private String docId, techRec, time, Date;
 
-    private ParseFile image;
+    TextView item, service, location, notes;
+    private EditText techRec, date, startTime;
+    private String docId, recommendations, time, Date;
 
     private ImageView itemPhoto;
     private Context context;
-    boolean isEdit;
     Button submit, back;
 
     ParseUser user;
@@ -58,16 +60,13 @@ public class BookingFragment extends Fragment {
         itemPhoto = view.findViewById(R.id.itemImg);
         location = view.findViewById(R.id.locat_tv);
         notes = view.findViewById(R.id.notes);
-        recommendations = view.findViewById(R.id.recommend);
+
+        techRec = view.findViewById(R.id.rec);
         date = view.findViewById(R.id.date);
-        startTime = view.findViewById(R.id.stime);
+        startTime = view.findViewById(R.id.time);
 
         submit = view.findViewById(R.id.schedule);
         back = view.findViewById(R.id.cncl);
-
-        techRec = recommendations.getText().toString();
-        time = startTime.getText().toString();
-        Date = date.getText().toString();
 
         ParseObject event = null;
         if (getArguments() != null) {
@@ -90,8 +89,12 @@ public class BookingFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(techRec)) {
-                    recommendations.setError("Please provide action needed");
+                recommendations = techRec.getText().toString();
+                time = startTime.getText().toString();
+                Date = date.getText().toString();
+
+                if(TextUtils.isEmpty(recommendations)) {
+                    techRec.setError("Please provide action needed");
                 }else if(TextUtils.isEmpty(Date)) {
                     date.setError("Provide appointment Date");
 

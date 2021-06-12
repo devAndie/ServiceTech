@@ -131,7 +131,6 @@ import com.parse.ParseUser;
             mDrawer.closeDrawer(GravityCompat.START);
         }
         else {
-
             super.onBackPressed();
         }
     }

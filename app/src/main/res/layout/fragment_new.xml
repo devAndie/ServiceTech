@@ -111,6 +111,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="TODO"
                 android:cropToPadding="true"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_baseline_image_24" />
 
             <ImageButton
@@ -149,7 +150,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="A Note for the technician"
+            android:hint="Problem encountered"
             android:inputType="text"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toTopOf="@+id/submit"
