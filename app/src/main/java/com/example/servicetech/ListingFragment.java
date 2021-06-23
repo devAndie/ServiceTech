@@ -64,8 +64,8 @@ public class ListingFragment extends Fragment {
         listingRv.addItemDecoration(dividerItemDecoration);
 
 		//  Get the events class as a reference.
-//		ParseQuery<ParseObject> query = new ParseQuery("events");
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
+		ParseQuery<ParseObject> query = new ParseQuery("events");
+//		ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
 
 		query.whereEqualTo("Status", "pending");
 		query.whereNotEqualTo("RequestedBy", tech);

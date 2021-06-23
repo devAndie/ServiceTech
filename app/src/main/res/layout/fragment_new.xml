@@ -25,26 +25,33 @@
             android:text="Request a service"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toTopOf="@+id/item_name"
+            app:layout_constraintBottom_toTopOf="@+id/item_nametv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_nametv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Item Name"
-            android:inputType="text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toTopOf="@+id/pss"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rqsv_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/rqsv_tv">
+            <EditText
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item Name"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/pss"
@@ -59,22 +66,27 @@
             app:layout_constraintBottom_toTopOf="@+id/item_type_la"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_name" />
+            app:layout_constraintTop_toBottomOf="@+id/item_nametv" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_type_la"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-
             android:layout_marginBottom="4dp"
-            android:hint="Installation, Repair, Maintenance or Upgrade"
-            android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pss" />
+            app:layout_constraintTop_toBottomOf="@+id/pss" >
+            <EditText
+                android:id="@+id/service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Installation, Repair, Maintenance or Upgrade"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <RelativeLayout
@@ -126,7 +138,7 @@
         </RelativeLayout>
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loc_el"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,15 +146,21 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Equipment's Location"
-            android:inputType="text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toTopOf="@+id/notewrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" >
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Equipment's Location"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/notewrap"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -150,13 +168,19 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
-            android:hint="Problem encountered"
-            android:inputType="text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toTopOf="@+id/submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loc_el" />
+            app:layout_constraintTop_toBottomOf="@+id/loc_el" >
+            <EditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Problem encountered"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/submit"

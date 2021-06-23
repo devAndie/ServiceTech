@@ -83,19 +83,21 @@ public class TechScheduleFragment extends Fragment {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     // Access the array of results here
-                    for (ParseObject object : objects){
-                        //ParseObject doc = object.toObject;
+                    if (objects.size() >= 0) {
 
-                        object.getObjectId();
-                        techScheduleList.add(object);
+                        for (ParseObject object : objects) {
+                            //ParseObject doc = object.toObject;
+                            object.getObjectId();
+                            techScheduleList.add(object);
+                        }
+                        techScheduleRV.setAdapter(techScheduleRvAdapter);
+                    } else if (objects.size() < 0){
+                        Toast.makeText(getContext(), "Zero Jobs booked, Return to Listing and book one",
+                                Toast.LENGTH_LONG).show();
+
                     }
-                    techScheduleRV.setAdapter(techScheduleRvAdapter);
 
                      Toast.makeText(getContext(), "Data retrieved", Toast.LENGTH_SHORT).show();
-                } else if (objects == null) {
-                    Toast.makeText(getContext(), "Zero Jobs booked, Return to Listing and book one",
-                            Toast.LENGTH_LONG).show();
-
                 } else {
                     Log.d("item", "Error: " + e.getMessage());
                 }

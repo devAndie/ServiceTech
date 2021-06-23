@@ -29,7 +29,8 @@ public class DetailsFragment extends Fragment {
     ImageView imageView;
     Context context;
 
-    String docId, custId, techId;
+    String docId, custId, techId, uId, tId;
+    ParseUser customer, technician;
 
     @Nullable
     @Override
@@ -74,18 +75,18 @@ public class DetailsFragment extends Fragment {
         }
         if(object != null){
             docId = object.getObjectId();
-
             status.setText(object.getString("Status"));
-
             name.setText(object.getString("Item"));
             service.setText(object.getString("Service"));
             location.setText(object.getString("Location"));
             note.setText("Problem :" + object.getString("Note"));
-            recomAct.setText("Solution" + object.getString("Recommendation"));
+
+            if (object.getString("Recommendation")!= null){
+                recomAct.setText("Solution :" + object.getString("Recommendation"));
+            }
 
             Glide.with(this.context).load(object.getParseFile("Image").getUrl()).into(imageView);
-            custId = object.getString("RequestedBy");
-            techId = object.getString("PickedBy");
+
 
             date.setText(object.getString("Date"));
             time.setText(object.getString("Time"));
@@ -94,50 +95,40 @@ public class DetailsFragment extends Fragment {
             endTime.setText(object.getString("EndTime"));
 
             followUp.setText(object.getString("FollowUp"));
-        }
 
+            ParseObject owner = object.getParseObject("RequestedBy");
 
-
-        ParseQuery<ParseObject> query = new ParseQuery<>("events");
-
-        query.getInBackground(docId, new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                cName.setText(object.getParseUser(custId).getUsername());
-                cTel.setText(object.getParseUser(custId).getString("Phone"));
-            }
-        });
-        if (techId != null){
-            query.getInBackground(docId, new GetCallback<ParseObject>() {
+            ParseQuery<ParseUser> custQuery = ParseUser.getQuery();
+            custQuery.whereEqualTo("objectId", owner.getObjectId());
+            custQuery.findInBackground(new FindCallback<ParseUser>() {
                 @Override
-                public void done(ParseObject object, ParseException e) {
-                    techName.setText(object.getParseUser(techId).getUsername());
-                    techCont.setText(object.getParseUser(techId).getString("Phone"));
-                }
-            });
-        }
-
-
-/*        ParseQuery creator = ParseUser.getQuery();
-
-        creator.whereEqualTo("objectId", custId);
-        creator.findInBackground(new FindCallback<ParseUser>(){
-            @Override
-            public void done(List<ParseUser> users, ParseException e) {
-                if (e == null) {
-                    // The query was successful.
-                    for (ParseUser user : users){
-                        cName.setText(user.getUsername());
-                        cTel.setText(user.getString("Phone"));
+                public void done(List<ParseUser> objects, ParseException e) {
+                    if (e == null){
+                        for (ParseUser user: objects){
+                            cName.setText(user.getUsername());
+                            cTel.setText(user.getString("Phone"));
+                        }
                     }
                 }
+            });
+
+            if (object.getParseObject("PickedBy") != null){
+                ParseObject tech = object.getParseObject("PickedBy");
+                 
+                ParseQuery<ParseUser> expert = ParseUser.getQuery();
+                expert.whereEqualTo("objectId", tech.getObjectId());
+                expert.findInBackground(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e == null){
+                            for (ParseUser user: objects){
+                                techName.setText(user.getUsername());
+                                techCont.setText(user.getString("Phone"));
+                            }
+                        }
+                    }
+                });
             }
-        });
-
-
- */
-
-
+        }
     }
-
 }

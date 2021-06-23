@@ -71,10 +71,10 @@ public class RequestServiceFragment extends Fragment {
         user = ParseUser.getCurrentUser();
 
         item = view.findViewById(id.item_name);
-        service = view.findViewById(id.item_type_la);
+        service = view.findViewById(id.service);
         itemImage = getView().findViewById(id.itm_img);
-        location = view.findViewById(id.loc_el);
-        notes = view.findViewById(id.notewrap);
+        location = view.findViewById(id.location);
+        notes = view.findViewById(id.note);
         itemImg = getView().findViewById(id.img_plus);
         submit = getView().findViewById(id.submit);
         cancel = getView().findViewById(id.cncl);

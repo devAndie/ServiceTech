@@ -108,7 +108,7 @@ public class BookingFragment extends Fragment {
                         public void done(ParseObject object, ParseException e) {
                             if (e == null ) {
                                 String status = object.getString("Status");
-                                if (status == "pending"){
+                                if (object.getString("Status") == "pending"){
                                     object.put("Status", "scheduled");
                                     object.put("Recommendation", techRec);
                                     object.put("Date", Date);
@@ -124,7 +124,7 @@ public class BookingFragment extends Fragment {
                                             viewSchedule();
                                         }
                                     });
-                                }else if (status != "pending"){
+                                }else if (object.getString("Status") != "pending"){
                                     Toast.makeText(getContext(), "Event already picked!" +
                                                     "Return to Listing",
                                             Toast.LENGTH_LONG).show();
